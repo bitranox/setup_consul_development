@@ -18,8 +18,8 @@ function get_linux_codename {
 }
 
 function banner {
-    clr_bold clr_green ""
-    clr_bold clr_green ""
+    clr_bold clr_green " "
+    clr_bold clr_green " "
     local sep="********************************************************************************"
     clr_bold clr_green ${sep}
     clr_bold clr_green "${1}"
@@ -32,12 +32,12 @@ function wait_for_enter {
         then
             banner "${1}"
         fi
-    clr_bold clr_green ""
+    clr_bold clr_green " "
     clr_bold clr_green "Enter to continue, Cntrl-C to exit: " && read -p
 }
 
 function reboot {
-    clr_bold clr_green ""
+    clr_bold clr_green " "
     clr_bold clr_green "Rebooting"
     sudo shutdown -r now
 }

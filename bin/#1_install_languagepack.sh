@@ -16,12 +16,14 @@ function install_languagepack {
     wait_for_enter "Installiere deutsche Sprachpakete"
     install_essentials
     linux_update
-    retry apt-get install language-pack-de -y
-    retry apt-get install language-pack-de-base -y
+    retry sudo apt-get install language-pack-de -y
+    retry sudo apt-get install language-pack-de-base -y
     linux_update
     wait_for_enter "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
     reboot
 }
+
+install_languagepack
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

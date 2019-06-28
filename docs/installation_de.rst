@@ -10,8 +10,12 @@ Host System
 -----------
 
 Das Host System besteht aus einem Linux Betriebssystem Version 18.04 (bionic) oder 19.04 (disco) oder höher.
-Die Basisinstallation kann entweder Linux Server (kleiner) oder Linux Desktop sein.
+Die Basisinstallation kann entweder Linux Server (weniger Platzbedarf) oder Linux Desktop sein.
 Es wird von einer frischen, minimalen Installation des Hostsystemes ausgegangen.
+Es wird in weiterer Folge ein Desktop System (unser Vorschlag ubuntu-desktop-mate) installiert, um bequem auf die virtuelle LXC Maschine
+über einen grafischen X-Client (x2go und/oder Chrome Remote Desktop) zugreifen zu können.
+Wie immer bei Linux führen sehr viele Wege zum Ziel, hier wird versucht eine möglichst einfache, bequeme Variante zu Erstellen -
+ohne Rücksicht auf optimierte Performance oder Ressourcen minimierung.
 
 mit virtueller Maschine
 -----------------------
@@ -28,6 +32,14 @@ Erzeugen Sie eine neue VM:
 - Bridged Networking
 
 auf diese virtuelle Maschine installieren Sie nun ein Ubuntu Server oder Desktop - nur das notwendigste !
+
+Installieren Sie jedenfalls die open-vm-tools:
+
+.. code-block:: bash
+
+    # Installiere Open VM Tools
+    sudo apt-get install open-vm-tools -y
+
 
 ohne virtueller Maschine
 ------------------------
@@ -51,7 +63,7 @@ wir gehen davon aus das Betriebssystem läuft. Wechseln Sie auf die Konsole (Ter
     # Herunterladen der Skripte
     git clone https://github.com/bitranox/consul-dev-env-public.git
     # Skripte ausführbar machen
-    sudo chmod -R +x ./consul-dev-env-public/*.sh
+    sudo chmod -R +x ./consul-dev-env-public/bin/*.sh
 
 
 die Skripte befinden sich nun im Verzeichnis Home/consul-dev-env-public/bin und müssen von dort aufgerufen werden.
