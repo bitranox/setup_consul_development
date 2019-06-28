@@ -21,9 +21,9 @@ function banner {
     clr_bold clr_green " "
     clr_bold clr_green " "
     local sep="********************************************************************************"
-    clr_bold clr_green ${sep}
-    clr_bold clr_green "${1}"
-    clr_bold clr_green ${sep}
+    clr_bold clr_green "${sep}"
+    clr_bold clr_green "* ${1}"
+    clr_bold clr_green "${sep}"
 }
 
 function wait_for_enter {
