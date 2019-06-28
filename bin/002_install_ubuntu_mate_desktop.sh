@@ -19,6 +19,9 @@ function install_ubuntu_mate_desktop {
     install_essentials
     linux_update
     retry sudo apt-get install ubuntu-mate-desktop -y
+    backup_file /etc/netplan/50-cloud-init.yaml
+    remove_file /etc/netplan/50-cloud-init.yaml
+    sudo cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
     wait_for_enter "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
     reboot
 }
@@ -40,3 +43,4 @@ if [[ ! -z "$1" ]]
           fail "\"${function_name}\" is not a known function name of \"${library_name}\""
         fi
 	fi
+

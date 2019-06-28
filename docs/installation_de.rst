@@ -128,6 +128,8 @@ Für Ubuntu-Desktop Versionen OPTIONAL, für Ubuntu Server zwingend notwendig !
 Installation des Ubuntu-Mate-Desktops - diese Desktopumgebung ist mehr Windows-ähnlich,
 viele Leute (so auch ich) kommen mit dem neuen Ubuntu-Gnome Desktop nicht so gut zurecht.
 
+Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager geändert!
+
 .. code-block:: bash
 
     cd ~/consul-dev-env-public/bin

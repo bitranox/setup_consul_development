@@ -44,6 +44,26 @@ function reboot {
 }
 
 
+function backup_file {
+    # if <file> exist
+    if [[ -f "${1}" ]]; then
+        # copy <file>.original to <file>.backup
+        sudo cp -f "${1}" "${1}.backup"
+        # if <file>.original does NOT exist
+        if [[ ! -f "${1}.original" ]]; then
+            sudo cp -f "${1}" "${1}.original"
+        fi
+    fi
+}
+
+
+function remove_file {
+    # if <file> exist
+    if [[ -f "${1}" ]]; then
+        sudo rm -f "${1}"
+    fi
+}
+
 
 
 ## make it possible to call functions without source include
