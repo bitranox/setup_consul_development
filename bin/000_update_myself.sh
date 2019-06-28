@@ -25,7 +25,7 @@ function update_myself {
     wait_for_enter "Update der eigenen Skripte beendet"
 }
 
-install_languagepack
+update_myself
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
