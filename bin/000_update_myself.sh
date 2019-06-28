@@ -21,7 +21,6 @@ function update_myself {
     retry sudo git fetch --all
     sudo git reset --hard origin/master
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    echo "MYDIR = ${my_dir}"
     sudo chmod -R +x "${my_dir}"/*.sh
     sudo chmod -R +x "${my_dir}"/lib_bash/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh

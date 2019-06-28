@@ -3,6 +3,9 @@
 - `ohne virtueller Maschine`_
 - `Installation der Skripte`_
 - `Essentielle, automatisch Installierte Programme`_
+- Installation des Host Systemes
+    - `000_update_myself`_
+    - `001_install_languagepack`_
 
 ----
 
@@ -98,4 +101,23 @@ folgende Programme werden bei Verwendung dieser Programme automatisch ohne Rück
 - apport    (Meldung von Fehlern an Ubuntu - das nervt)
 
 
+000_update_myself
+-----------------
+
+dieses Skript führt ein Update der eigenen Installationsskripte durch. Achtung, etwaige eigene Änderungen in den Skripten werden überschrieben !
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./000*
+
+001_install_languagepack
+------------------------
+
+Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht bereits haben - es schadet nicht.
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./001*
 
