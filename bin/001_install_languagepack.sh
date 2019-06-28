@@ -20,7 +20,6 @@ function install_languagepack {
     linux_update
     retry sudo apt-get install language-pack-de -y
     retry sudo apt-get install language-pack-de-base -y
-    linux_update
     wait_for_enter "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
     reboot
 }
