@@ -17,7 +17,8 @@ function update_myself {
     wait_for_enter "Update der Skripte"
     install_essentials
     linux_update
-    git pull https://github.com/bitranox/consul-dev-env-public.git
+    sudo git git fetch --all
+    sudo git reset --hard origin/master
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     sudo chmod +x "${my_dir}"/lib_bash/*.sh
     sudo chmod +x "${my_dir}"/lib_install/*.sh
