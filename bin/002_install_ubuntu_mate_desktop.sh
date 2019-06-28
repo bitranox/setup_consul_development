@@ -14,7 +14,7 @@ function include_dependencies {
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
-function install_languagepack {
+function install_ubuntu_mate_desktop {
     wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
     install_essentials
     linux_update
@@ -23,7 +23,7 @@ function install_languagepack {
     reboot
 }
 
-install_languagepack
+install_ubuntu_mate_desktop
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
