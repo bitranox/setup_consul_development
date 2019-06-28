@@ -123,7 +123,8 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
 
 002_install_ubuntu_mate_desktop
 -------------------------------
-OPTIONAL !
+Für Ubuntu-Desktop Versionen OPTIONAL, für Ubuntu Server zwingend notwendig !
+
 Installation des Ubuntu-Mate-Desktops - diese Desktopumgebung ist mehr Windows-ähnlich,
 viele Leute (so auch ich) kommen mit dem neuen Ubuntu-Gnome Desktop nicht so gut zurecht.
 
