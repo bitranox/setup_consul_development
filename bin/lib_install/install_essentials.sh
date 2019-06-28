@@ -15,10 +15,7 @@ function install_essentials {
     clr_bold clr_green ""
     clr_bold clr_green "Installiere Essentielles am Host, entferne Apport und Whoopsie"
     retry sudo apt-get install net-tools -y
-    retry sudo apt-get install mc -y
     retry sudo apt-get install git -y
-    retry sudo apt-get purge whoopsie -y
-    retry sudo apt-get purge apport -y
 }
 
 ## make it possible to call functions without source include

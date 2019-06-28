@@ -26,6 +26,18 @@ function banner {
     clr_bold clr_green "${sep}"
 }
 
+
+function banner_warning {
+    clr_bold clr_red " "
+    clr_bold clr_red " "
+    local sep="********************************************************************************"
+    clr_bold clr_red "${sep}"
+    clr_bold clr_red "* ${1}"
+    clr_bold clr_red "${sep}"
+}
+
+
+
 function wait_for_enter {
     # wait for enter - first parameter will be showed in a banner if present
     if [[ ! -z "$1" ]] ;
@@ -34,8 +46,19 @@ function wait_for_enter {
         fi
     clr_bold clr_green " "
     read -p "Enter to continue, Cntrl-C to exit: "
-
 }
+
+
+function wait_for_enter_warning {
+    # wait for enter - first parameter will be showed in a banner if present
+    if [[ ! -z "$1" ]] ;
+        then
+            banner_warning "${1}"
+        fi
+    clr_bold clr_green " "
+    read -p "Enter to continue, Cntrl-C to exit: "
+}
+
 
 function reboot {
     clr_bold clr_green " "

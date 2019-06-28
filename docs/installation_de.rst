@@ -91,15 +91,8 @@ Essentielle, automatisch Installierte Programme
 
 folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückfrage installiert:
 
-- net-tools (grundlegende netzwerk Tools)
+- net-tools (grundlegende Netzwerk Tools)
 - git
-- mc  (Midnight Commander, ein Text Basierender Dateimanager und Editor, Aufruf mit "mc" oder "sudo mc")
-
-folgende Programme werden bei Verwendung dieser Programme automatisch ohne Rückfrage deinstalliert:
-
-- whoopsie  (Meldung von Fehlern an Ubuntu - das nervt)
-- apport    (Meldung von Fehlern an Ubuntu - das nervt)
-
 
 000_update_myself
 -----------------
@@ -135,3 +128,13 @@ Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager 
     cd ~/consul-dev-env-public/bin
     ./002*
 
+003_remove_unnecessary
+----------------------
+Für die Entwicklung unnötige Programme deinstallieren. Darunter fallen viele Tools wie VIM, Brasero, aber auch
+Thunderbird Mailprogramm, Dateimanager Nautils (Mate verwendet Caja), oder Libre Office.
+Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dieser Programme benötigen !
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./003*
