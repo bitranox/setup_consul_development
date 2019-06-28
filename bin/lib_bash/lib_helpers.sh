@@ -33,8 +33,8 @@ function wait_for_enter {
             banner "${1}"
         fi
     clr_bold clr_green " "
-    clr_bold clr_green "Enter to continue, Cntrl-C to exit: "
-    read -p
+    clr_bold clr_green read -p "Enter to continue, Cntrl-C to exit: "
+
 }
 
 function reboot {
