@@ -184,6 +184,17 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
     cd ~/consul-dev-env-public/bin
     ./001*
 
+002_install_ubuntu_mate_desktop
+-------------------------------
+OPTIONAL !
+Installation des Ubuntu-Mate-Desktops - diese Desktopumgebung ist mehr Windows-ähnlich,
+viele Leute (so auch ich) kommen mit dem neuen Ubuntu-Gnome Desktop nicht so gut zurecht.
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./002*
+
 Grundlegende Verwendung
 -----------------------
 
