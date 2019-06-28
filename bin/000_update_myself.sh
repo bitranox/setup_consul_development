@@ -21,8 +21,8 @@ function update_myself {
     sudo git reset --hard origin/master
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     echo "MYDIR = ${my_dir}"
-    sudo chmod +x "${my_dir}"/lib_bash/*.sh
-    sudo chmod +x "${my_dir}"/lib_install/*.sh
+    sudo chmod -R +x "${my_dir}"/lib_bash/*.sh
+    sudo chmod -R +x "${my_dir}"/lib_install/*.sh
     wait_for_enter "Update der eigenen Skripte beendet"
 }
 
