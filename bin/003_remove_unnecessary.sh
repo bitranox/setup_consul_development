@@ -27,7 +27,6 @@ function remove_unnecessary {
     sudo apt-get purge apport -y
     ### Spelling
     sudo apt-get purge aspell -y
-    sudo apt-get purge wamerican -y
     ### Bluetooth
     sudo apt-get purge blueman -y
     sudo apt-get purge bluez -y
@@ -103,8 +102,8 @@ function remove_unnecessary {
 
 
     linux_update
-    wait_for_enter "Unnötige Programme deinstalliert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
-    reboot
+    wait_for_enter "Unnötige Programme deinstalliert"
+
 }
 
 remove_unnecessary
