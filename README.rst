@@ -69,6 +69,8 @@ Installation
 - Installation des Host Systemes
     - `000_update_myself`_
     - `001_install_languagepack`_
+    - `003_remove_unnecessary`_
+    - `004_install_tools`_
 
 ----
 
@@ -201,6 +203,15 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
 
     cd ~/consul-dev-env-public/bin
     ./003*
+
+004_install_tools
+-----------------
+Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, synaptics
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./004*
 
 Grundlegende Verwendung
 -----------------------

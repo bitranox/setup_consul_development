@@ -32,7 +32,6 @@ function remove_unnecessary {
     sudo apt-get purge bluez -y
     sudo apt-get purge bluez-cups -y
     sudo apt-get purge bluez-obexd -y
-
     # CD Brenner
     sudo apt-get purge brasero -y
     sudo apt-get purge brasero-cdrkit -y
@@ -42,12 +41,9 @@ function remove_unnecessary {
     sudo apt-get purge dvdauthor -y
     sudo apt-get purge growisofs -y
     sudo apt-get purge libburn4 -y
-
     # Musik
     sudo apt-get purge rhythmbox -y
     sudo apt-get purge rhythmbox-data -y
-
-
     # Braille für Blinde
     sudo apt-get purge brltty -y
     sudo apt-get purge libbrlapi0.6 -y
@@ -64,8 +60,6 @@ function remove_unnecessary {
     sudo apt-get purge gedit-common -y
     sudo apt-get purge pluma-common -y
     sudo apt-get purge tilda -y
-
-
     # Bildbetrachter / Scanner
     sudo apt-get purge eog -y
     sudo apt-get purge shotwell-common -y
@@ -83,27 +77,21 @@ function remove_unnecessary {
     # Libre Office
     sudo apt-get purge libreoffice-common -y
     sudo apt-get purge ure -y
-
     # Dateimanager
     sudo apt-get purge nautilus -y
     sudo apt-get purge nautilus-data -y
     sudo apt-get purge nautilus-extension-gnome-terminal -y
     sudo apt-get purge nautilus-sendto -y
-
     # Bildschirmtastatur
     sudo apt-get purge onboard -y
     sudo apt-get purge onboard-common -y
     # Dock
     sudo apt-get purge plank -y
-
     # thunderbird
     sudo apt-get purge thunderbird -y
     sudo apt-get purge transmission-common -y
-
-
     linux_update
     wait_for_enter "Unnötige Programme deinstalliert"
-
 }
 
 remove_unnecessary
