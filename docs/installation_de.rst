@@ -69,6 +69,19 @@ wir gehen davon aus das Betriebssystem läuft. Wechseln Sie auf die Konsole (Ter
 die Skripte befinden sich nun im Verzeichnis Home/consul-dev-env-public/bin und müssen von dort aufgerufen werden.
 Dies können Sie händisch in der Konsole machen, oder über einen Dateimanager (Nautilus, Caja, etc...) aufrufen.
 
+Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
+
+.. code-block:: bash
+
+    # wechsel in das Skript Verzeichnis
+    cd ~/consul-dev-env-public/bin
+
+    # Aufruf des Skriptes 000_update_myself.sh
+    # so können Sie sehr schnell die Skripte ohne große Tipparbeit in der Konsole ausführen
+    # alternativ können Sie natürlich sie Skripte über den Dateimanager starten
+    ./000*
+
+
 
 Essentielle, automatisch Installierte Programme
 -----------------------------------------------
