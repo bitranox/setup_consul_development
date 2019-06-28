@@ -15,7 +15,7 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function install_software {
-    wait_for_enter_warning "Notwendige und nützliche Tools werden installiert"
+    wait_for_enter "Notwendige und nützliche Tools werden installiert"
     install_essentials
     linux_update
     # build-essential
@@ -28,7 +28,6 @@ function install_software {
     retry sudo apt-get install meld -y
     # Paketverwaltung
     retry sudo apt-get install synaptic -y
-    retry sudo apt-get install apt-cache -y
     retry sudo apt-get install snap -y
     wait_for_enter "Notwendige und nützliche Tools sind installiert"
 }

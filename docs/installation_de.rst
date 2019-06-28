@@ -22,6 +22,7 @@ Es wird in weiterer Folge ein Desktop System (unser Vorschlag ubuntu-desktop-mat
 Wie immer bei Linux führen sehr viele Wege zum Ziel, hier wird versucht eine möglichst einfache, bequeme Variante zu Erstellen -
 ohne Rücksicht auf optimierte Performance oder Ressourcen minimierung.
 
+
 mit virtueller Maschine
 -----------------------
 Exemplarisch verwenden wir eine VM-Ware Workstation Pro - es wird eine neue virtuelle Maschine mit folgenden Settings erstellt:
@@ -57,7 +58,12 @@ auf deren Funktion Sie angewiesen sind. Eine Datensicherung vor Verwendung unser
 Installation der Skripte
 ------------------------
 
-wir gehen davon aus das Betriebssystem läuft. Wechseln Sie auf die Konsole (Terminal).
+Die Installation ist in eine Anzahl von Skripten aufgeteilt, um insbesondere für bereits bestehende Linux Hosts,
+bzw für bereits aufgesetzte Linux Rechner eine flexiblere Installation zu ermöglichen.
+
+Für "frisch aufgesetzte" Linux Rechner bzw. virtuelle Maschinen können die vorliegenden Skripte einfach der Reihe nach aufgerufen werden.
+
+Wir gehen nun davon aus, das Betriebssystem läuft. Wechseln Sie auf die Konsole (Terminal).
 
 .. code-block:: bash
 
@@ -99,7 +105,7 @@ folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückf
 000_update_myself
 -----------------
 
-dieses Skript führt ein Update der eigenen Installationsskripte durch. Achtung, etwaige eigene Änderungen in den Skripten werden überschrieben !
+Dieses Skript führt ein Update der eigenen Installationsskripte durch. Achtung, etwaige eigene Änderungen in den Skripten werden überschrieben !
 
 .. code-block:: bash
 
