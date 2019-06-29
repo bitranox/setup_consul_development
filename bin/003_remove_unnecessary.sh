@@ -55,6 +55,7 @@ function remove_unnecessary {
     sudo apt-get purge gedit-common -y
     sudo apt-get purge pluma-common -y
     sudo apt-get purge tilda -y
+    sudo apt-get purge vim -y
     # Bildbetrachter / Scanner
     sudo apt-get purge eog -y
     sudo apt-get purge shotwell-common -y

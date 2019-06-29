@@ -61,6 +61,7 @@ Voraussetzungen
 Installation
 ------------
 
+- `Installationsvarianten`_
 - `Host System`_
 - `mit virtueller Maschine`_
 - `ohne virtueller Maschine`_
@@ -71,23 +72,41 @@ Installation
     - `001_install_languagepack`_
     - `003_remove_unnecessary`_
     - `004_install_tools`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `005_install_lxd_container_system`_
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `006_configure_lxd_container_system`_
     - `007_create_clean_lxc_container`_
 
 ----
 
+Die Ruby Entwicklungsumgebung läuft auf Ubuntu Desktop 19.04 (Disco Dingo) oder höher - andere Versionen können funktionieren,
+sind aber im Moment nicht getestet !
+
+
+Folgende Installationsvarianten sind möglich:
+
+----
+
+Installationsvarianten
+----------------------
+
+Es gibt verschiedene Varianten um eine Produktionsumgebung zu erreichen :
+
+wir schlagen vor die Entwicklungsumgebung auf dem Hostsystem Ubuntu 19.04 in LXC Containern laufen zu lassen.
+Diese Container können sehr leicht für diverse Tests geklont werden, auch Cluster mit mehreren parallel laufenden LXC Containern sind leicht möglich.
+
+Das Hostsystem kann wiederum in einer Virtuellen Maschine (VMWare) laufen.
+
+Die Ruby Entwicklungsumgebung kann auch direkt auf dem Hostsystem installiert werden. Wie auch immer - wir empehlen die Verwendung von LXC Containern.
+
+
 Host System
 -----------
 
-Das Host System besteht aus einem Linux Betriebssystem Version 18.04 (bionic) oder 19.04 (disco) oder höher.
-Die Basisinstallation kann entweder Linux Server (weniger Platzbedarf) oder Linux Desktop sein.
+Das Host System besteht aus einem Linux Desktop Betriebssystem.
+Wenn Sie LXC Container installieren möchten (empfohlen) so wird Version 19.04 (disco) benötigt - 18.04 funktioniert NICHT.
 Es wird von einer frischen, minimalen Installation des Hostsystemes ausgegangen.
-Es wird in weiterer Folge ein Desktop System (unser Vorschlag ubuntu-desktop-mate) installiert, um bequem auf die virtuelle LXC Maschine
-über einen grafischen X-Client (x2go und/oder Chrome Remote Desktop) zugreifen zu können.
-Wie immer bei Linux führen sehr viele Wege zum Ziel, hier wird versucht eine möglichst einfache, bequeme Variante zu Erstellen -
-ohne Rücksicht auf optimierte Performance oder Ressourcen minimierung.
+Das Host System kann natürlich auch auf einer Virtuellen Maschine (VM-Ware) laufen.
 
 
 mit virtueller Maschine
@@ -104,7 +123,7 @@ Erzeugen Sie eine neue VM:
 - 500GB Festplatte (in einem File, wird ohnehin dynamisch je nach Platzbedarf verwendet)
 - Bridged Networking
 
-auf diese virtuelle Maschine installieren Sie nun ein Ubuntu Server oder Desktop - nur das notwendigste !
+auf diese virtuelle Maschine installieren Sie nun ein Ubuntu Desktop 19.04 - nur das notwendigste !
 
 Installieren Sie jedenfalls die open-vm-tools:
 
@@ -216,7 +235,7 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
 
 004_install_tools
 -----------------
-Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, synaptics
+Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, synaptics, x2goclient
 
 .. code-block:: bash
 
@@ -225,7 +244,7 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
 
 005_install_lxd_container_system
 --------------------------------
-Installation des LCD Container Systemes
+Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden möchten)
 
 .. code-block:: bash
 
@@ -234,7 +253,7 @@ Installation des LCD Container Systemes
 
 006_configure_lxd_container_system
 ----------------------------------
-Konfiguration des LXC Systemes :
+Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
  - anlegen eines Shared Directories zum Dateiaustausch unter $HOME/lxc-shared
  - Disk Device zu Shared Directory zu Profile "default" hinzufügen
  - subuid, subgid setzen
@@ -249,6 +268,7 @@ Konfiguration des LXC Systemes :
 
 007_create_clean_lxc_container
 ------------------------------
+Erzeugen des ersten LXC Containers (nur wenn Sie LXC Container verwenden möchten)
 Erzeuge einen sauberen LXC Container lxc-clean, mit Benutzer consul, passwort consul.
 Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxd erreichbar.
 (auch über SSH, etc)

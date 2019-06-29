@@ -65,19 +65,62 @@ function lxc_install_language_pack {
     lxc_reboot ${container_name}
 }
 
+function lxc_install_ubuntu_mate_desktop {
+    # parameter: $1 = container_name
+    local container_name=$1
+    wait_for_enter "Container ${container_name}: Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
+    lxc_update ${container_name}
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install ubuntu-mate-desktop -y"
+    lxc exec "${container_name}" -- sh -c "sudo rm -f /etc/netplan/50-cloud-init.yaml"
+    lxc exec "${container_name}" -- sh -c "cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml"
+    lxc_reboot ${container_name}
+}
 
+function lxc_install_tools {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: Install Tools"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install build-essential -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install mc -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install geany -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install meld -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install synaptic -y"
+}
+
+function lxc_install_x2goserver {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: Install X2GO Server"
+    retry lxc exec "${container_name}" -- sh -c "sudo add-apt-repository ppa:x2go/stable -y"
+    lxc_update ${container_name}
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install x2goserver -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install x2goserver-xsession -y"
+}
+
+function lxc_configure_ssh {
+    # parameter: $1 = container_name, $2=user_name
+    local container_name=$1
+    local user_name=$2
+    banner "Container ${container_name}: Configure ssh"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install ssh -y"
+    lxc exec "${container_name}" -- sh -c "cp -f ./shared/config_lxc/etc/ssh/sshd_config /etc/ssh/sshd_config"
+    lxc exec "${container_name}" -- sh -c "sudo service sshd restart"
+    lxc exec "${container_name}" -- sh -c "sudo service x2goserver restart"
+}
 
 container_name="lxc-clean"
 lxc_user_name="consul"
-wait_for_enter "Erzeuge einen sauberen LXC-Container lxc-clean, user=consul, pwd=consul, DNS Name = lxc-clean.lxd"
+wait_for_enter "Erzeuge einen sauberen LXC-Container ${container_name}, user=${lxc_user_name}, pwd=consul, DNS Name = ${container_name}.lxd"
 install_essentials
 linux_update
 create_container_disco "${container_name}"
 create_lxc_user "${container_name}" "${lxc_user_name}"
 install_scripts_on_lxc_container "${container_name}"
 lxc_install_language_pack "${container_name}"
-
-
+lxc_install_ubuntu_mate_desktop "${container_name}"
+lxc_install_x2goserver "${container_name}"
+lxc_configure_ssh "${container_name}" "${lxc_user_name}"
+wait_for_enter "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
 
 
 ## make it possible to call functions without source include
