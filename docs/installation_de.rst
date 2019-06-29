@@ -9,8 +9,8 @@
     - `001_install_languagepack`_
     - `003_remove_unnecessary`_
     - `004_install_tools`_
-    - `005_install_lxd_container_system`_
 - Installation der LXC Container - alternativ, jedoch EMPFOHLEN, es zahlt sich aus !
+    - `005_install_lxd_container_system`_
     - `006_configure_lxd_container_system`_
     - `007_create_clean_lxc_container`_
     - `Grundlegende Befehle für LXC Container`_
