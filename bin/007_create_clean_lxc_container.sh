@@ -45,15 +45,14 @@ function lxc_reboot {
     lxc start "${container_name}"
 }
 
-function lxc_add_languagepack_de {
+function install_scripts_on_lxc_container{
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Installiere Languagepack Deutsch"
-    lxc_update "${container_name}"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de-base -y"
-    lxc_reboot "${container_name}"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install git -y"
+    retry lxc exec "${container_name}" -- sh -c "git clone https://github.com/bitranox/consul-dev-env-public.git"
+    retry lxc exec "${container_name}" -- sh -c "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
 }
+
 
 
 
@@ -62,7 +61,8 @@ install_essentials
 linux_update
 create_container_disco lxc-clean
 create_lxc_user lxc-clean consul
-lxc_add_languagepack_de lxc-clean
+install_scripts_on_lxc_container lxc-clean
+
 
 
 
