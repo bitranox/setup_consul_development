@@ -39,7 +39,7 @@ function configure_dns {
     local bridge_ip=$(ifconfig lxdbr0 | grep 'inet' | head -n 1 | tail -n 1 | awk '{print $2}')
     sudo mkdir -p /etc/systemd/resolved.conf.d
     # sudo sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
-    rm -f /etc/systemd/resolved.conf.d/lxdbr0.conf
+    sudo rm -f /etc/systemd/resolved.conf.d/lxdbr0.conf
     sudo service systemd-resolved restart
     sudo service network-manager restart
     sudo snap lxd restart
