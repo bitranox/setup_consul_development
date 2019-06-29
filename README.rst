@@ -383,16 +383,16 @@ wir haben folgendes für Sie eingerichtet :
     +----------------+---------+
     |      NAME      | USED BY |
     +----------------+---------+
-    | default        | 0       |
+    | default        | 1       |
     +----------------+---------+
     | map-lxc-shared | 1       |
     +----------------+---------+
 
     # neuen Container aus Image erzeugen
     # es wird Zeit aus dem Image lxc-clean-fresh einen lxc container zum testen zu erzeugen
-    lxc init lxc-clean-fresh lxc-test            # erzeuge aus dem Image lxc-clean-fresh einen neuen Container lxc-test
-    lxc profile assign lxc-test map-lxc-shared   # weise das Profil map-lxc-shared dem Container lxc-test zu
-    lxc start lxc-test                           # starten des neuen Containers lxc-test
+    lxc init lxc-clean-fresh lxc-test                     # erzeuge aus dem Image lxc-clean-fresh einen neuen Container lxc-test
+    lxc profile assign lxc-test default, map-lxc-shared   # weise das Profil map-lxc-shared dem Container lxc-test zu
+    lxc start lxc-test                                    # starten des neuen Containers lxc-test
     # auf diesen Container können Sie wieder mit X2go über Adresse lxc-test.lxd zugreifen
 
     # neues Image erzeugen
@@ -402,8 +402,8 @@ wir haben folgendes für Sie eingerichtet :
     lxc publish lxc-test --alias lxc-mydevelop-clean    # container unter image "lxc-mydevelop-clean" abspeichern
 
     # jetzt können Sie beliebig viele neue Testcontainer schnell erzeugen - einfach
-    lxc init lxc-mydevelop-clean lxc-test2              # container lxc-test2 aus image lxc-mydevelop-clean erzeugen.
-    lxc profile assign lxc-test2 map-lxc-shared         # weise das Profil map-lxc-shared dem Container lxc-test2 zu
+    lxc init lxc-mydevelop-clean lxc-test2                # container lxc-test2 aus image lxc-mydevelop-clean erzeugen.
+    lxc profile assign lxc-test2 default, map-lxc-shared  # weise das Profil default und map-lxc-shared dem Container lxc-test2 zu
 
     # so starten Sie nun alle drei container gleichzeitig - WHOW. Images können nicht gestartet werden - das sind sozusagen Backups von Containern.
     # auf alle Container können Sie wiederum mit X2Go unter der Adresse <containername>.lxd zugreifen ! Gleichzeitig !
