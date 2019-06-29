@@ -19,7 +19,7 @@ function lxd_init {
     lxd init --auto --storage-backend dir
 }
 
-function set_uids{
+function set_uids {
     # subuid, subgid setzen
     sudo sh -c "echo \"${USER}:100000:65536\nroot:$(id -u):1\n\" > /etc/subuid"
     sudo sh -c "echo \"${USER}:100000:65536\nroot:$(id -g):1\n\" > /etc/subgid"
