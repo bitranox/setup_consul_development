@@ -44,6 +44,7 @@ function configure_dns {
 function create_lxc_profile {
     # parameter: $1:profile_name
     local profile_name=$1
+    lxc profile delete "${profile_name}"
     lxc profile create "${profile_name}"
     # Device zu Profile hinzufügen
     lxc profile device add "${profile_name}" lxc-shared disk source="${HOME}"/lxc-shared path=/media/lxc-shared
