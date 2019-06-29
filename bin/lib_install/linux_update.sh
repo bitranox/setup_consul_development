@@ -12,7 +12,7 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function linux_update {
     # update / upgrade linux and clean / autoremove
-    clr_bold clr_green ""
+    clr_bold clr_green " "
     clr_bold clr_green "Linux Update"
     retry sudo apt-get update
     retry sudo apt-get upgrade -y
