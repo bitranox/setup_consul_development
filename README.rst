@@ -68,14 +68,16 @@ Installation
 - `Installation der Skripte`_
 - `Essentielle, automatisch Installierte Programme`_
 - Installation des Host Systemes
-    - `000_update_myself`_
+    - `000_update_myself`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
     - `001_install_languagepack`_
     - `003_remove_unnecessary`_
     - `004_install_tools`_
     - `005_install_lxd_container_system`_
+- Installation der LXC Container - alternativ, jedoch EMPFOHLEN, es zahlt sich aus !
     - `006_configure_lxd_container_system`_
     - `007_create_clean_lxc_container`_
     - `Grundlegende Befehle für LXC Container`_
+    - `Chrome Remote Desktop installieren`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 
 ----
@@ -177,6 +179,8 @@ Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
     # Aufruf des Skriptes 000_update_myself.sh
     # so können Sie sehr schnell die Skripte ohne große Tipparbeit in der Konsole ausführen
     # alternativ können Sie natürlich sie Skripte über den Dateimanager starten
+    # Wenn Sie diese Skripte bereits heruntergeladen haben, so sollten Sie bei neuerlicher Verwendung
+    # immer das Skript 000_update_myself.sh ausführen, um die neueste Version zu erhalten !
     ./000*
 
 
@@ -347,6 +351,7 @@ wir haben folgendes für Sie eingerichtet :
     |                 | ee3259ee512f | no     | ubuntu 19.04 amd64 (release) (20190627) | x86_64 | 319.74MB  | Jun 29, 2019 at 1:29pm (UTC) |
     +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
 
+    # images löschen
     # wenn Sie Platznot haben, können sie alte Images löschen - Sie können dazu entweder den ALIAS oder die ersten paar Ziffern des FINGERPRINT angeben :
     # folgender Befehl würde das Image welches zur ersten Erstellung des Containers lxc-clean gedient hat löschen (das brauchen wir nicht mehr)
     lxc image delete ee3  # Ihr Fingerprint wird eine andere Nummer haben - dies ist eine Prüfsumme
@@ -361,6 +366,53 @@ wir haben folgendes für Sie eingerichtet :
 
     # profile auflisten
     lxc profile list
+    +----------------+---------+
+    |      NAME      | USED BY |
+    +----------------+---------+
+    | default        | 0       |
+    +----------------+---------+
+    | map-lxc-shared | 1       |
+    +----------------+---------+
+
+    # neuen Container aus Image erzeugen
+    # es wird Zeit aus dem Image lxc-clean-fresh einen lxc container zum testen zu erzeugen
+    lxc init lxc-clean-fresh lxc-test            # erzeuge aus dem Image lxc-clean-fresh einen neuen Container lxc-test
+    lxc profile assign lxc-test map-lxc-shared   # weise das Profil map-lxc-shared dem Container lxc-test zu
+    lxc start lxc-test                           # starten des neuen Containers lxc-test
+    # auf diesen Container können Sie wieder mit X2go über Adresse lxc-test.lxd zugreifen
+
+    # neues Image erzeugen
+    # wenn Sie nun den Container lxc-test so hergerichtet haben wie Sie möchten, (Hintergrund, Chrome Remote Desktop, etc ... )
+    # so können Sie diesen Container wieder als Image abspeichern und daraus neue Container erzeugen
+    lxc stop lxc-test                                   # container stoppen
+    lxc publish lxc-test --alias lxc-mydevelop-clean    # container unter image "lxc-mydevelop-clean" abspeichern
+
+    # jetzt können Sie beliebig viele neue Testcontainer schnell erzeugen - einfach
+    lxc init lxc-mydevelop-clean lxc-test2              # container lxc-test2 aus image lxc-mydevelop-clean erzeugen.
+    lxc profile assign lxc-test2 map-lxc-shared         # weise das Profil map-lxc-shared dem Container lxc-test2 zu
+
+    # so starten Sie nun alle drei container gleichzeitig - WHOW. Images können nicht gestartet werden - das sind sozusagen Backups von Containern.
+    # auf alle Container können Sie wiederum mit X2Go unter der Adresse <containername>.lxd zugreifen ! Gleichzeitig !
+    # Wir empfehlen jedoch chrome-remote-desktop zu installieren, das ist performanter.
+    lxc start lxc-test
+    lxc start lxc-test2
+    lxc start lxc-clean
+
+    # stoppen des Host Systemes
+    # wenn Sie das Host System bei laufenden LXC Containern herunterfahren, so werden diese Container automatisch
+    # beim Neustart des Host Systemes wieder gestartet.
+    # wir empfehlen Ihnen sich verschieden Hintergründe mit dem Rechnernamen im Bild für die Container zu erstellen -
+    # sonst kommt man schnell mal mit den vielen Maschinen durcheinander.
+    # nehmen Sie dazu einfach einen vorhandenen Hintergrund und fügen Sie mit einem Grafikprogramm den Rechnernamen
+    # samt anderen nützlichen Informationen ein.
+
+
+Chrome Remote Desktop installieren
+----------------------------------
+
+Chrome Remote Desktop sollten Sie sowohl am (virtualisierten) Hostsystem, als auch auf den LXC Containern installieren.
+Damit können Sie sehr performant über Ihr Basissystem, oder über Weltweit jeden Rechner auf diese vielen Container zugreifen.
+Sie können auch temporär einzelne Container für andere Personen, z.B. für Remote Hilfe freigeben - Sehr praktisch und empfohlen !
 
 Grundlegende Verwendung
 -----------------------

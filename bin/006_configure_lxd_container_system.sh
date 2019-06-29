@@ -50,7 +50,7 @@ function create_lxc_profile {
     lxc profile create "${profile_name}"
     # Device zu Profile hinzufügen
     lxc profile device add "${profile_name}" lxc-shared disk source=/media/lxc-shared path=/media/lxc-shared
-    lxc profile device add "${profile_name}" root disk path=/ poll=default
+    lxc profile device add "${profile_name}" root disk path=/ pool=default
     # raw idmap im profile setzen
     lxc profile set "${profile_name}" raw.idmap "both $(id -u) $(id -g)"
 }
