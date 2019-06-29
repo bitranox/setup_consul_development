@@ -59,7 +59,6 @@ linux_update
 lxd_init
 set_uids
 create_shared_directory
-configure_lxd_container_system
 configure_dns
 create_lxc_profile "${profile_name}"
 wait_for_enter "LXD fertig konfiguriert"
