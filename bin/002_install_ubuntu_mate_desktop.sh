@@ -25,6 +25,13 @@ function install_swapfile {
     sudo swapon /var/cache/swap/swap0
 }
 
+function disable_hibernate {
+    sudo systemctl mask sleep.target
+    sudo systemctl mask suspend.target
+    sudo systemctl mask hibernate.target
+    sudo systemctl mask hybrid-sleep.target
+}
+
 function install_ubuntu_mate_desktop {
     banner "Install ubuntu-mate-desktop"
     retry sudo apt-get install ubuntu-mate-desktop -y
@@ -37,6 +44,7 @@ wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Disp
 install_essentials
 linux_update
 install_swapfile
+disable_hibernate
 install_ubuntu_mate_desktop
 wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
 reboot
