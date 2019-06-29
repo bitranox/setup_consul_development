@@ -22,6 +22,11 @@ function install_lxd_container_system {
     retry sudo apt-get install snap -y
     # install lxd
     retry sudo snap install lxd
+}
+
+
+function add_user_to_lxd_group {
+    wait_for_enter "Add user to LCD Group"
     # add current user to lxd group
     sudo usermod --append --groups lxd "${USER}"
     # join the group for this session - not as root !
@@ -33,6 +38,7 @@ function install_lxd_container_system {
 }
 
 install_lxd_container_system
+add_user_to_lxd_group
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
