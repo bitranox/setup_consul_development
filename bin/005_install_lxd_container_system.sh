@@ -15,9 +15,7 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function install_lxd_container_system {
-    wait_for_enter "Installiere LXD Container System"
-    install_essentials
-    linux_update
+    banner "snap Install LXD"
     # install snap
     retry sudo apt-get install snap -y
     # install lxd
@@ -31,12 +29,16 @@ function add_user_to_lxd_group {
     sudo usermod --append --groups lxd "${USER}"
     # join the group for this session - not as root !
     # init LXD - not as root !
-    wait_for_enter_warning "LXD Container System fertig installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
-    reboot
 }
 
+wait_for_enter "Installiere LXD Container System"
+install_essentials
+linux_update
 install_lxd_container_system
 add_user_to_lxd_group
+wait_for_enter_warning "LXD Container System fertig installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+reboot
+
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

@@ -65,7 +65,7 @@ set_uids
 create_shared_directory
 configure_dns
 create_lxc_profile "${profile_name}"
-wait_for_enter "LXD fertig konfiguriert"
+banner "LXD fertig konfiguriert"
 
 
 ## make it possible to call functions without source include

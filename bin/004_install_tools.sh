@@ -34,7 +34,7 @@ wait_for_enter "Notwendige und nützliche Tools werden installiert"
 install_essentials
 linux_update
 install_software
-wait_for_enter "Notwendige und nützliche Tools sind installiert"
+banner "Notwendige und nützliche Tools sind installiert"
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

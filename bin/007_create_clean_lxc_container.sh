@@ -138,7 +138,7 @@ lxc_install_x2goserver "${container_name}"
 lxc_configure_ssh "${container_name}" "${lxc_user_name}"
 lxc_create_image "${container_name}"
 
-wait_for_enter "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
+banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
 
 
 ## make it possible to call functions without source include

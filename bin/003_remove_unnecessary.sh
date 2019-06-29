@@ -94,7 +94,7 @@ install_essentials
 linux_update
 remove_unnecessary
 linux_update
-wait_for_enter "Unnötige Programme deinstalliert"
+banner "Unnötige Programme deinstalliert"
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

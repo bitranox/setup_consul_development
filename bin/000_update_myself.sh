@@ -27,7 +27,7 @@ wait_for_enter "Update der Skripte"
 install_essentials
 linux_update
 update_myself
-wait_for_enter "Update der eigenen Skripte beendet"
+banner "Update der eigenen Skripte beendet"
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
