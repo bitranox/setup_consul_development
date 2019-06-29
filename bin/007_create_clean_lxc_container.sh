@@ -24,40 +24,45 @@ function create_container_disco {
 function create_lxc_user {
     # parameter: $1 = container_name, $2=user_name
     local container_name=$1
-    local user_name=$1
+    local user_name=$2
     banner "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
     lxc exec "${container_name}" -- sh -c "adduser ${user_name}"
     lxc exec "${container_name}" -- sh -c "usermod -aG sudo ${user_name}"
 }
 
 function lxc_update {
-    retry lxc exec lxc-clean -- sh -c "sudo apt-get update"
-    retry lxc exec lxc-clean -- sh -c "sudo apt-get upgrade -y"
-    retry lxc exec lxc-clean -- sh -c "sudo apt-get dist-upgrade -y"
+    # parameter: $1 = container_name
+    local container_name=$1
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get update"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get upgrade -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get dist-upgrade -y"
 }
 
 function lxc_reboot {
-    lxc stop lxc-clean -f
-    lxc start lxc-clean
+    # parameter: $1 = container_name
+    local container_name=$1
+    lxc stop "${container_name}" -f
+    lxc start "${container_name}"
 }
 
 function lxc_add_languagepack_de {
+    # parameter: $1 = container_name
+    local container_name=$1
     banner "Installiere Languagepack Deutsch"
-    lxc_update
-    retry lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de -y"
-    retry lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de-base -y"
-    lxc_reboot
+    lxc_update "${container_name}"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de-base -y"
+    lxc_reboot "${container_name}"
 }
-
 
 
 
 wait_for_enter "Erzeuge einen sauberen LXC-Container lxc-clean, user=consul, pwd=consul, DNS Name = lxc-clean.lxd"
 install_essentials
 linux_update
-create_container_disco lxc_clean
-create_lxc_user lxc_clean consul
-lxc_add_languagepack_de
+create_container_disco lxc-clean
+create_lxc_user lxc-clean consul
+lxc_add_languagepack_de lxc-clean
 
 
 
