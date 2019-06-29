@@ -8,6 +8,8 @@
     - `001_install_languagepack`_
     - `003_remove_unnecessary`_
     - `004_install_tools`_
+    - `005_install_lxd_container_system`_
+    - `006_configure_lxd_container_system`_
 
 ----
 
@@ -155,3 +157,27 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
 
     cd ~/consul-dev-env-public/bin
     ./004*
+
+005_install_lxd_container_system
+--------------------------------
+Installation des LCD Container Systemes
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./005*
+
+006_configure_lxd_container_system
+----------------------------------
+Konfiguration des LXC Systemes :
+ - anlegen eines Shared Directories zum Dateiaustausch unter $HOME/lxc-shared
+ - Disk Device zu Shared Directory zu Profile "default" hinzufügen
+ - subuid, subgid setzen
+ - raw idmap im profile setzen (für Zugriffsberechtigung auf Shared Directory)
+ - lcx network bridge DNS Zone .lxd einrichten (die container sind dann im DNS unter <containername>.lxd eingetragen
+ - systemd-resolved konfigurieren, DNS Zone .lxd wird auf der lxdbr0 Bridge abgefragt
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./006*

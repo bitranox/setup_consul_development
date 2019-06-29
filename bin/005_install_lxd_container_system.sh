@@ -14,27 +14,25 @@ function include_dependencies {
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
-function install_software {
-    wait_for_enter "Notwendige und nützliche Tools werden installiert"
+function install_lxd_container_system {
+    wait_for_enter "Installiere LXD Container System"
     install_essentials
     linux_update
-    # build-essential
-    retry sudo apt-get install build-essential -y
-    # midnight commander
-    retry sudo apt-get install mc -y
-    # geany Editor
-    retry sudo apt-get install geany -y
-    # Meld Vergleichstool
-    retry sudo apt-get install meld -y
-    # Paketverwaltung
-    retry sudo apt-get install synaptic -y
-    # x2go client
-    retry sudo apt-get install x2goclient -y
-
-    wait_for_enter "Notwendige und nützliche Tools sind installiert"
+    # install snap
+    retry sudo apt-get install snap -y
+    # install lxd
+    retry sudo snap install lxd
+    # add current user to lxd group
+    sudo usermod --append --groups lxd "${USER}"
+    # join the group for this session - not as root !
+    newgrp lxd
+    # init LXD - not as root !
+    lxd init --auto --storage-backend dir
+    wait_for_enter_warning "LXD Container System installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+    reboot
 }
 
-install_software
+install_lxd_container_system
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
