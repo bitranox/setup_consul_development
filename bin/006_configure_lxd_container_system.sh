@@ -22,6 +22,9 @@ function configure_lxd_container_system {
     # shared Verzeichnis anlegen
     sudo mkdir -p "${HOME}"/lxc-shared
 
+    # shared Verzeichnis anlegen
+    lxd init --auto --storage-backend dir
+
     # Device zu Profile hinzufügen
     lxc profile device add default lxc-shared disk source="${HOME}"/lxc-shared path=/media/lxc-shared
 

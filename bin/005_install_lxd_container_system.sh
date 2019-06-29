@@ -31,7 +31,6 @@ function add_user_to_lxd_group {
     sudo usermod --append --groups lxd "${USER}"
     # join the group for this session - not as root !
     # init LXD - not as root !
-    sudo lxd init --auto --storage-backend dir
     wait_for_enter_warning "LXD Container System fertig installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
     reboot
 }
