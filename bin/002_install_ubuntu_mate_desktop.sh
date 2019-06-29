@@ -22,11 +22,24 @@ function install_ubuntu_mate_desktop {
     backup_file /etc/netplan/50-cloud-init.yaml
     remove_file /etc/netplan/50-cloud-init.yaml
     sudo cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
-    wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
-    reboot
 }
 
+function install_swapfile {
+    banner "Install 8GB Swapfile"
+    sudo swapoff -a
+    sudo rm /swapfile
+    sudo mkdir -p /var/cache/swap
+    sudo fallocate -l 8G /var/cache/swap/swap0
+    sudo chmod 0600 /var/cache/swap/swap0
+    sudo mkswap /var/cache/swap/swap0
+    sudo swapon /var/cache/swap/swap0
+}
+
+install_swapfile
 install_ubuntu_mate_desktop
+
+wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+reboot
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

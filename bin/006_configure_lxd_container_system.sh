@@ -15,7 +15,7 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function configure_lxd_container_system {
-    wait_for_enter "Konfiguriere LXD Container System - DNSMASQ darf NICHT laufen, DNS muss über systemd-resolved erfolgen !"
+    wait_for_enter "Konfiguriere LXD Container System - DNSMASQ darf nicht installiert sein, DNS muss über systemd-resolved erfolgen !"
     install_essentials
     linux_update
 
