@@ -124,7 +124,7 @@ function lxc_assign_profile {
     local container_name=$1
     local profile_name=$2
     lxc stop "${container_name}" -f
-    lxc profile assign "${container_name}" "${profile_name}"
+    lxc profile assign "${container_name}" default, "${profile_name}"
     lxc start "${container_name}"
 }
 

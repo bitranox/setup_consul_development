@@ -38,7 +38,7 @@ function configure_dns {
     # systemd-resolved für domain .lxd von Bridge IP abfragen - DNSMASQ darf NICHT installiert sein !
     local bridge_ip=$(ifconfig lxdbr0 | grep 'inet' | head -n 1 | tail -n 1 | awk '{print $2}')
     sudo mkdir -p /etc/systemd/resolved.conf.d
-    # sudo sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
+    sudo sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
     sudo service systemd-resolved restart
     sudo service network-manager restart
 }
@@ -49,8 +49,9 @@ function create_lxc_profile {
     lxc profile delete "${profile_name}"
     lxc profile create "${profile_name}"
     # Device zu Profile hinzufügen
-    lxc profile device add "${profile_name}" lxc-shared disk source=/media/lxc-shared path=/media/lxc-shared
     lxc profile device add "${profile_name}" root disk path=/ pool=default
+    lxc profile device add "${profile_name}" lxc-shared disk source=/media/lxc-shared path=/media/lxc-shared
+
     # raw idmap im profile setzen
     lxc profile set "${profile_name}" raw.idmap "both $(id -u) $(id -g)"
 }
