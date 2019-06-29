@@ -16,7 +16,7 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function create_container_disco {
     banner "Erzeuge Container"
-    lxc launch ubuntu:disco lxc-clean
+    retry lxc launch ubuntu:disco lxc-clean
 }
 
 function create_lxc_user_consul {
@@ -25,10 +25,10 @@ function create_lxc_user_consul {
     lxc exec lxc-clean -- sh -c "usermod -aG sudo consul"
 }
 
-function lxc_update{
-    lxc exec lxc-clean -- sh -c "sudo apt-get update"
-    lxc exec lxc-clean -- sh -c "sudo apt-get upgrade -y"
-    lxc exec lxc-clean -- sh -c "sudo apt-get dist-upgrade -y"
+function lxc_update {
+    retry lxc exec lxc-clean -- sh -c "sudo apt-get update"
+    retry lxc exec lxc-clean -- sh -c "sudo apt-get upgrade -y"
+    retry lxc exec lxc-clean -- sh -c "sudo apt-get dist-upgrade -y"
 }
 
 function lxc_reboot{
@@ -36,11 +36,11 @@ function lxc_reboot{
     lxc start lxc-clean
 }
 
-function add_languagepack_de {
+function lxc_add_languagepack_de {
     banner "Installiere Languagepack Deutsch"
     lxc_update
-    lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de -y"
-    lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de-base -y"
+    retry lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de -y"
+    retry lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de-base -y"
     lxc_reboot
 }
 
@@ -52,6 +52,8 @@ install_essentials
 linux_update
 create_container_disco
 create_lxc_user_consul
+lxc_add_languagepack_de
+
 
 
 
