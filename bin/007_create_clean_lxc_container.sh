@@ -31,7 +31,7 @@ function lxc_update {
     retry lxc exec lxc-clean -- sh -c "sudo apt-get dist-upgrade -y"
 }
 
-function lxc_reboot{
+function lxc_reboot {
     lxc stop lxc-clean -f
     lxc start lxc-clean
 }
