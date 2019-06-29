@@ -45,7 +45,7 @@ function lxc_reboot {
     lxc start "${container_name}"
 }
 
-function install_scripts_on_lxc_container{
+function install_scripts_on_lxc_container {
     # parameter: $1 = container_name
     local container_name=$1
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install git -y"
