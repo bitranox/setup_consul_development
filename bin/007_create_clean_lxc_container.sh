@@ -16,7 +16,7 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function create_container_disco {
     banner "Erzeuge Container"
-    retry lxc launch ubuntu:disco lxc-clean
+    lxc launch ubuntu:disco lxc-clean
 }
 
 function create_lxc_user_consul {
@@ -26,9 +26,9 @@ function create_lxc_user_consul {
 }
 
 function lxc_update{
-    lxc exec lxc-consul-clean -- sh -c "sudo apt-get update"
-    lxc exec lxc-consul-clean -- sh -c "sudo apt-get upgrade -y"
-    lxc exec lxc-consul-clean -- sh -c "sudo apt-get dist-upgrade -y"
+    lxc exec lxc-clean -- sh -c "sudo apt-get update"
+    lxc exec lxc-clean -- sh -c "sudo apt-get upgrade -y"
+    lxc exec lxc-clean -- sh -c "sudo apt-get dist-upgrade -y"
 }
 
 function lxc_reboot{
@@ -39,8 +39,8 @@ function lxc_reboot{
 function add_languagepack_de {
     banner "Installiere Languagepack Deutsch"
     lxc_update
-    lxc exec lxc-consul-clean -- sh -c "sudo apt-get install language-pack-de -y"
-    lxc exec lxc-consul-clean -- sh -c "sudo apt-get install language-pack-de-base -y"
+    lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de -y"
+    lxc exec lxc-clean -- sh -c "sudo apt-get install language-pack-de-base -y"
     lxc_reboot
 }
 
