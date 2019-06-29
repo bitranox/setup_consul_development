@@ -8,8 +8,8 @@
     - `001_install_languagepack`_
     - `003_remove_unnecessary`_
     - `004_install_tools`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `005_install_lxd_container_system`_
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `006_configure_lxd_container_system`_
     - `007_create_clean_lxc_container`_
 

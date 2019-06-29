@@ -14,40 +14,56 @@ function include_dependencies {
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
-function configure_lxd_container_system {
-    wait_for_enter "Konfiguriere LXD Container System - DNSMASQ darf nicht installiert sein, DNS muss über systemd-resolved erfolgen !"
-    install_essentials
-    linux_update
-
-    # shared Verzeichnis anlegen
-    sudo mkdir -p "${HOME}"/lxc-shared
-
-    # shared Verzeichnis anlegen
+function lxd_init {
+    # lxd initialisieren
     lxd init --auto --storage-backend dir
+}
 
-    # Device zu Profile hinzufügen
-    lxc profile device add default lxc-shared disk source="${HOME}"/lxc-shared path=/media/lxc-shared
-
+function set_uids{
     # subuid, subgid setzen
     sudo sh -c "echo \"${USER}:100000:65536\nroot:$(id -u):1\n\" > /etc/subuid"
     sudo sh -c "echo \"${USER}:100000:65536\nroot:$(id -g):1\n\" > /etc/subgid"
+}
 
-    # raw idmap im profile setzen
-    lxc profile set default raw.idmap "both $(id -u) $(id -g)"
+function create_shared_directory {
+    # shared Verzeichnis anlegen
+    sudo mkdir -p "${HOME}"/lxc-shared
+}
 
+function configure_dns {
     # LXC Network dns einschalten
     echo -e "auth-zone=lxd\ndns-loop-detect" | lxc network set lxdbr0 raw.dnsmasq -
-
     # systemd-resolved für domain .lxd von Bridge IP abfragen - DNSMASQ darf NICHT installiert sein !
-    bridge_ip=$(ifconfig lxdbr0 | grep 'inet' | head -n 1 | tail -n 1 | awk '{print $2}')
+    local bridge_ip=$(ifconfig lxdbr0 | grep 'inet' | head -n 1 | tail -n 1 | awk '{print $2}')
     sudo mkdir -p /etc/systemd/resolved.conf.d
     sudo sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
     sudo service systemd-resolved restart
-
-    wait_for_enter "LXD fertig konfiguriert"
+    sudo service network-manager restart
 }
 
+function create_lxc_profile {
+    # parameter: $1:profile_name
+    local profile_name=$1
+    lxc profile create "${profile_name}"
+    # Device zu Profile hinzufügen
+    lxc profile device add "${profile_name}" lxc-shared disk source="${HOME}"/lxc-shared path=/media/lxc-shared
+    # raw idmap im profile setzen
+    lxc profile set "${profile_name}" raw.idmap "both $(id -u) $(id -g)"
+}
+
+
+profile_name="consul"
+wait_for_enter "Konfiguriere LXD Container System - DNSMASQ darf nicht installiert sein, DNS muss über systemd-resolved erfolgen !"
+install_essentials
+linux_update
+lxd_init
+set_uids
+create_shared_directory
 configure_lxd_container_system
+configure_dns
+create_lxc_profile "${profile_name}"
+wait_for_enter "LXD fertig konfiguriert"
+
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
