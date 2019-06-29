@@ -37,7 +37,7 @@ Diese Container können sehr leicht für diverse Tests geklont werden, auch Clus
 
 Das Hostsystem kann wiederum in einer Virtuellen Maschine (VMWare) laufen.
 
-Die Ruby Entwicklungsumgebung kann auch direkt auf dem Hostsystem installiert werden. Wie auch immer - wir empehlen die Verwendung von LXC Containern.
+Die Ruby Entwicklungsumgebung kann auch direkt auf dem Hostsystem installiert werden. Wie auch immer - wir empfehlen die Verwendung von LXC Containern.
 
 
 Host System
@@ -239,6 +239,20 @@ Dies ist viel performanter. Installieren Sie Google Chrome sowie Chrome Remote D
 Dann können Sie Ihre Virtuelle Maschine (soferne Sie diese verwenden) im Hintergrund laufen, und von Ihrem Grundsystem über Chrome Remote Desktop auf die laufenden Container zugreifen.
 
 Sollten Sie den Container lxc-clean neu erstellen wollen, so rufen Sie das Skript 007_create_clean_lxc_container.sh einfach nochmals auf (es gibt dazu aber eine bessere Variante, dazu später).
+
+Auf dem Container sind die Installationsskripte bereits installiert - wenn Sie möchten können Sie die überflüssigen Programme am Container wie folgt entfernen
+
+.. code-block:: bash
+
+    # am LCX Container ausführen !
+    cd ~/consul-dev-env-public/bin
+    ./000*      # skripte updaten
+    ./003*      # überflüssige Programme entfernen
+
+    # nun am Host ausführen
+    lxc stop lxc-clean                                      # container stoppen
+    lxc publish lxc-clean --alias lcx-clean-fresh-minimal   # neues Image erstellen das alte Image ann wie unten Beschrieben gelöscht werden
+
 
 Grundlegende Befehle für LXC Container
 --------------------------------------
