@@ -10,9 +10,10 @@
     - `003_remove_unnecessary`_
     - `004_install_tools`_
     - `005_install_lxd_container_system`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `006_configure_lxd_container_system`_
     - `007_create_clean_lxc_container`_
+    - `Grundlegende Befehle für LXC Container`_
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 
 ----
 
@@ -214,6 +215,94 @@ Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxd 
 
     cd ~/consul-dev-env-public/bin
     ./007*
+
+Der LXC Container läuft nun und ist über SSH erreichbar.
+
+Starten Sie nun den X2GO Client an Hostsystem (aud fer VM soferne verwendet) und erzeugen Sie eine neue Sitzung mit folgenden Einstellungen :
+
+ - Name : lxc-clean.lxd
+ - Host: lxc-clean.lxd
+ - Login: consul
+ - Sitzungsart: MATE
+ - Reiter "Verbindung" : LAN
+ - Reiter "Ein-/Ausgabe" : Auflösung nach Geschmack einstellen
+ - Reiter "Medien" : Audio nach Geschmack ausschalten
+
+Sie können sich nun mit dem laufenden LXC Container verbinden.
+
+Im allgemeinen können Sie nun bereits auf dem LXC Container arbeiten - wir empfehlen jedoch zusätzlich zu X2GO Chrome Remote Desktop zu installieren.
+Dies ist viel performanter. Installieren Sie Google Chrome sowie Chrome Remote Desktop auf dem LXC Container und schalten Sie die Freigabe ein.
+Dann können Sie Ihre Virtuelle Maschine (soferne Sie diese verwenden) im Hintergrund laufen, und von Ihrem Grundsystem über Chrome Remote Desktop auf die laufenden Container zugreifen.
+
+Sollten Sie den Container lxc-clean neu erstellen wollen, so rufen Sie das Skript 007_create_clean_lxc_container.sh einfach nochmals auf (es gibt dazu aber eine bessere Variante, dazu später).
+
+Grundlegende Befehle für LXC Container
+--------------------------------------
+
+Die LXC Container sind sehr performante Virtuelle Maschinen, welche auf Ihrem Hostsystem laufen.
+
+- Sie können mehrere LXC Container parallel laufen lassen (und gleichzeitig Remote auf diese Container zugreifen)
+- Sie können LXC Container in Images exportieren
+- Sie können aus diesen Images neue Container erstellen
+- Sie können über Profile diesen Container Eigenschaften zuordnen
+- es gibt noch viele weitere Möglichkeiten, wie z.Bsp. Snaphots usw - konsultieren Sie dazu die LXC Dokumentation.
+
+wir haben folgendes für Sie eingerichtet :
+
+- einen container "lxc-clean"
+- ein image "lxc-clean-fresh" (daraus können Sie jederzeit einen neuen Container mit dem Inhalt von "lxc-clean" erzeugen)
+- ein Profil Names "map-lxc-shared" mit gewissen Eigenschaften, um auf das shared Verzeichnis "/media/lxc-shared" zuzugreifen.
+  Wenn dieses Profil einem Container zugeordnet wird, so kann dieser Container auf das Host Verzeichnis "/media/lxc-shared" zugreifen -
+  damit können Sie einfach Dateien mit dem Host oder zwischen lxc-containern austauschen.
+
+.. code-block:: bash
+
+    # container auflisten
+    lxc list
+    +-----------+---------+----------------------+-----------------------------------------------+------------+-----------+
+    |   NAME    |  STATE  |         IPV4         |                     IPV6                      |    TYPE    | SNAPSHOTS |
+    +-----------+---------+----------------------+-----------------------------------------------+------------+-----------+
+    | lxc-clean | RUNNING | 10.147.11.150 (eth0) | fd42:10a7:7208:bd35:216:3eff:fec0:27ba (eth0) | PERSISTENT |           |
+    +-----------+---------+----------------------+-----------------------------------------------+------------+-----------+
+
+    # container stoppen
+    lxc stop lxc-clean
+    lxc list
+    +-----------+---------+------+------+------------+-----------+
+    |   NAME    |  STATE  | IPV4 | IPV6 |    TYPE    | SNAPSHOTS |
+    +-----------+---------+------+------+------------+-----------+
+    | lxc-clean | STOPPED |      |      | PERSISTENT |           |
+    +-----------+---------+------+------+------------+-----------+
+
+    # images auflisten
+    lxc image list
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+    |      ALIAS      | FINGERPRINT  | PUBLIC |               DESCRIPTION               |  ARCH  |   SIZE    |         UPLOAD DATE          |
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+    | lxc-clean-fresh | 9975e04fd183 | no     |                                         | x86_64 | 2316.91MB | Jun 29, 2019 at 6:43pm (UTC) |
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+    |                 | ee3259ee512f | no     | ubuntu 19.04 amd64 (release) (20190627) | x86_64 | 319.74MB  | Jun 29, 2019 at 1:29pm (UTC) |
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+
+    # wenn Sie Platznot haben, können sie alte Images löschen - Sie können dazu entweder den ALIAS oder die ersten paar Ziffern des FINGERPRINT angeben :
+    # folgender Befehl würde das Image welches zur ersten Erstellung des Containers lxc-clean gedient hat löschen (das brauchen wir nicht mehr)
+    lxc image delete ee3  # Ihr Fingerprint wird eine andere Nummer haben - dies ist eine Prüfsumme
+    lxc image delete
+    lxc image list
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+    |      ALIAS      | FINGERPRINT  | PUBLIC |               DESCRIPTION               |  ARCH  |   SIZE    |         UPLOAD DATE          |
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+    | lxc-clean-fresh | 9975e04fd183 | no     |                                         | x86_64 | 2316.91MB | Jun 29, 2019 at 6:43pm (UTC) |
+    +-----------------+--------------+--------+-----------------------------------------+--------+-----------+------------------------------+
+
+
+    # profile auflisten
+    lxc profile list
+
+
+
+
+
 
 
 

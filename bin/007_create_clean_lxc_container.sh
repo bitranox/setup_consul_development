@@ -16,11 +16,16 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function create_container_disco {
     # parameter: $1 = container_name
+    # parameter: $2 = profile_name
     local container_name=$1
-    banner "Erzeuge Container ${container_name}"
+    local profile_name=$2
+    banner "Erzeuge Container ${container_name} und Profil ${profile_name} zuordnen"
     lxc stop "${container_name}"
     lxc delete "${container_name}"
     lxc launch ubuntu:disco "${container_name}"
+    lxc stop "${container_name}" -f
+    lxc profile assign "${container_name}" "${profile_name}"
+    lxc start "${container_name}"
 }
 
 function create_lxc_user {
@@ -108,18 +113,31 @@ function lxc_configure_ssh {
     lxc exec "${container_name}" -- sh -c "sudo service x2goserver restart"
 }
 
+function lxc_create_image {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: create backup image ${container_name}-fresh"
+    lxc stop ${container_name}
+    lxc publish ${container_name} --alias ${container_name}-fresh
+    lxc start ${container_name}
+}
+lxc publish
+
 container_name="lxc-clean"
+profile_name="map-lxc-shared"
 lxc_user_name="consul"
 wait_for_enter "Erzeuge einen sauberen LXC-Container ${container_name}, user=${lxc_user_name}, pwd=consul, DNS Name = ${container_name}.lxd"
 install_essentials
 linux_update
-create_container_disco "${container_name}"
+create_container_disco "${container_name}" "${profile_name}"
 create_lxc_user "${container_name}" "${lxc_user_name}"
 install_scripts_on_lxc_container "${container_name}"
 lxc_install_language_pack "${container_name}"
 lxc_install_ubuntu_mate_desktop "${container_name}"
 lxc_install_x2goserver "${container_name}"
 lxc_configure_ssh "${container_name}" "${lxc_user_name}"
+lxc_create_image "${container_name}"
+
 wait_for_enter "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
 
 
