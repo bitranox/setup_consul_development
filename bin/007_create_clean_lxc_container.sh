@@ -121,7 +121,17 @@ function lxc_create_image {
     lxc publish ${container_name} --alias ${container_name}-fresh
     lxc start ${container_name}
 }
-lxc publish
+
+function lxc_disable_hibernate {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: create backup image ${container_name}-fresh"
+    lxc exec "${container_name}" -- sh -c "sudo systemctl mask sleep.target"
+    lxc exec "${container_name}" -- sh -c "sudo systemctl mask suspend.target"
+    lxc exec "${container_name}" -- sh -c "sudo systemctl mask hibernate.target"
+    lxc exec "${container_name}" -- sh -c "sudo systemctl mask hybrid-sleep.target"
+}
+
 
 container_name="lxc-clean"
 profile_name="map-lxc-shared"
@@ -136,6 +146,7 @@ lxc_install_language_pack "${container_name}"
 lxc_install_ubuntu_mate_desktop "${container_name}"
 lxc_install_x2goserver "${container_name}"
 lxc_configure_ssh "${container_name}" "${lxc_user_name}"
+lxc_disable_hibernate "${container_name}"
 lxc_create_image "${container_name}"
 
 banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
