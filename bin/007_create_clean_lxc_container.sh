@@ -123,6 +123,7 @@ function lxc_assign_profile {
     # parameter: $2 = profile_name
     local container_name=$1
     local profile_name=$2
+    banner "Container ${container_name}: attach Profiles default,${profile_name}"
     lxc stop "${container_name}" -f
     lxc profile assign "${container_name}" default,"${profile_name}"
     lxc start "${container_name}"
