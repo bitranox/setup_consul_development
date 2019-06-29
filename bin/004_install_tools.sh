@@ -15,9 +15,7 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function install_software {
-    wait_for_enter "Notwendige und nützliche Tools werden installiert"
-    install_essentials
-    linux_update
+    banner "install needed tools : build-essential, mc, geany, meld, synaptic, x2goclient"
     # build-essential
     retry sudo apt-get install build-essential -y
     # midnight commander
@@ -30,11 +28,13 @@ function install_software {
     retry sudo apt-get install synaptic -y
     # x2go client
     retry sudo apt-get install x2goclient -y
-
-    wait_for_enter "Notwendige und nützliche Tools sind installiert"
 }
 
+wait_for_enter "Notwendige und nützliche Tools werden installiert"
+install_essentials
+linux_update
 install_software
+wait_for_enter "Notwendige und nützliche Tools sind installiert"
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

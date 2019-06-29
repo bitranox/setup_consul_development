@@ -14,16 +14,6 @@ function include_dependencies {
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
-function install_ubuntu_mate_desktop {
-    wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
-    install_essentials
-    linux_update
-    retry sudo apt-get install ubuntu-mate-desktop -y
-    backup_file /etc/netplan/50-cloud-init.yaml
-    remove_file /etc/netplan/50-cloud-init.yaml
-    sudo cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
-}
-
 function install_swapfile {
     banner "Install 8GB Swapfile"
     sudo swapoff -a
@@ -35,9 +25,19 @@ function install_swapfile {
     sudo swapon /var/cache/swap/swap0
 }
 
+function install_ubuntu_mate_desktop {
+    banner "Install ubuntu-mate-desktop"
+    retry sudo apt-get install ubuntu-mate-desktop -y
+    backup_file /etc/netplan/50-cloud-init.yaml
+    remove_file /etc/netplan/50-cloud-init.yaml
+    sudo cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
+}
+
+wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
+install_essentials
+linux_update
 install_swapfile
 install_ubuntu_mate_desktop
-
 wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
 reboot
 

@@ -15,11 +15,6 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function remove_unnecessary {
-
-    wait_for_enter_warning "Unnötige Programme deinstallieren - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie sicher ?"
-    wait_for_enter_warning "Unnötige Programme und deren Daten werden GELÖSCHT - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie GANZ sicher ?"
-    install_essentials
-    linux_update
     ### remove Canonical Reporting
     sudo apt-get purge whoopsie -y
     sudo apt-get purge libwhoopsie0 -y
@@ -90,11 +85,15 @@ function remove_unnecessary {
     # thunderbird
     sudo apt-get purge thunderbird -y
     sudo apt-get purge transmission-common -y
-    linux_update
-    wait_for_enter "Unnötige Programme deinstalliert"
 }
 
+wait_for_enter_warning "Unnötige Programme deinstallieren - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie sicher ?"
+wait_for_enter_warning "Unnötige Programme und deren Daten werden GELÖSCHT - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie GANZ sicher ?"
+install_essentials
+linux_update
 remove_unnecessary
+linux_update
+wait_for_enter "Unnötige Programme deinstalliert"
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

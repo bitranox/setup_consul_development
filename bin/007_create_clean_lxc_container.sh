@@ -15,14 +15,19 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function create_container_disco {
-    banner "Erzeuge Container"
-    lxc launch ubuntu:disco lxc-clean
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Erzeuge Container ${container_name}"
+    lxc launch ubuntu:disco "${container_name}"
 }
 
-function create_lxc_user_consul {
-    banner "Lege LXC User 'consul' an - bitte geben Sie das Passwort 'consul' ein"
-    lxc exec lxc-clean -- sh -c "adduser consul"
-    lxc exec lxc-clean -- sh -c "usermod -aG sudo consul"
+function create_lxc_user {
+    # parameter: $1 = container_name, $2=user_name
+    local container_name=$1
+    local user_name=$1
+    banner "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
+    lxc exec "${container_name}" -- sh -c "adduser ${user_name}"
+    lxc exec "${container_name}" -- sh -c "usermod -aG sudo ${user_name}"
 }
 
 function lxc_update {
@@ -50,8 +55,8 @@ function lxc_add_languagepack_de {
 wait_for_enter "Erzeuge einen sauberen LXC-Container lxc-clean, user=consul, pwd=consul, DNS Name = lxc-clean.lxd"
 install_essentials
 linux_update
-create_container_disco
-create_lxc_user_consul
+create_container_disco lxc_clean
+create_lxc_user lxc_clean consul
 lxc_add_languagepack_de
 
 

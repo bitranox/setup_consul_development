@@ -15,16 +15,17 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function install_languagepack {
-    wait_for_enter "Installiere deutsche Sprachpakete"
-    install_essentials
-    linux_update
     retry sudo apt-get install language-pack-de -y
     retry sudo apt-get install language-pack-de-base -y
-    wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
-    reboot
 }
 
+wait_for_enter "Installiere deutsche Sprachpakete"
+install_essentials
+linux_update
 install_languagepack
+wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+reboot
+
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
