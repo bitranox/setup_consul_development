@@ -27,7 +27,9 @@ function set_uids {
 
 function create_shared_directory {
     # shared Verzeichnis anlegen
-    sudo mkdir -p "${HOME}"/lxc-shared
+    sudo mkdir -p /media/lxc-shared
+    sudo chmod -R 0777 /media/lxc-shared
+
 }
 
 function configure_dns {
@@ -47,7 +49,7 @@ function create_lxc_profile {
     lxc profile delete "${profile_name}"
     lxc profile create "${profile_name}"
     # Device zu Profile hinzufügen
-    lxc profile device add "${profile_name}" lxc-shared disk source="${HOME}"/lxc-shared path=/media/lxc-shared
+    lxc profile device add "${profile_name}" lxc-shared disk source=/media/lxc-shared path=/media/lxc-shared
     # raw idmap im profile setzen
     lxc profile set "${profile_name}" raw.idmap "both $(id -u) $(id -g)"
 }

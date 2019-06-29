@@ -73,8 +73,6 @@ function lxc_install_ubuntu_mate_desktop {
     wait_for_enter "Container ${container_name}: Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
     lxc_update ${container_name}
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install ubuntu-mate-desktop -y"
-    lxc exec "${container_name}" -- sh -c "sudo rm -f /etc/netplan/50-cloud-init.yaml"
-    lxc exec "${container_name}" -- sh -c "cp -f ./consul-dev-env-public/bin/shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml"
     lxc_reboot ${container_name}
 }
 
