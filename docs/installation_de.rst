@@ -10,6 +10,7 @@
     - `004_install_tools`_
     - `005_install_lxd_container_system`_
     - `006_configure_lxd_container_system`_
+    - `007_create_clean_lxc_container`_
 
 ----
 
@@ -181,3 +182,17 @@ Konfiguration des LXC Systemes :
 
     cd ~/consul-dev-env-public/bin
     ./006*
+
+007_create_clean_lxc_container
+------------------------------
+Erzeuge einen sauberen LXC Container lxc-clean, mit Benutzer consul, passwort consul.
+Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxd erreichbar.
+(auch über SSH, etc)
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    ./007*
+
+
+
