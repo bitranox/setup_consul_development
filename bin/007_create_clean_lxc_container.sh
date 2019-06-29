@@ -18,6 +18,7 @@ function create_container_disco {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Erzeuge Container ${container_name}"
+    lxc stop "${container_name}"
     lxc delete "${container_name}"
     lxc launch ubuntu:disco "${container_name}"
 }
