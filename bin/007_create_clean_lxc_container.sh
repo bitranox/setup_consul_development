@@ -55,6 +55,12 @@ function install_scripts_on_lxc_container {
     retry lxc exec "${container_name}" -- sh -c "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
 }
 
+function lxc_install_language_pack {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: Install Language Pack"
+    retry lxc exec "${container_name}" -- sh -c "sudo ./consul-dev-env-public/bin/001* install_languagepack"
+}
 
 
 
