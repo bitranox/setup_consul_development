@@ -48,6 +48,8 @@ function lxc_reboot {
 function install_scripts_on_lxc_container {
     # parameter: $1 = container_name
     local container_name=$1
+    banner "Container ${container_name}: lege Install Scripte an"
+    retry lxc exec "${container_name}" -- sh -c "sudo rm -Rf ./consul-dev-env-public"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install git -y"
     retry lxc exec "${container_name}" -- sh -c "git clone https://github.com/bitranox/consul-dev-env-public.git"
     retry lxc exec "${container_name}" -- sh -c "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
