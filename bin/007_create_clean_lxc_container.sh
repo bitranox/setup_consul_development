@@ -64,13 +64,15 @@ function lxc_install_language_pack {
 
 
 
+container_name="lxc-clean"
+lxc_user_name="consul"
 wait_for_enter "Erzeuge einen sauberen LXC-Container lxc-clean, user=consul, pwd=consul, DNS Name = lxc-clean.lxd"
 install_essentials
 linux_update
-create_container_disco lxc-clean
-create_lxc_user lxc-clean consul
-install_scripts_on_lxc_container lxc-clean
-
+create_container_disco "${container_name}"
+create_lxc_user "${container_name}" "${lxc_user_name}"
+install_scripts_on_lxc_container "${container_name}"
+lxc_install_language_pack "${container_name}"
 
 
 
