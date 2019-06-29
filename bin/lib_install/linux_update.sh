@@ -16,6 +16,7 @@ function linux_update {
     clr_bold clr_green "Linux Update"
     retry sudo apt-get update
     retry sudo apt-get upgrade -y
+    retry sudo apt-get dist-upgrade -y
     retry sudo apt-get autoclean -y
     retry sudo apt-get autoremove -y
 }
