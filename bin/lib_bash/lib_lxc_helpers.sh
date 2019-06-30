@@ -111,6 +111,7 @@ function lxc_replace_or_add_lines_containing_string_in_file {
     local path_file=$2
     local search_string=$3
     local new_line=$4
+    banner "${container_name}" "$(cat ${path_file} | grep -c ${search_string})"
     local number_of_lines_found=$(lxc_exec "${container_name}" "$(cat ${path_file} | grep -c ${search_string})")
     banner ${number_of_lines_found}
     if [[ $((number_of_lines_found)) > 0 ]]; then
