@@ -130,6 +130,32 @@ function lxc_assign_profile {
     lxc start "${container_name}"
 }
 
+function lxc_install_chrome {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: install google chrome"
+    lxc exec "${container_name}" -- sh -c "wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+    lxc exec "${container_name}" -- sh -c "sudo dpkg -i google-chrome-stable_current_amd64.deb"
+    lxc exec "${container_name}" -- sh -c "sudo rm -f ./google-chrome-stable_current_amd64.deb"
+
+}
+
+function lxc_install_chrome_remote_desktop {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: install google chrome remote desktop"
+    lxc exec "${container_name}" -- sh -c "sudo apt-get install xvfb"
+    lxc exec "${container_name}" -- sh -c "wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
+    lxc exec "${container_name}" -- sh -c "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
+    lxc exec "${container_name}" -- sh -c "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
+}
+
+
+
+
+
+
+
 function lxc_create_image {
     # parameter: $1 = container_name
     local container_name=$1
@@ -155,6 +181,8 @@ lxc_install_x2goserver "${container_name}"
 lxc_configure_ssh "${container_name}" "${lxc_user_name}"
 lxc_disable_hibernate "${container_name}"
 # lxc_assign_profile "${container_name}" "${profile_name}"
+lxc_install_chrome "${container_name}"
+lxc_install_chrome_remote_desktop "${container_name}"
 lxc_create_image "${container_name}"
 
 banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
