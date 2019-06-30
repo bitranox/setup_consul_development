@@ -103,25 +103,24 @@ function lxc_reboot {
 
 
 function lxc_replace_or_add_lines_containing_string_in_file {
-    # $1 : container_name
-    # $2 : File
-    # $3 : search string
-    # $4 : new line to replace
+    # $1 = container_name
+    # $2 = File
+    # $3 = search string
+    # $4 = new line to replace
     local container_name=$1
     local path_file=$2
     local search_string=$3
     local new_line=$4
-    banner "${container_name}" "$(cat ${path_file} | grep -c ${search_string})"
-    local number_of_lines_found=$(lxc_exec "${container_name}" "$(cat ${path_file} | grep -c ${search_string})")
-    banner ${number_of_lines_found}
+    local number_of_lines_found=$(lxc exec $container_name -- sh -c "cat $path_file | grep -c $search_string")
     if [[ $((number_of_lines_found)) > 0 ]]; then
-        # replace line if there
-        lxc_exec "${container_name}" "sudo sed -i \"/${search_string}/c\\\\${new_line}\" ${path_file}"
+        # replace lines if there
+        lxc exec $container_name -- sh -c "sudo sed -i \"/$search_string/c\\\\$new_line\" $path_file"
     else
         # add line if not there
-        lxc_exec "${container_name}" "sudo sh -c \"echo \\"${new_line}\\" >> ${path_file}\""
+        lxc exec $container_name -- sh -c "sudo sh -c \"echo \\"$new_line\\" >> $path_file\""
     fi
 }
+
 
 
 

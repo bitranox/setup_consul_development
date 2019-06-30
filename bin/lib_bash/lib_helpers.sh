@@ -105,7 +105,7 @@ function replace_or_add_lines_containing_string_in_file {
     local new_line=$3
     local number_of_lines_found=$(cat ${path_file} | grep -c ${search_string})
     if [[ $((number_of_lines_found)) > 0 ]]; then
-        # replace line if there
+        # replace lines if there
         sudo sed -i "/${search_string}/c\\${new_line}" ${path_file}
     else
         # add line if not there

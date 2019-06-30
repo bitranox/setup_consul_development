@@ -163,7 +163,7 @@ function lxc_install_chrome_remote_desktop {
     retry lxc_exec "${container_name}" "wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
     retry lxc_exec "${container_name}" "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
     lxc_exec "${container_name}" "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
-    # /etc/environment CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES="2560x1600"
+    # /etc/environment CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES="5120x1600"
 }
 
 
