@@ -64,7 +64,6 @@ function install_chrome_remote_desktop {
 }
 
 
-check_upgrade "$0" "$@"
 wait_for_enter "Notwendige und nützliche Tools werden installiert"
 install_essentials
 linux_update
