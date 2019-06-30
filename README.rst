@@ -440,6 +440,8 @@ und Ihre VMWare minimieren, bzw. können Sie die VMWare auch mit der Option "vir
 Sie können nun auf die Maschinen mit dem Google Browser, der Chrome Remote Software, Tablet, Handy etc. leicht und sehr performant
  - auch über die Grenzen Ihre Firewall hinweg - zugreifen. Auch wenn Sie keine statische IP Adresse haben.
 
+Als maximale Auflösung haben wir 5120x1600 voreingestellt, dieses Setting finden Sie unter /etc/environment
+
 Grundlegende Verwendung
 -----------------------
 

@@ -64,6 +64,7 @@ function lxc_install_language_pack {
     lxc_update ${container_name}
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de-base -y"
+    lxc_update ${container_name}
     lxc_reboot ${container_name}
 }
 
@@ -151,6 +152,7 @@ function lxc_install_chrome_remote_desktop {
     lxc exec "${container_name}" -- sh -c "wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
     lxc exec "${container_name}" -- sh -c "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
     lxc exec "${container_name}" -- sh -c "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
+    # /etc/environment CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES="2560x1600"
 }
 
 
