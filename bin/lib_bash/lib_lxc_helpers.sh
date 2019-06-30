@@ -102,6 +102,25 @@ function lxc_reboot {
 }
 
 
+function lxc_replace_or_add_lines_containing_string_in_file {
+    # $1 : container_name
+    # $2 : File
+    # $3 : search string
+    # $4 : new line to replace
+    local container_name=$1
+    local path_file=$2
+    local search_string=$3
+    local new_line=$4
+    local number_of_lines_found=$(lxc_exec "${container_name}" "$(cat ${path_file} | grep -c ${search_string})")
+    if [[ $((number_of_lines_found)) > 0 ]]; then
+        # replace line if there
+        lxc_exec "${container_name}" "sudo sed -i \"/${search_string}/c\\\\${new_line}\" ${path_file}"
+    else
+        # add line if not there
+        lxc_exec "${container_name}" "sudo sh -c \"echo \\"${new_line}\\" >> ${path_file}\""
+    fi
+}
+
 
 
 ## make it possible to call functions without source include

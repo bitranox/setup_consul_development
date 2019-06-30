@@ -111,7 +111,6 @@ function replace_or_add_lines_containing_string_in_file {
         # add line if not there
         sudo sh -c "echo \"${new_line}\" >> ${path_file}"
     fi
-
 }
 
 
