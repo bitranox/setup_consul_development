@@ -75,7 +75,6 @@ function lxc_install_tools {
     retry lxc_exec "${container_name}" "sudo apt-get install net-tools -y"
     retry lxc_exec "${container_name}" "sudo apt-get install build-essential -y"
     retry lxc_exec "${container_name}" "sudo apt-get install mc -y"
-    retry lxc_exec "${container_name}" "sudo apt-get purge emacsen-common -y"
     retry lxc_exec "${container_name}" "sudo apt-get purge enchant -y"
     retry lxc_exec "${container_name}" "sudo apt-get purge gedit -y"
     retry lxc_exec "${container_name}" "sudo apt-get purge gedit-common -y"
