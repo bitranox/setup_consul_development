@@ -33,13 +33,6 @@ function create_lxc_user {
     lxc exec "${container_name}" -- sh -c "usermod -aG sudo ${user_name}"
 }
 
-function lxc_update {
-    # parameter: $1 = container_name
-    local container_name=$1
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get update"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get upgrade -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get dist-upgrade -y"
-}
 
 function install_scripts_on_lxc_container {
     # parameter: $1 = container_name
@@ -152,11 +145,6 @@ function lxc_install_chrome_remote_desktop {
     lxc exec "${container_name}" -- sh -c "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
     # /etc/environment CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES="2560x1600"
 }
-
-
-
-
-
 
 
 function lxc_create_image {

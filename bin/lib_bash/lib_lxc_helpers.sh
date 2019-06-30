@@ -10,6 +10,15 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 
+function lxc_update {
+    # parameter: $1 = container_name
+    local container_name=$1
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get update"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get upgrade -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get dist-upgrade -y"
+}
+
+
 function lxc_wait_until_machine_stopped {
     # parameter: $1 = container_name
     local container_name=$1
