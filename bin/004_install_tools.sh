@@ -15,6 +15,12 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function install_software {
     banner "install needed tools : build-essential, mc, geany, meld, synaptic, x2goclient"
+    ### remove Canonical Reporting
+    sudo apt-get purge whoopsie -y
+    sudo apt-get purge libwhoopsie0 -y
+    sudo apt-get purge libwhoopsie-preferences0 -y
+    sudo apt-get purge apport -y
+    # essential
     retry sudo apt-get install net-tools -y
     retry sudo apt-get install git -y
     # build-essential
