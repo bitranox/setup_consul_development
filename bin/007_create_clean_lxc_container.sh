@@ -198,6 +198,6 @@ lxc_disable_hibernate "${container_name}"
 lxc_install_chrome "${container_name}"
 lxc_install_chrome_remote_desktop "${container_name}"
 lxc_install_language_pack ${container_name}
-# lxc_create_image "${container_name}"
+lxc_create_image "${container_name}"
 lxc_reboot "${container_name}"
 banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
