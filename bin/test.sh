@@ -16,7 +16,7 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 
 container_name="lxc-clean"
-lxc_replace_or_add_lines_containing_string_in_file $"{container_name}" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\""
+lxc_replace_or_add_lines_containing_string_in_file ${container_name} "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\""
 banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
 
 
