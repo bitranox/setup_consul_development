@@ -30,6 +30,7 @@ function create_lxc_user {
     banner "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
     lxc_exec "${container_name}" "adduser ${user_name}"
     clr_green "adding user ${user_name} to sudoer group"
+    # seltsamerweise funktioniert dies nicht mit lxc_exec !
     lxc exec "${container_name}" -- sh -c "usermod -aG sudo ${user_name}"
 }
 
@@ -51,7 +52,9 @@ function lxc_install_language_pack {
     lxc_update ${container_name}
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de -y"
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de-base -y"
-    # https://askubuntu.com/questions/133318/how-do-i-change-the-language-via-a-terminal
+    retry lxc_exec "${container_name}" "language-pack-gnome-de -y"
+    retry lxc_exec "${container_name}" "language-pack-gnome-de -y" "sudo apt-get install $(check-language-support)"
+    lxc_exec "${container_name}" "update-locale LANG=\"de_AT.UTF-8\" LANGUAGE=\"de_AT:de\""
     lxc_update ${container_name}
     lxc_reboot ${container_name}
     lxc_wait_until_internet_connected ${container_name}
