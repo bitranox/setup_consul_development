@@ -28,7 +28,6 @@ function create_lxc_user {
     local container_name=$1
     local user_name=$2
     banner "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
-    lxc_exec "${container_name}" "adduser ${user_name}"
     lxc exec "${container_name}" "usermod -aG sudo ${user_name}"
 }
 
