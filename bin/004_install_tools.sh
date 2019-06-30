@@ -5,6 +5,7 @@ function include_dependencies {
     sudo chmod -R +x "${my_dir}"/*.sh
     sudo chmod -R +x "${my_dir}"/lib_bash/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
+    source "${my_dir}/000_update_myself.sh"
     source "${my_dir}/lib_bash/lib_color.sh"
     source "${my_dir}/lib_bash/lib_retry.sh"
     source "${my_dir}/lib_bash/lib_helpers.sh"
@@ -63,7 +64,7 @@ function install_chrome_remote_desktop {
 }
 
 
-
+check_upgrade "$0" "$@"
 wait_for_enter "Notwendige und nützliche Tools werden installiert"
 install_essentials
 linux_update
