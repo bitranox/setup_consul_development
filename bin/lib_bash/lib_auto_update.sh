@@ -37,3 +37,13 @@ main () {
 
 check_upgrade
 main
+
+
+# remote hash :
+git --no-pager ls-remote | grep HEAD | awk '{print $1;}'
+
+
+# local hash
+git --no-pager log --decorate=short --pretty=oneline -n1 | grep HEAD | awk '{print $1;}'
+
+

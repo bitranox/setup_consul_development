@@ -44,5 +44,3 @@ if [[ ! -z "$1" ]]
         fi
 	fi
 
-
-git ls-remote
