@@ -48,7 +48,6 @@ function remove_unnecessary {
     # Taschenrechner
     sudo apt-get purge dc -y
     # editoren / Terminals
-    sudo apt-get purge emacsen-common -y
     sudo apt-get purge enchant -y
     sudo apt-get purge gedit -y
     sudo apt-get purge gedit-common -y
