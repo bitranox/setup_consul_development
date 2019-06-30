@@ -41,7 +41,7 @@ function configure_dns {
     sudo sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
     sudo service systemd-resolved restart
     sudo service network-manager restart
-    sudo snap lxd restart
+    sudo snap restart lxd
 }
 
 function create_lxc_profile {
