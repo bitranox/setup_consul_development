@@ -10,12 +10,23 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 
+function lxc_exec {
+    # parameter: $1 = container_name
+    # parameter: $2 = shell_command
+    local container_name=$1
+    local shell_command=$2
+    lxc exec "${container_name}" -- sh -c "${shell_command}"
+}
+
+
+
+
 function lxc_update {
     # parameter: $1 = container_name
     local container_name=$1
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get update"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get upgrade -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get dist-upgrade -y"
+    retry lxc_exec "${container_name}" "sudo apt-get update"
+    retry lxc_exec "${container_name}" "sudo apt-get upgrade -y"
+    retry lxc_exec "${container_name}" "sudo apt-get dist-upgrade -y"
 }
 
 
@@ -47,12 +58,12 @@ function lxc_wait_until_machine_running {
     done
 }
 
-function lxc_wait_until_machine_internet_connected {
+function lxc_wait_until_internet_connected {
     # parameter: $1 = container_name
     local container_name=$1
     clr_green "Container ${container_name}: wait for internet connection"
     while true; do
-        lxc exec "${container_name}" -- sh -c "wget -q --spider http://google.com"
+        lxc_exec "${container_name}" "wget -q --spider http://google.com"
         if [[ $? -eq 0 ]]; then
             break
         else
@@ -63,15 +74,29 @@ function lxc_wait_until_machine_internet_connected {
 }
 
 
+function lxc_startup {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: Startup"
+    lxc start "${container_name}"
+    lxc_wait_until_machine_running "${container_name}"
+}
+
+function lxc_shutdown {
+    # parameter: $1 = container_name
+    local container_name=$1
+    banner "Container ${container_name}: Shutdown"
+    lxc_exec "${container_name}" "sudo shutdown now"
+    lxc_wait_until_machine_stopped "${container_name}"
+}
+
+
 function lxc_reboot {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: Rebooting"
-    retry lxc exec "${container_name}" -- sh -c "sudo shutdown now"
-    lxc_wait_until_machine_stopped "${container_name}"
-    lxc start "${container_name}"
-    lxc_wait_until_machine_running "${container_name}"
-    lxc_wait_until_machine_internet_connected "${container_name}"
+    lxc_shutdown "${container_name}"
+    lxc_startup "${container_name}"
 }
 
 

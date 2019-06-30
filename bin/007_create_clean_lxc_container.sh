@@ -29,8 +29,8 @@ function create_lxc_user {
     local container_name=$1
     local user_name=$2
     banner "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
-    lxc exec "${container_name}" -- sh -c "adduser ${user_name}"
-    lxc exec "${container_name}" -- sh -c "usermod -aG sudo ${user_name}"
+    lxc_exec "${container_name}" "adduser ${user_name}"
+    lxc exec "${container_name}" "usermod -aG sudo ${user_name}"
 }
 
 
@@ -38,10 +38,10 @@ function install_scripts_on_lxc_container {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: lege Install Scripte an"
-    retry lxc exec "${container_name}" -- sh -c "sudo rm -Rf ./consul-dev-env-public"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install git -y"
-    retry lxc exec "${container_name}" -- sh -c "git clone https://github.com/bitranox/consul-dev-env-public.git"
-    retry lxc exec "${container_name}" -- sh -c "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
+    retry lxc_exec "${container_name}" "sudo rm -Rf ./consul-dev-env-public"
+    retry lxc_exec "${container_name}" "sudo apt-get install git -y"
+    retry lxc_exec "${container_name}" "git clone https://github.com/bitranox/consul-dev-env-public.git"
+    retry lxc_exec "${container_name}" "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
 }
 
 function lxc_install_language_pack {
@@ -49,11 +49,12 @@ function lxc_install_language_pack {
     local container_name=$1
     banner "Container ${container_name}: Install Language Pack"
     lxc_update ${container_name}
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de-base -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de-base -y"
     # https://askubuntu.com/questions/133318/how-do-i-change-the-language-via-a-terminal
     lxc_update ${container_name}
     lxc_reboot ${container_name}
+    lxc_wait_until_internet_connected ${container_name}
     lxc_update ${container_name}
 }
 
@@ -62,32 +63,39 @@ function lxc_install_ubuntu_mate_desktop {
     local container_name=$1
     wait_for_enter "Container ${container_name}: Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
     lxc_update ${container_name}
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get purge gdm3 -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install ubuntu-mate-desktop -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install ubuntu-mate-desktop -y"
     lxc_reboot ${container_name}
+    lxc_wait_until_internet_connected ${container_name}
 }
 
 function lxc_install_tools {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: Install Tools"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install git -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install net-tools -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install build-essential -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install mc -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install geany -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install meld -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install synaptic -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install git -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install net-tools -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install build-essential -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install mc -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge emacsen-common -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge enchant -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge gedit -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge gedit-common -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge pluma-common -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge tilda -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge vim -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install geany -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install meld -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install synaptic -y"
 }
 
 function lxc_install_x2goserver {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: Install X2GO Server"
-    retry lxc exec "${container_name}" -- sh -c "sudo add-apt-repository ppa:x2go/stable -y"
+    retry lxc_exec "${container_name}" "sudo add-apt-repository ppa:x2go/stable -y"
     lxc_update ${container_name}
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install x2goserver -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install x2goserver-xsession -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install x2goserver -y"
+    retry lxc_exec "${container_name}" "sudo apt-get install x2goserver-xsession -y"
 }
 
 function lxc_configure_ssh {
@@ -95,20 +103,20 @@ function lxc_configure_ssh {
     local container_name=$1
     local user_name=$2
     banner "Container ${container_name}: Configure ssh"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install ssh -y"
-    lxc exec "${container_name}" -- sh -c "cp -f ./consul-dev-env-public/bin/shared/config_lxc/etc/ssh/sshd_config /etc/ssh/sshd_config"
-    lxc exec "${container_name}" -- sh -c "sudo service sshd restart"
-    lxc exec "${container_name}" -- sh -c "sudo service x2goserver restart"
+    retry lxc_exec "${container_name}" "sudo apt-get install ssh -y"
+    lxc_exec "${container_name}" "sudo cp -f ./consul-dev-env-public/bin/shared/config_lxc/etc/ssh/sshd_config /etc/ssh/sshd_config"
+    lxc_exec "${container_name}" "sudo service sshd restart"
+    lxc_exec "${container_name}" "sudo service x2goserver restart"
 }
 
 function lxc_disable_hibernate {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: create backup image ${container_name}-fresh"
-    lxc exec "${container_name}" -- sh -c "sudo systemctl mask sleep.target"
-    lxc exec "${container_name}" -- sh -c "sudo systemctl mask suspend.target"
-    lxc exec "${container_name}" -- sh -c "sudo systemctl mask hibernate.target"
-    lxc exec "${container_name}" -- sh -c "sudo systemctl mask hybrid-sleep.target"
+    lxc_exec "${container_name}" "sudo systemctl mask sleep.target"
+    lxc_exec "${container_name}" "sudo systemctl mask suspend.target"
+    lxc_exec "${container_name}" "sudo systemctl mask hibernate.target"
+    lxc_exec "${container_name}" "sudo systemctl mask hybrid-sleep.target"
 }
 
 function lxc_assign_profile {
@@ -118,18 +126,20 @@ function lxc_assign_profile {
     local container_name=$1
     local profile_name=$2
     banner "Container ${container_name}: attach Profiles default,${profile_name}"
-    lxc stop "${container_name}" -f
+    lxc_shutdown "${container_name}"
     lxc profile assign "${container_name}" default,"${profile_name}"
-    lxc start "${container_name}"
+    lxc_startup "${container_name}"
+    lxc_wait_until_internet_connected ${container_name}
+
 }
 
 function lxc_install_chrome {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: install google chrome"
-    lxc exec "${container_name}" -- sh -c "wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-    lxc exec "${container_name}" -- sh -c "sudo dpkg -i google-chrome-stable_current_amd64.deb"
-    lxc exec "${container_name}" -- sh -c "sudo rm -f ./google-chrome-stable_current_amd64.deb"
+    retry lxc_exec "${container_name}" "wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+    retry lxc_exec "${container_name}" "sudo dpkg -i google-chrome-stable_current_amd64.deb"
+    lxc_exec "${container_name}" "sudo rm -f ./google-chrome-stable_current_amd64.deb"
 
 }
 
@@ -137,12 +147,12 @@ function lxc_install_chrome_remote_desktop {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: install google chrome remote desktop"
-    lxc exec "${container_name}" -- sh -c "sudo apt-get install xvfb"
-    lxc exec "${container_name}" -- sh -c "sudo apt-get install xbase-clients"
-    lxc exec "${container_name}" -- sh -c "sudo apt-get install python-psutil"
-    lxc exec "${container_name}" -- sh -c "wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
-    lxc exec "${container_name}" -- sh -c "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
-    lxc exec "${container_name}" -- sh -c "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
+    retry lxc_exec "${container_name}" "sudo apt-get install xvfb"
+    retry lxc_exec "${container_name}" "sudo apt-get install xbase-clients"
+    retry lxc_exec "${container_name}" "sudo apt-get install python-psutil"
+    retry lxc_exec "${container_name}" "wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
+    retry lxc_exec "${container_name}" "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
+    lxc_exec "${container_name}" "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
     # /etc/environment CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES="2560x1600"
 }
 
@@ -151,9 +161,10 @@ function lxc_create_image {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: create backup image ${container_name}-fresh"
-    lxc stop ${container_name}
+    lxc_shutdown "${container_name}"
     lxc publish ${container_name} --alias ${container_name}-fresh
-    lxc start ${container_name}
+    lxc_startup "${container_name}"
+    lxc_wait_until_internet_connected ${container_name}
 }
 
 

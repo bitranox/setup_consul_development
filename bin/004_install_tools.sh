@@ -23,6 +23,13 @@ function install_software {
     # midnight commander
     retry sudo apt-get install mc -y
     # geany Editor
+    retry sudo apt-get purge emacsen-common -y
+    retry sudo apt-get purge enchant -y
+    retry sudo apt-get purge gedit -y
+    retry sudo apt-get purge gedit-common -y
+    retry sudo apt-get purge pluma-common -y
+    retry sudo apt-get purge tilda -y
+    retry sudo apt-get purge vim -y
     retry sudo apt-get install geany -y
     # Meld Vergleichstool
     retry sudo apt-get install meld -y
