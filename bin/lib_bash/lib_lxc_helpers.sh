@@ -22,6 +22,7 @@ function lxc_update {
 function lxc_wait_until_machine_stopped {
     # parameter: $1 = container_name
     local container_name=$1
+    clr_green "Container ${container_name}: stopping"
     while true; do
         if [[ $(lxc list -cns | grep "${container_name}" | grep -c STOPPED) == "1" ]]; then
             break
@@ -35,6 +36,7 @@ function lxc_wait_until_machine_stopped {
 function lxc_wait_until_machine_running {
     # parameter: $1 = container_name
     local container_name=$1
+    clr_green "Container ${container_name}: starting"
     while true; do
         if [[ $(lxc list -cns | grep "${container_name}" | grep -c RUNNING) == "1" ]]; then
             break
@@ -46,15 +48,18 @@ function lxc_wait_until_machine_running {
 }
 
 function lxc_wait_until_machine_internet_connected {
-
-wget -q --spider http://google.com
-
-if [ $? -eq 0 ]; then
-    echo "Online"
-else
-    echo "Offline"
-fi
-
+    # parameter: $1 = container_name
+    local container_name=$1
+    clr_green "Container ${container_name}: wait for internet connection"
+    while true; do
+        lxc exec "${container_name}" -- sh -c "wget -q --spider http://google.com"
+        if [[ $? -eq 0 ]]; then
+            break
+        else
+            sleep 1
+            clr_green "Container ${container_name}: wait for internet connection"
+        fi
+    done
 }
 
 
@@ -66,6 +71,7 @@ function lxc_reboot {
     lxc_wait_until_machine_stopped "${container_name}"
     lxc start "${container_name}"
     lxc_wait_until_machine_running "${container_name}"
+    lxc_wait_until_machine_internet_connected "${container_name}"
 }
 
 
