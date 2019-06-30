@@ -43,3 +43,6 @@ if [[ ! -z "$1" ]]
           fail "\"${function_name}\" is not a known function name of \"${library_name}\""
         fi
 	fi
+
+
+git ls-remote
