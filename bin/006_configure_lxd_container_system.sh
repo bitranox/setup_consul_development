@@ -46,6 +46,7 @@ function configure_dns {
 
 function create_lxc_profile {
     # parameter: $1:profile_name
+    ## deprecated --> extend_default_profile
     local profile_name=$1
     lxc profile delete "${profile_name}"
     lxc profile create "${profile_name}"
@@ -58,6 +59,15 @@ function create_lxc_profile {
 }
 
 
+function extend_default_profile {
+    # Device zu Profile hinzufügen
+    lxc profile device add default lxc-shared disk source=/media/lxc-shared path=/media/lxc-shared
+    lxc profile set default raw.idmap "both $(id -u) $(id -g)"
+}
+
+
+
+
 profile_name="map-lxc-shared"
 wait_for_enter "Konfiguriere LXD Container System - DNSMASQ darf nicht installiert sein, DNS muss über systemd-resolved erfolgen !"
 install_essentials
@@ -66,7 +76,8 @@ lxd_init
 set_uids
 create_shared_directory
 configure_dns
-create_lxc_profile "${profile_name}"
+# create_lxc_profile "${profile_name}"
+extend_default_profile
 banner "LXD fertig konfiguriert"
 
 

@@ -119,6 +119,7 @@ function lxc_disable_hibernate {
 }
 
 function lxc_assign_profile {
+    # deprecated, we extended the default profile
     # parameter: $1 = container_name
     # parameter: $2 = profile_name
     local container_name=$1
@@ -153,7 +154,7 @@ lxc_install_ubuntu_mate_desktop "${container_name}"
 lxc_install_x2goserver "${container_name}"
 lxc_configure_ssh "${container_name}" "${lxc_user_name}"
 lxc_disable_hibernate "${container_name}"
-lxc_assign_profile "${container_name}" "${profile_name}"
+# lxc_assign_profile "${container_name}" "${profile_name}"
 lxc_create_image "${container_name}"
 
 banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
