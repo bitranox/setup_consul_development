@@ -72,6 +72,7 @@ function lxc_install_ubuntu_mate_desktop {
     local container_name=$1
     wait_for_enter "Container ${container_name}: Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
     lxc_update ${container_name}
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get purge gdm3 -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install ubuntu-mate-desktop -y"
     lxc_reboot ${container_name}
 }
