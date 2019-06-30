@@ -43,7 +43,7 @@ function install_software {
 function install_chrome {
     banner "Install google chrome"
     retry wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    retry sudo dpkg -i google-chrome-stable_current_amd64.deb
     sudo rm -f ./google-chrome-stable_current_amd64.deb
 }
 
@@ -53,7 +53,7 @@ function install_chrome_remote_desktop {
     retry sudo apt-get install xbase-clients
     retry sudo apt-get install python-psutil
     retry wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
-    sudo dpkg -i chrome-remote-desktop_current_amd64.deb
+    retry sudo dpkg -i chrome-remote-desktop_current_amd64.deb
     sudo rm -f ./chrome-remote-desktop_current_amd64.deb
 }
 
