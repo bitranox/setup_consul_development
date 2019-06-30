@@ -145,6 +145,8 @@ function lxc_install_chrome_remote_desktop {
     local container_name=$1
     banner "Container ${container_name}: install google chrome remote desktop"
     lxc exec "${container_name}" -- sh -c "sudo apt-get install xvfb"
+    lxc exec "${container_name}" -- sh -c "sudo apt-get install xbase-clients"
+    lxc exec "${container_name}" -- sh -c "sudo apt-get install python-psutil"
     lxc exec "${container_name}" -- sh -c "wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
     lxc exec "${container_name}" -- sh -c "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
     lxc exec "${container_name}" -- sh -c "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
