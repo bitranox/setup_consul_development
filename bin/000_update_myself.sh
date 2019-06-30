@@ -9,7 +9,6 @@ function include_dependencies {
     source "${my_dir}/lib_bash/lib_retry.sh"
     source "${my_dir}/lib_bash/lib_helpers.sh"
     source "${my_dir}/lib_install/install_essentials.sh"
-    source "${my_dir}/lib_install/linux_update.sh"
 }
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir

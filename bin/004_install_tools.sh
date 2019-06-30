@@ -9,7 +9,6 @@ function include_dependencies {
     source "${my_dir}/lib_bash/lib_retry.sh"
     source "${my_dir}/lib_bash/lib_helpers.sh"
     source "${my_dir}/lib_install/install_essentials.sh"
-    source "${my_dir}/lib_install/linux_update.sh"
 }
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
@@ -23,7 +22,6 @@ function install_software {
     # midnight commander
     retry sudo apt-get install mc -y
     # geany Editor
-    retry sudo apt-get purge emacsen-common -y
     retry sudo apt-get purge enchant -y
     retry sudo apt-get purge gedit -y
     retry sudo apt-get purge gedit-common -y

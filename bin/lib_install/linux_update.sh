@@ -10,16 +10,6 @@ function include_dependencies {
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
-function linux_update {
-    # update / upgrade linux and clean / autoremove
-    clr_bold clr_green " "
-    clr_bold clr_green "Linux Update"
-    retry sudo apt-get update
-    retry sudo apt-get upgrade -y
-    retry sudo apt-get dist-upgrade -y
-    retry sudo apt-get autoclean -y
-    retry sudo apt-get autoremove -y
-}
 
 
 ## make it possible to call functions without source include
