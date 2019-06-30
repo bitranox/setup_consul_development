@@ -40,11 +40,22 @@ function lxc_wait_until_machine_running {
             break
         else
             sleep 1
-            clr_green "Container ${container_name}: stopping"
+            clr_green "Container ${container_name}: starting"
         fi
     done
 }
 
+function lxc_wait_until_machine_internet_connected {
+
+wget -q --spider http://google.com
+
+if [ $? -eq 0 ]; then
+    echo "Online"
+else
+    echo "Offline"
+fi
+
+}
 
 
 function lxc_reboot {
@@ -52,9 +63,9 @@ function lxc_reboot {
     local container_name=$1
     banner "Container ${container_name}: Rebooting"
     retry lxc exec "${container_name}" -- sh -c "sudo shutdown now"
-    lxc_wait_until_machine_stopped
+    lxc_wait_until_machine_stopped "${container_name}"
     lxc start "${container_name}"
-    lxc_wait_until_machine_running
+    lxc_wait_until_machine_running "${container_name}"
 }
 
 
