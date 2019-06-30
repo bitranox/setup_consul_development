@@ -200,21 +200,3 @@ lxc_install_language_pack ${container_name}
 # lxc_create_image "${container_name}"
 lxc_reboot "${container_name}"
 banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
-
-
-## make it possible to call functions without source include
-# Check if the function exists (bash specific)
-if [[ ! -z "$1" ]]
-    then
-        if declare -f "${1}" > /dev/null
-        then
-          # call arguments verbatim
-          "$@"
-        else
-          # Show a helpful error
-          function_name="${1}"
-          library_name="${0}"
-          fail "\"${function_name}\" is not a known function name of \"${library_name}\""
-        fi
-	fi
-

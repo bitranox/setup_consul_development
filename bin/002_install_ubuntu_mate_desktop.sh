@@ -50,19 +50,3 @@ install_and_update_language_packs
 wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
 reboot
 
-## make it possible to call functions without source include
-# Check if the function exists (bash specific)
-if [[ ! -z "$1" ]]
-    then
-        if declare -f "${1}" > /dev/null
-        then
-          # call arguments verbatim
-          "$@"
-        else
-          # Show a helpful error
-          function_name="${1}"
-          library_name="${0}"
-          fail "\"${function_name}\" is not a known function name of \"${library_name}\""
-        fi
-	fi
-

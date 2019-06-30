@@ -94,19 +94,3 @@ remove_unnecessary
 linux_update
 banner "Unnötige Programme deinstalliert"
 
-## make it possible to call functions without source include
-# Check if the function exists (bash specific)
-if [[ ! -z "$1" ]]
-    then
-        if declare -f "${1}" > /dev/null
-        then
-          # call arguments verbatim
-          "$@"
-        else
-          # Show a helpful error
-          function_name="${1}"
-          library_name="${0}"
-          fail "\"${function_name}\" is not a known function name of \"${library_name}\""
-        fi
-	fi
-
