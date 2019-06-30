@@ -82,6 +82,8 @@ function lxc_install_tools {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: Install Tools"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install git -y"
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install net-tools -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install build-essential -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install mc -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install geany -y"

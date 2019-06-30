@@ -16,6 +16,8 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function install_software {
     banner "install needed tools : build-essential, mc, geany, meld, synaptic, x2goclient"
+    retry sudo apt-get install net-tools -y
+    retry sudo apt-get install git -y
     # build-essential
     retry sudo apt-get install build-essential -y
     # midnight commander

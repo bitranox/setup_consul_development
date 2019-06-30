@@ -12,10 +12,14 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function install_essentials {
     # update / upgrade linux and clean / autoremove
-    clr_bold clr_green ""
+    clr_bold clr_green " "
     clr_bold clr_green "Installiere Essentielles am Host, entferne Apport und Whoopsie"
     retry sudo apt-get install net-tools -y
     retry sudo apt-get install git -y
+    sudo apt-get purge whoopsie -y
+    sudo apt-get purge libwhoopsie0 -y
+    sudo apt-get purge libwhoopsie-preferences0 -y
+    sudo apt-get purge apport -y
 }
 
 ## make it possible to call functions without source include
