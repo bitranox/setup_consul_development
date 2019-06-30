@@ -8,6 +8,7 @@ function include_dependencies {
     source "${my_dir}/lib_bash/lib_color.sh"
     source "${my_dir}/lib_bash/lib_retry.sh"
     source "${my_dir}/lib_bash/lib_helpers.sh"
+    source "${my_dir}/lib_bash/lib_lxc_helpers.sh"
     source "${my_dir}/lib_install/install_essentials.sh"
     source "${my_dir}/lib_install/linux_update.sh"
 }
@@ -38,13 +39,6 @@ function lxc_update {
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get update"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get upgrade -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get dist-upgrade -y"
-}
-
-function lxc_reboot {
-    # parameter: $1 = container_name
-    local container_name=$1
-    lxc stop "${container_name}" -f
-    lxc start "${container_name}"
 }
 
 function install_scripts_on_lxc_container {
