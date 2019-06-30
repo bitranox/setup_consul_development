@@ -134,7 +134,9 @@ folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückf
 000_update_myself
 -----------------
 
-Dieses Skript führt ein Update der eigenen Installationsskripte durch. Achtung, etwaige eigene Änderungen in den Skripten werden überschrieben !
+Dieses Skript führt ein Update der eigenen Installationsskripte durch.
+Sobald auf Github eine neue Version vorliegt, werden bei Aufruf eines der nachfolgenden Skripte automatisch ein Update ausgeführt.
+Achtung, etwaige eigene Änderungen in diesen Skripten werden überschrieben !
 
 .. code-block:: bash
 
