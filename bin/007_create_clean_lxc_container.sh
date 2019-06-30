@@ -71,6 +71,12 @@ function lxc_install_tools {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: Install Tools"
+    ### remove Canonical Reporting
+    retry lxc_exec "${container_name}" "sudo apt-get purge whoopsie -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge libwhoopsie0 -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge libwhoopsie-preferences0 -y"
+    retry lxc_exec "${container_name}" "sudo apt-get purge apport -y"
+
     retry lxc_exec "${container_name}" "sudo apt-get install git -y"
     retry lxc_exec "${container_name}" "sudo apt-get install net-tools -y"
     retry lxc_exec "${container_name}" "sudo apt-get install build-essential -y"
