@@ -112,6 +112,7 @@ function lxc_replace_or_add_lines_containing_string_in_file {
     local search_string=$3
     local new_line=$4
     local number_of_lines_found=$(lxc_exec "${container_name}" "$(cat ${path_file} | grep -c ${search_string})")
+    banner ${number_of_lines_found}
     if [[ $((number_of_lines_found)) > 0 ]]; then
         # replace line if there
         lxc_exec "${container_name}" "sudo sed -i \"/${search_string}/c\\\\${new_line}\" ${path_file}"
