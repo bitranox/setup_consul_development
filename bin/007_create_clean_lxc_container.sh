@@ -64,8 +64,10 @@ function lxc_install_language_pack {
     lxc_update ${container_name}
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de -y"
     retry lxc exec "${container_name}" -- sh -c "sudo apt-get install language-pack-de-base -y"
+    # https://askubuntu.com/questions/133318/how-do-i-change-the-language-via-a-terminal
     lxc_update ${container_name}
     lxc_reboot ${container_name}
+    lxc_update ${container_name}
 }
 
 function lxc_install_ubuntu_mate_desktop {
