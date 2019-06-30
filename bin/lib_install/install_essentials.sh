@@ -22,6 +22,17 @@ function install_essentials {
     sudo apt-get purge apport -y
 }
 
+function install_and_update_language_packs {
+    # install language pack and install language files for applications
+    banner "Install and Update Language Packs"
+    retry sudo apt-get install language-pack-de -y
+    retry sudo apt-get install language-pack-de-base -y
+    retry sudo apt-get install language-pack-gnome-de -y
+    retry sudo apt-get install $(check-language-support -l de)
+    sudo update-locale LANG=\"de_AT.UTF-8\" LANGUAGE=\"de_AT:de\"
+}
+
+
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
 if [[ ! -z "$1" ]]

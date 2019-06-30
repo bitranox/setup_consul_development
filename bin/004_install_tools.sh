@@ -59,6 +59,7 @@ function install_chrome_remote_desktop {
     retry wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
     retry sudo dpkg -i chrome-remote-desktop_current_amd64.deb
     sudo rm -f ./chrome-remote-desktop_current_amd64.deb
+    replace_or_add_lines_containing_string_in_file "/etc/environment" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\""
 }
 
 
@@ -69,6 +70,7 @@ linux_update
 install_software
 install_chrome
 install_chrome_remote_desktop
+install_and_update_language_packs
 banner "Notwendige und nützliche Tools sind installiert"
 
 ## make it possible to call functions without source include

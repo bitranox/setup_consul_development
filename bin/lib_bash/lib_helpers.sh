@@ -96,6 +96,24 @@ function remove_file {
 }
 
 
+function replace_or_add_lines_containing_string_in_file {
+    # $1 : File
+    # $2 : search string
+    # $3 : new line to replace
+    local path_file=$1
+    local search_string=$2
+    local new_line=$3
+    local number_of_lines_found = $(cat ${path_file} | grep -c ${search_string})
+    if [[ number_of_lines_found > 0 ]]; then
+        # replace line if there
+        sudo sed -i "/${search_string}/c\\${new_line}" ${path_file}
+    else
+        # add line if not there
+        sudo sh -c "echo \"${new_line}\n\" >> ${path_file}"
+    fi
+
+}
+
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)

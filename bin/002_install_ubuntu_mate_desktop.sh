@@ -39,12 +39,14 @@ function install_ubuntu_mate_desktop {
     sudo cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
 }
 
+
 wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
 install_essentials
 linux_update
 install_swapfile
 disable_hibernate
 install_ubuntu_mate_desktop
+install_and_update_language_packs
 wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
 reboot
 
