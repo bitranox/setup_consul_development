@@ -30,10 +30,32 @@ function install_software {
     retry sudo apt-get install x2goclient -y
 }
 
+
+function install_chrome {
+    banner "Install google chrome"
+    retry wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    sudo rm -f ./google-chrome-stable_current_amd64.deb
+}
+
+function install_chrome_remote_desktop {
+    banner "Install google chrome remote desktop"
+    retry sudo apt-get install xvfb
+    retry sudo apt-get install xbase-clients
+    retry sudo apt-get install python-psutil
+    retry wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+    sudo dpkg -i chrome-remote-desktop_current_amd64.deb
+    sudo rm -f ./chrome-remote-desktop_current_amd64.deb
+}
+
+
+
 wait_for_enter "Notwendige und nützliche Tools werden installiert"
 install_essentials
 linux_update
 install_software
+install_chrome
+install_chrome_remote_desktop
 banner "Notwendige und nützliche Tools sind installiert"
 
 ## make it possible to call functions without source include

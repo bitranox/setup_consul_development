@@ -14,7 +14,8 @@
     - `006_configure_lxd_container_system`_
     - `007_create_clean_lxc_container`_
     - `Grundlegende Befehle für LXC Container`_
-    - `Chrome Remote Desktop installieren`_
+- sonstige Einrichtung
+    - `Chrome Remote Desktop einrichten`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 
 ----
@@ -354,10 +355,30 @@ wir haben folgendes für Sie eingerichtet :
     # samt anderen nützlichen Informationen ein.
 
 
-Chrome Remote Desktop installieren
-----------------------------------
+Chrome Remote Desktop einrichten
+--------------------------------
 
-Chrome Remote Desktop sollten Sie sowohl am (virtualisierten) Hostsystem, als auch auf den LXC Containern installieren.
+Chrome Remote Desktop sollten Sie sowohl am (virtualisierten) Hostsystem, als auch auf den LXC Containern einrichten.
 Damit können Sie sehr performant über Ihr Basissystem, oder über Weltweit jeden Rechner auf diese vielen Container zugreifen.
 Sie können auch temporär einzelne Container für andere Personen, z.B. für Remote Hilfe freigeben - Sehr praktisch und empfohlen !
+
+Wir haben Google Chrome und Chrome Remote Desktop bereits vorinstalliert.
+
+Um Chrome Remote Desktop einzurichten, öffnen Sie den Chrome Browser und geben in der Adresszeile https://remotedesktop.google.com/access ein.
+Melden Sie sich mit Ihrem Google Account an und wählen Sie auf der nun angezeigten Webseite "Remotezugriff einrichten" / Hinzufügen / Add Extension aus.
+Nun können Sie einen Namen und einen PIN (zur Erstmaligen Verbindung) für Ihre Maschine eingeben. Da der Zugriff ohnehin an Ihr Google Account geknüpft ist,
+können Sie überall den selben Pin verwenden.
+
+Wiederholen Sie den Vorgang für all Ihre LXC Container und das Hostsystem auf der VMWare.
+
+Nun können Sie den X2Go Client schließen (der Container läuft ja im Hintergrund weiter),
+und Ihre VMWare minimieren, bzw. können Sie die VMWare auch mit der Option "virtuelle Maschine im Hintergrund ausführen" beenden.
+
+Sie können nun auf die Maschinen mit dem Google Browser, der Chrome Remote Software, Tablet, Handy etc. leicht und sehr performant
+ - auch über die Grenzen Ihre Firewall hinweg - zugreifen. Auch wenn Sie keine statische IP Adresse haben.
+
+
+
+
+
 
