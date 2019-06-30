@@ -17,7 +17,6 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 
 function test {
-    lxc_update ${container_name}
     lxc_reboot ${container_name}
     lxc_update ${container_name}
 }
