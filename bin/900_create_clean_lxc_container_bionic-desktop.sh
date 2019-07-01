@@ -195,7 +195,7 @@ lxc_install_x2goserver "${container_name}"
 lxc_configure_ssh "${container_name}" "${lxc_user_name}"
 lxc_disable_hibernate "${container_name}"
 # depricated, because we adopt the default profile - it is easier for the users to clone without
-# assigning other profiles
+# assigning other profiless
 # lxc_assign_profile "${container_name}" "${profile_name}"
 lxc_install_chrome "${container_name}"
 lxc_install_chrome_remote_desktop "${container_name}"
