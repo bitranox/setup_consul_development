@@ -45,7 +45,7 @@ Host System
 -----------
 
 Das Host System besteht aus einem Linux Desktop Betriebssystem.
-Wenn Sie LXC Container installieren möchten (empfohlen) so wird Version 19.04 (disco) benötigt - 18.04 funktioniert NICHT.
+Wenn Sie die LXC Container automatisch mit unseren Skripten installieren möchten (empfohlen), so wird Version 19.04 (disco) benötigt - 18.04 funktioniert NICHT.
 Es wird von einer frischen, minimalen Installation des Hostsystemes ausgegangen.
 Das Host System kann natürlich auch auf einer Virtuellen Maschine (VM-Ware) laufen.
 

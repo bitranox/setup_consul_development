@@ -24,7 +24,9 @@ Die hier vorgestellten Skripte dienen zur Einrichtung einer Standardisierten Ent
 Über diese Skripte wird entweder auf einem Linux Host, oder auf einer virtuellen Maschine (VM-Ware) ein LXC Container (dies ist eine weitere virtuelle Maschine) erstellt.
 Es wird alle Software installiert um Consul auszuführen (Entwicklungs & Testumgebung - keine Produktionsumgebung, diese hat andere, höhere Voraussetzungen !)
 
-Getestet unter: Ubuntu 18.04 (bionic), Ubuntu 19.04 (disco) jeweils in der minimalen installation Deutsch, entweder direkt auf einem Rechner installiert (bevorzugt) oder auf einer virtuellen Maschine.
+Getestet unter:
+ - automatische Erstellung der LXC Container : Ubuntu 19.04 (disco) jeweils in der minimalen installation Deutsch, entweder direkt auf einem Rechner installiert (bevorzugt) oder auf einer virtuellen Maschine.
+ - Ruby Installation :  Ubuntu 18.04 (bionic), Ubuntu 19.04 (disco)
 
 ----
 
@@ -108,7 +110,7 @@ Host System
 -----------
 
 Das Host System besteht aus einem Linux Desktop Betriebssystem.
-Wenn Sie LXC Container installieren möchten (empfohlen) so wird Version 19.04 (disco) benötigt - 18.04 funktioniert NICHT.
+Wenn Sie die LXC Container automatisch mit unseren Skripten installieren möchten (empfohlen), so wird Version 19.04 (disco) benötigt - 18.04 funktioniert NICHT.
 Es wird von einer frischen, minimalen Installation des Hostsystemes ausgegangen.
 Das Host System kann natürlich auch auf einer Virtuellen Maschine (VM-Ware) laufen.
 
