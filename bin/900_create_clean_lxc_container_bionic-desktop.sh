@@ -179,7 +179,7 @@ function lxc_create_image {
 }
 
 
-container_name="lxc-clean-bionic"
+container_name="lxc-clean-bionic-desktop"
 profile_name="map-lxc-shared"
 lxc_user_name="consul"
 wait_for_enter "Erzeuge einen sauberen LXC-Container ${container_name}, user=${lxc_user_name}, pwd=consul, DNS Name = ${container_name}.lxd"
