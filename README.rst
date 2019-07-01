@@ -82,6 +82,9 @@ Installation
 - sonstige Einrichtung
     - `Chrome Remote Desktop einrichten`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
+- Installation von Consul
+    - `Installation von Consul - Vorbereitung`_
+    - `Installation des Datenbankservers`_
 
 ----
 
@@ -445,6 +448,25 @@ Sie können nun auf die Maschinen mit dem Google Browser, der Chrome Remote Soft
  - auch über die Grenzen Ihre Firewall hinweg - zugreifen. Auch wenn Sie keine statische IP Adresse haben.
 
 Als maximale Auflösung haben wir 5120x1600 voreingestellt, dieses Setting finden Sie unter /etc/environment
+
+
+---
+
+Installation von Consul - Vorbereitung
+--------------------------------------
+
+wir gehen nun davon aus, das Sie zu dem laufenden LXC Container oder dem Desktop Host System verbunden sind,
+auf dem Consul installiert werden soll.
+
+Einige Skripte können auch auf Servern ohne grafischer Benutzeroberfläche verwendet werden, diese sind besonders gekennzeichnet.
+
+Führen Sie nun auf dieser Maschine die unter `Installation der Skripte`_ beschriebenen Schritte aus, um die Skripte
+auch auf dem Container zu installieren.
+
+Installation des Datenbankservers
+---------------------------------
+
+more to come
 
 Grundlegende Verwendung
 -----------------------
