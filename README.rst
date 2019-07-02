@@ -84,7 +84,7 @@ Installation
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 - Installation von Consul
     - `Installation von Consul - Vorbereitung`_
-    - `Installation des Datenbankservers`_
+    - `008_00_install_postgresql`_
 
 ----
 
@@ -416,6 +416,12 @@ wir haben folgendes für Sie eingerichtet :
     lxc start lxc-test2
     lxc start lxc-clean
 
+    # console eines lxc-containers aufrufen
+    # wenn einmal das Netzwerk des Containers nicht funktioniert,
+    # oder Sie einen neuen Container ohne SSH und grafischem Desktop installiert haben,
+    # so können Sie von Host Rechner wie folgt auf die Console des LXC Containers zugreifen :
+    lxc exec <containername> /bin/bash
+
     # stoppen des Host Systemes
     # wenn Sie das Host System bei laufenden LXC Containern herunterfahren, so werden diese Container automatisch
     # beim Neustart des Host Systemes wieder gestartet.
@@ -463,8 +469,27 @@ Einige Skripte können auch auf Servern ohne grafischer Benutzeroberfläche verw
 Führen Sie nun auf dieser Maschine die unter `Installation der Skripte`_ beschriebenen Schritte aus, um die Skripte
 auch auf dem Container zu installieren.
 
-Installation des Datenbankservers
----------------------------------
+008_00_install_postgresql
+-------------------------
+
+Installation des Datenbankservers. Die Installation besteht aus zwei Unterskripten, welche Sie auch einzeln aufrufen können.
+
+- 008_00_install_postgresql
+    - ruft beide untenstehenden Skripte auf - getestet auf Ubuntu 18.04/19.04 Desktop
+- 008_01_install_postgresql_server.sh
+    - Installiert den Postgres SQL Server - getestet auf Ubuntu 18.04/19.04 Desktop und Server
+- 008_02_install_postgresql_pgadmin4
+    - Installiert das Administrationstool für Postgres - dies macht nur Sinn auf Maschinen mit grafischem Desktop
+    - getestet auf Ubuntu 18.04/19.04 Desktop
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    # für Desktop Maschinen:
+    ./008*
+    # alternativ für Server:
+    ./008-01*
+
 
 more to come
 

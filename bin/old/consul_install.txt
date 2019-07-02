@@ -1,0 +1,31 @@
+####################
+# installation
+####################
+
+use "#1_install_ruby_and_postgresql_for_consul.sh" to install all needed packages
+use "#2_install_or_reinstall_consul.sh" to install a clean (standard consul) environment
+use "start_consul.sh" to start the consul server
+
+####################
+# suggested tools to use:
+####################
+Database Administration : pgadmin4  (Installed by "#1_install_ruby_and_postgresql_for_consul.sh")
+comparison : meld (Installed by "#1_install_ruby_and_postgresql_for_consul.sh")
+programming: rubymine, see: https://www.jetbrains.com/ruby/specials/rubymine/ruby.html
+
+####################
+# conventions on hacking:
+####################
+
+#### FILENAMES
+altering files: save a copy of the original file with extension .original
+new files: use the suffix *_gilt.<extension>
+Example: template_gilt.yml   --> this is a new file (not an altered file from the original distribution)
+Example: logo_gilt.png   --> this is a new file (not an altered file from the original distribution)
+
+#### DATABASE NAMES, Usernames, Login Credentials
+for development use the credentials that are supplied with the installation script.
+we can agree to alter those ....
+
+
+
