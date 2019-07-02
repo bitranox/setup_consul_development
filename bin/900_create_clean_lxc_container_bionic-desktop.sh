@@ -22,6 +22,7 @@ function create_container_disco {
     lxc stop "${container_name}"
     lxc delete "${container_name}"
     lxc launch ubuntu:bionic "${container_name}"
+    lxc_reboot ${container_name}
 }
 
 function create_lxc_user {

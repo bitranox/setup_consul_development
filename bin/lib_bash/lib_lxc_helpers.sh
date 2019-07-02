@@ -98,6 +98,7 @@ function lxc_reboot {
     local container_name=$1
     banner "Container ${container_name}: Rebooting"
     lxc_shutdown "${container_name}"
+    sleep 2
     lxc_startup "${container_name}"
 }
 
