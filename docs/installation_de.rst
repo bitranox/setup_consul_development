@@ -23,8 +23,11 @@
 
 ----
 
-Die Ruby Entwicklungsumgebung läuft auf Ubuntu Desktop 19.04 (Disco Dingo) oder höher - andere Versionen können funktionieren,
-sind aber im Moment nicht getestet !
+- die Erstellung der LXC Container samt Namensauflösung läuft derzeit nur unter Ubuntu Desktop 19.04
+- der Datenbankserver postgresql lauft unter Ubuntu 18.04/19.04 Desktop oder Server
+- Ruby und Consul laufen unter Ubuntu 18.04/19.04 Desktop oder Server
+- die Ruby Entwicklungsumgebung läuft unter Ubuntu Desktop 18.04/19.04
+- für die Entwicklungsmaschine werden alle diese Programme am Besten auf einem Ubuntu 19.04 Desktop installiert, manche Skripte (für Server) sind jedoch bereits für die Installation auf einem Serversystem vorbereitet.
 
 
 Folgende Installationsvarianten sind möglich:
