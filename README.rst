@@ -81,10 +81,10 @@ Installation
     - `Grundlegende Befehle für LXC Container`_
 - sonstige Einrichtung
     - `Chrome Remote Desktop einrichten`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 - Installation von Consul
     - `Installation von Consul - Vorbereitung`_
     - `008_00_install_postgresql`_
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 
 ----
 
@@ -475,9 +475,11 @@ auch auf dem Container zu installieren.
 Installation des Datenbankservers. Die Installation besteht aus zwei Unterskripten, welche Sie auch einzeln aufrufen können.
 
 - 008_00_install_postgresql
-    - ruft beide untenstehenden Skripte auf - getestet auf Ubuntu 18.04/19.04 Desktop
+    - ruft beide untenstehenden Skripte auf
+    - getestet auf Ubuntu 18.04/19.04 Desktop
 - 008_01_install_postgresql_server.sh
-    - Installiert den Postgres SQL Server - getestet auf Ubuntu 18.04/19.04 Desktop und Server
+    - Installiert den Postgres SQL Server
+    - getestet auf Ubuntu 18.04/19.04 Desktop und Server
 - 008_02_install_postgresql_pgadmin4
     - Installiert das Administrationstool für Postgres - dies macht nur Sinn auf Maschinen mit grafischem Desktop
     - getestet auf Ubuntu 18.04/19.04 Desktop
