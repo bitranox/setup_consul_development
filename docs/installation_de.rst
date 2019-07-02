@@ -431,5 +431,4 @@ Installation des Datenbankservers. Die Installation besteht aus zwei Unterskript
     ./008-01*
 
 
-more to come
-
+nächster Schritt Ruby Installation - in Arbeit
