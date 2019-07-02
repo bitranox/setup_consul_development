@@ -5,7 +5,6 @@ function include_dependencies {
     sudo chmod -R +x "${my_dir}"/*.sh
     sudo chmod -R +x "${my_dir}"/lib_bash/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
-    source "${my_dir}/000_update_myself.sh"
     source "${my_dir}/008_99_lib.sh"
     source "${my_dir}/lib_bash/lib_color.sh"
     source "${my_dir}/lib_bash/lib_retry.sh"
