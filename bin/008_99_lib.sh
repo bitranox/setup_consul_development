@@ -15,7 +15,7 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function install_postgresql_repository {
-    sudo apt-get install wget ca-certificates -y
+    sudo apt-get install wget ca-certificates
     wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     sudo apt-get update
