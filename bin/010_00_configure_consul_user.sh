@@ -17,11 +17,14 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function install_ruby {
     banner "Install Ruby"
-    sudo apt-get install zlib1g -y
-    sudo apt-get install zlib1g-dev -y
-    sudo apt-get install ruby-full -y
-    sudo apt-get install nodejs -y
-    sudo apt-get install npm -y
+    sudo apt-get install zlib1g
+    sudo apt-get install zlib1g-dev
+    sudo apt-get install ruby-full
+    # https://stackoverflow.com/questions/2119064/sudo-gem-install-or-gem-install-and-gem-locations
+    # use RVM !!!
+    gem install bundler             # not Install gems as root !!!
+    sudo apt-get install nodejs
+    sudo apt-get install npm
 }
 
 

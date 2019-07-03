@@ -86,6 +86,7 @@ Installation
     - `008_00_install_postgresql`_
     - `009_00_install_ruby`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
+    - `010_00_configure_consul_user`_
 
 ----
 
@@ -500,16 +501,7 @@ Installation des Datenbankservers. Die Installation besteht aus zwei Unterskript
 009_00_install_ruby
 -------------------
 
-Installation von Ruby, nodejs und npm, Installation der "bundler" gem. Gems sind die Bibliotheken von Ruby - es ist darauf zu Achten das gems NICHT ALS ROOT installiert werden.
-
-Wir wollen mehrere Versionen von Consul (Originalversion, Entwicklungsversion, Testversion, etc ...) gleichzeitig auf dieser Maschine laufen lassen.
-Es könnte jedoch sein das diese Versionen unterschiedliche Versionen der "gems" benötigen - dies wird erst in zukünftigen Skript Versionen unterstützt.
-In Zukunft soll dazu RVM eingesetzt werden, um verschiedene Ruby Environments für verschiedene Consul-Versionen erstellen zu können.
-
-Derzeit werden die Gems als (und somit für) den Benutzer "consul" installiert,
-
-siehe auch : https://stackoverflow.com/questions/2119064/sudo-gem-install-or-gem-install-and-gem-locations
-
+Installation von Ruby, nodejs und npm
 getestet auf Ubuntu 18.04/19.04 Desktop und Server
 
 .. code-block:: bash
@@ -519,8 +511,24 @@ getestet auf Ubuntu 18.04/19.04 Desktop und Server
     ./009*
 
 
+010_00_configure_consul_user
+----------------------------
 
-nächster Schritt CONSUL Installation - in Arbeit
+Gems sind die Bibliotheken von Ruby - es ist darauf zu Achten das gems NICHT ALS ROOT installiert werden.
+
+Wir wollen mehrere Versionen von Consul (Originalversion, Entwicklungsversion, Testversion, etc ...) gleichzeitig auf dieser Maschine laufen lassen.
+Es könnte jedoch sein das diese Versionen unterschiedliche Versionen der "gems" benötigen - dies wird erst in zukünftigen Skript Versionen unterstützt.
+In Zukunft soll dazu RVM eingesetzt werden, um verschiedene Ruby Environments für verschiedene Consul-Versionen erstellen zu können.
+
+Derzeit werden alle gems unter /var/lib/gems gespeichert. Der Verweis auf die jeweilig für einen Benutzer installiertes gem findet sich auf ~/.gem
+
+Es wird ein Benutzer und Gruppe "consul" angelegt (soferne noch nicht vorhanden)
+Es wird ein Benutzer und Gruppe "ruby" angelegt. Jeder Benutzer der Ruby verwenden möchte, muss der Gruppe "ruby" hinzugefügt werden, sonst können keine gems installiert werden.
+Der Benutzer "consul" wird als Mitglied der Gruppe "ruby" hinzugefügt und erhält damit Schreibrechte auf /var/lib/gems
+
+Derzeit werden die Gems als (und somit für) den Benutzer "consul" installiert,
+
+siehe auch : https://stackoverflow.com/questions/2119064/sudo-gem-install-or-gem-install-and-gem-locations
 
 Grundlegende Verwendung
 -----------------------
