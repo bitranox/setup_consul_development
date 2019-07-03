@@ -19,6 +19,7 @@
 - Installation von Consul
     - `Installation von Consul - Vorbereitung`_
     - `008_00_install_postgresql`_
+    - `009_00_install_ruby`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 
 ----
@@ -431,4 +432,27 @@ Installation des Datenbankservers. Die Installation besteht aus zwei Unterskript
     ./008-01*
 
 
-nächster Schritt Ruby Installation - in Arbeit
+009_00_install_ruby
+-------------------
+
+Installation von Ruby, nodejs und npm, Installation der "bundler" gem. Gems sind die Bibliotheken von Ruby - es ist darauf zu Achten das gems NICHT ALS ROOT installiert werden.
+
+Wir wollen mehrere Versionen von Consul (Originalversion, Entwicklungsversion, Testversion, etc ...) gleichzeitig auf dieser Maschine laufen lassen.
+Es könnte jedoch sein das diese Versionen unterschiedliche Versionen der "gems" benötigen - dies wird erst in zukünftigen Skript Versionen unterstützt.
+In Zukunft soll dazu RVM eingesetzt werden, um verschiedene Ruby Environments für verschiedene Consul-Versionen erstellen zu können.
+
+Derzeit werden die Gems als (und somit für) den Benutzer "consul" installiert,
+
+siehe auch : https://stackoverflow.com/questions/2119064/sudo-gem-install-or-gem-install-and-gem-locations
+
+getestet auf Ubuntu 18.04/19.04 Desktop und Server
+
+.. code-block:: bash
+
+    cd ~/consul-dev-env-public/bin
+    # für Desktop oder Server Maschinen:
+    ./009*
+
+
+
+nächster Schritt CONSUL Installation - in Arbeit
