@@ -14,7 +14,13 @@ function fail {
 }
 
 function get_linux_codename {
-    export linux_codename=`lsb_release --codename | cut -f2`
+    local linux_codename=`lsb_release --codename | cut -f2`
+    echo "${linux_codename}"
+}
+
+function export_linux_codename {
+    local linux_codename=`lsb_release --codename | cut -f2`
+    export ${linux_codename}
 }
 
 function banner {
@@ -59,7 +65,7 @@ function wait_for_enter {
 
 
 function wait_for_enter_warning {
-    # wait for enter - first parameter will be showed in a banner if present
+    # wait for enter - first parameter will be showed in a red banner if present
     if [[ ! -z "$1" ]] ;
         then
             banner_warning "${1}"
@@ -76,6 +82,10 @@ function reboot {
 
 
 function backup_file {
+    # $1 : <file>
+    # copies <file> to <file>.backup
+    # copies <file> to <file>.original if <file>.original does not exist
+
     # if <file> exist
     if [[ -f "${1}" ]]; then
         # copy <file>.original to <file>.backup
@@ -89,6 +99,9 @@ function backup_file {
 
 
 function remove_file {
+    # $1 : <file>
+    # removes <file>
+
     # if <file> exist
     if [[ -f "${1}" ]]; then
         sudo rm -f "${1}"
