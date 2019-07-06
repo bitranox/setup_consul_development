@@ -14,11 +14,10 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function update_myself {
-    retry sudo git fetch --all
-    sudo git reset --hard origin/master
+    retry sudo git fetch --all > /dev/null 2>&1
+    sudo git reset --hard origin/master > /dev/null 2>&1
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     sudo chmod -R +x "${my_dir}"/*.sh
-    sudo chmod -R +x "${my_dir}"/lib_bash/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
 }
 
