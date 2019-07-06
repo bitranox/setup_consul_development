@@ -41,9 +41,10 @@ function lxc_wait_until_machine_stopped {
             break
         else
             sleep 1
-            clr_green "Container ${container_name}: stopping"
+            clr_green "Container ${container_name}: wait for stopping"
         fi
     done
+    clr_green "Container ${container_name}: stopped"
 }
 
 function lxc_wait_until_machine_running {
@@ -55,9 +56,10 @@ function lxc_wait_until_machine_running {
             break
         else
             sleep 1
-            clr_green "Container ${container_name}: starting"
+            clr_green "Container ${container_name}: wait for startup"
         fi
     done
+    clr_green "Container ${container_name}: started"
 }
 
 function lxc_wait_until_internet_connected {
@@ -73,6 +75,7 @@ function lxc_wait_until_internet_connected {
             clr_green "Container ${container_name}: wait for internet connection"
         fi
     done
+    clr_green "Container ${container_name}: internet connected"
 }
 
 
@@ -98,7 +101,7 @@ function lxc_reboot {
     local container_name=$1
     banner "Container ${container_name}: Rebooting"
     lxc_shutdown "${container_name}"
-    sleep 2
+    sleep 1
     lxc_startup "${container_name}"
 }
 

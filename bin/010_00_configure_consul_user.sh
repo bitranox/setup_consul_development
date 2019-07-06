@@ -32,3 +32,12 @@ wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby
 banner "Install Ruby, nodejs, npm fertig"
 
+################################################################################################
+# function get_input_with_default_value
+################################################################################################
+
+#
+# name="Ricardo"
+# read -e -i "$name" -p "Please enter your name: " input
+# name="${input:-$name}"
+#
