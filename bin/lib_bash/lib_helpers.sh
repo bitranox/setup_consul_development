@@ -18,11 +18,6 @@ function get_linux_codename {
     echo "${linux_codename}"
 }
 
-function export_linux_codename {
-    local linux_codename=`lsb_release --codename | cut -f2`
-    export ${linux_codename}
-}
-
 function banner {
     clr_bold clr_green " "
     clr_bold clr_green " "
