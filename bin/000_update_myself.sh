@@ -1,9 +1,9 @@
 #!/bin/bash
+install_lib_bash.sh
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     sudo chmod -R +x "${my_dir}"/*.sh
-    sudo chmod -R +x "${my_dir}"/lib_bash/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/lib_bash/lib_color.sh"
     source "${my_dir}/lib_bash/lib_retry.sh"
