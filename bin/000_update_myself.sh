@@ -29,7 +29,7 @@ function check_upgrade {
     local script_name=$1
     local script_args=$2
 
-    local git_remote_hash=$(git --no-pager ls-remote | grep HEAD | awk '{print $1;}')
+    local git_remote_hash=$(git --no-pager ls-remote --quiet | grep HEAD | awk '{print $1;}')
     local git_local_hash=$(git --no-pager log --decorate=short --pretty=oneline -n1 | grep HEAD | awk '{print $1;}')
 
     if [[ ${git_remote_hash} == ${git_local_hash} ]]; then
