@@ -50,8 +50,8 @@ function update_myself {
 function check_upgrade {
     # parameter: $1 script_name
     # parameter: $2 script_args
-    local script_name=$1
-    local script_args=$2
+    local calling_script="${1}"
+    local script_args="${@}"
 
     local git_remote_hash=$(git --no-pager ls-remote --quiet | grep HEAD | awk '{print $1;}')
     local git_local_hash=$(git --no-pager log --decorate=short --pretty=oneline -n1 | grep HEAD | awk '{print $1;}')
@@ -62,13 +62,12 @@ function check_upgrade {
         banner "new Version, updating skripts..."
         update_myself
 
-        # running the new Version
-        "$@"
-        # $script_name $script_args
+        # running the new Version of the calling script
+        "${@}"
 
-        # exit this old instance
-        exit 0
+        # exit this old instance with error code 100
+        exit 100
     fi
 }
 
-check_upgrade "$0" "$@"
+check_upgrade "${0}" "${@}"
