@@ -62,7 +62,8 @@ function check_upgrade {
         update_myself
 
         # running the new Version
-        $script_name $script_args
+        "$@"
+        # $script_name $script_args
 
         # exit this old instance
         exit 0
