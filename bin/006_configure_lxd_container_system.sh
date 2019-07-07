@@ -93,7 +93,7 @@ function extend_default_profile {
 
 
 profile_name="map-lxc-shared"
-wait_for_enter "Konfiguriere LXD Container System - DNSMASQ darf nicht installiert sein, DNS muss über systemd-resolved erfolgen !"
+wait_for_enter "Konfiguriere LXD Container System"
 install_essentials
 linux_update
 lxd_init
