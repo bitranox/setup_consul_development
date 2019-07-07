@@ -22,8 +22,8 @@ function get_sudo_command_prefix {
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command_prefix=$(get_sudo_command_prefix)
-    {sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
-    {sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
+    ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/install_lib_bash.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
@@ -41,8 +41,8 @@ function update_myself {
     ${sudo_command_prefix} chmod -R 0755 "${my_dir}"
     ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
     ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
-    ${sudo_command_prefix} chown -R ${USER} "${my_dir}"
-    ${sudo_command_prefix} chgrp -R ${USER} "${my_dir}"
+    ${sudo_command_prefix} chown -R "${USER}" "${my_dir}"
+    ${sudo_command_prefix} chgrp -R "${USER}" "${my_dir}"
 }
 
 
