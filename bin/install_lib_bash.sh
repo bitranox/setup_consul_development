@@ -39,6 +39,7 @@ function set_lib_bash_permissions {
 
 function install_lib_bash_if_not_exist {
     if [[ ! -d "/usr/lib/lib_bash" ]]; then
+        echo "installing lib_bash"
         $(get_sudo_command_prefix) git clone https://github.com/bitranox/lib_bash.git /usr/lib/lib_bash > /dev/null 2>&1
     fi
 }
