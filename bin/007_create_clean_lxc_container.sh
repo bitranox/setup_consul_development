@@ -30,6 +30,7 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
+    source /usr/lib/lib_bash/lib_lxc_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
@@ -39,8 +40,8 @@ function create_container_disco {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Erzeuge Container ${container_name}"
-    lxc stop "${container_name}"
-    lxc delete "${container_name}"
+    lxc stop "${container_name}"  > /dev/null 2>&1
+    lxc delete "${container_name}"  > /dev/null 2>&1
     lxc launch ubuntu:disco "${container_name}"
 }
 
