@@ -9,23 +9,23 @@ function get_sudo_exists {
     fi
 }
 
-function get_sudo_command_prefix {
+function get_sudo_command {
     # we need this for travis - there is no sudo command !
     if [[ $(get_sudo_exists) == "True" ]]; then
-        local sudo_cmd_prefix="sudo"
-        echo ${sudo_cmd_prefix}
+        local sudo_command="sudo"
+        echo ${sudo_command}
     else
-        local sudo_cmd_prefix=""
-        echo ${sudo_cmd_prefix}
+        local sudo_command=""
+        echo ${sudo_command}
     fi
 }
 
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command_prefix=$(get_sudo_command_prefix)
-    ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
+    local sudo_command=$(get_sudo_command)
+    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/000_update_myself.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
@@ -37,54 +37,54 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function install_software {
     banner "install needed tools : build-essential, mc, geany, meld, synaptic, x2goclient"
-    local sudo_command_prefix=$(get_sudo_command_prefix)
+    local sudo_command=$(get_sudo_command)
     ### remove Canonical Reporting
-    ${sudo_command_prefix} apt-get purge whoopsie -y
-    ${sudo_command_prefix} apt-get purge libwhoopsie0 -y
-    ${sudo_command_prefix} apt-get purge libwhoopsie-preferences0 -y
-    ${sudo_command_prefix} apt-get purge apport -y
+    ${sudo_command} apt-get purge whoopsie -y
+    ${sudo_command} apt-get purge libwhoopsie0 -y
+    ${sudo_command} apt-get purge libwhoopsie-preferences0 -y
+    ${sudo_command} apt-get purge apport -y
     # essential
-    retry ${sudo_command_prefix} apt-get install net-tools -y
-    retry ${sudo_command_prefix} apt-get install git -y
+    retry ${sudo_command} apt-get install net-tools -y
+    retry ${sudo_command} apt-get install git -y
     # build-essential
-    retry ${sudo_command_prefix} apt-get install build-essential -y
+    retry ${sudo_command} apt-get install build-essential -y
     # midnight commander
-    retry ${sudo_command_prefix} apt-get install mc -y
+    retry ${sudo_command} apt-get install mc -y
     # geany Editor
-    retry ${sudo_command_prefix} apt-get purge enchant -y
-    retry ${sudo_command_prefix} apt-get purge gedit -y
-    retry ${sudo_command_prefix} apt-get purge gedit-common -y
-    retry ${sudo_command_prefix} apt-get purge pluma-common -y
-    retry ${sudo_command_prefix} apt-get purge tilda -y
-    retry ${sudo_command_prefix} apt-get purge vim -y
-    retry ${sudo_command_prefix} apt-get install geany -y
+    retry ${sudo_command} apt-get purge enchant -y
+    retry ${sudo_command} apt-get purge gedit -y
+    retry ${sudo_command} apt-get purge gedit-common -y
+    retry ${sudo_command} apt-get purge pluma-common -y
+    retry ${sudo_command} apt-get purge tilda -y
+    retry ${sudo_command} apt-get purge vim -y
+    retry ${sudo_command} apt-get install geany -y
     # Meld Vergleichstool
-    retry ${sudo_command_prefix} apt-get install meld -y
+    retry ${sudo_command} apt-get install meld -y
     # Paketverwaltung
-    retry ${sudo_command_prefix} apt-get install synaptic -y
+    retry ${sudo_command} apt-get install synaptic -y
     # x2go client
-    retry ${sudo_command_prefix} apt-get install x2goclient -y
+    retry ${sudo_command} apt-get install x2goclient -y
 }
 
 
 
 function install_chrome {
     banner "Install google chrome"
-    local sudo_command_prefix=$(get_sudo_command_prefix)
+    local sudo_command=$(get_sudo_command)
     retry wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    retry ${sudo_command_prefix} dpkg -i google-chrome-stable_current_amd64.deb
-    ${sudo_command_prefix} rm -f ./google-chrome-stable_current_amd64.deb
+    retry ${sudo_command} dpkg -i google-chrome-stable_current_amd64.deb
+    ${sudo_command} rm -f ./google-chrome-stable_current_amd64.deb
 }
 
 function install_chrome_remote_desktop {
     banner "Install google chrome remote desktop"
-    local sudo_command_prefix=$(get_sudo_command_prefix)
-    retry ${sudo_command_prefix} apt-get install xvfb
-    retry ${sudo_command_prefix} apt-get install xbase-clients
-    retry ${sudo_command_prefix} apt-get install python-psutil
+    local sudo_command=$(get_sudo_command)
+    retry ${sudo_command} apt-get install xvfb
+    retry ${sudo_command} apt-get install xbase-clients
+    retry ${sudo_command} apt-get install python-psutil
     retry wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
-    retry ${sudo_command_prefix} dpkg -i chrome-remote-desktop_current_amd64.deb
-    ${sudo_command_prefix} rm -f ./chrome-remote-desktop_current_amd64.deb
+    retry ${sudo_command} dpkg -i chrome-remote-desktop_current_amd64.deb
+    ${sudo_command} rm -f ./chrome-remote-desktop_current_amd64.deb
     replace_or_add_lines_containing_string_in_file "/etc/environment" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\""
 }
 
