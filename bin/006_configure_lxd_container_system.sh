@@ -1,9 +1,31 @@
 #!/bin/bash
 
+function get_sudo_exists {
+    # we need this for travis - there is no sudo command !
+    if [[ -f /usr/bin/sudo ]]; then
+        echo "True"
+    else
+        echo "False"
+    fi
+}
+
+function get_sudo_command_prefix {
+    # we need this for travis - there is no sudo command !
+    if [[ $(get_sudo_exists) == "True" ]]; then
+        local sudo_cmd_prefix="sudo"
+        echo ${sudo_cmd_prefix}
+    else
+        local sudo_cmd_prefix=""
+        echo ${sudo_cmd_prefix}
+    fi
+}
+
+
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    sudo chmod -R +x "${my_dir}"/*.sh
-    sudo chmod -R +x "${my_dir}"/lib_install/*.sh
+    local sudo_command_prefix=$(get_sudo_command_prefix)
+    ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/000_update_myself.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
@@ -20,27 +42,30 @@ function lxd_init {
 
 function set_uids {
     # subuid, subgid setzen
-    sudo sh -c "echo \"${USER}:100000:65536\nroot:$(id -u):1\n\" > /etc/subuid"
-    sudo sh -c "echo \"${USER}:100000:65536\nroot:$(id -g):1\n\" > /etc/subgid"
+    local sudo_command_prefix=$(get_sudo_command_prefix)
+    ${sudo_command_prefix} sh -c "echo \"${USER}:100000:65536\nroot:$(id -u):1\n\" > /etc/subuid"
+    ${sudo_command_prefix} sh -c "echo \"${USER}:100000:65536\nroot:$(id -g):1\n\" > /etc/subgid"
 }
 
 function create_shared_directory {
     # shared Verzeichnis anlegen
-    sudo mkdir -p /media/lxc-shared
-    sudo chmod -R 0777 /media/lxc-shared
+    local sudo_command_prefix=$(get_sudo_command_prefix)
+    ${sudo_command_prefix} mkdir -p /media/lxc-shared
+    ${sudo_command_prefix} chmod -R 0777 /media/lxc-shared
 
 }
 
 function configure_dns {
     # LXC Network dns einschalten
+    local sudo_command_prefix=$(get_sudo_command_prefix)
     echo -e "auth-zone=lxd\ndns-loop-detect" | lxc network set lxdbr0 raw.dnsmasq -
     # systemd-resolved für domain .lxd von Bridge IP abfragen - DNSMASQ darf NICHT installiert sein !
     local bridge_ip=$(ifconfig lxdbr0 | grep 'inet' | head -n 1 | tail -n 1 | awk '{print $2}')
-    sudo mkdir -p /etc/systemd/resolved.conf.d
-    sudo sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
-    sudo service systemd-resolved restart
-    sudo service network-manager restart
-    sudo snap restart lxd
+    ${sudo_command_prefix} mkdir -p /etc/systemd/resolved.conf.d
+    ${sudo_command_prefix} sh -c "echo \"[Resolve]\nDNS=$bridge_ip\nDomains=lxd\n\" > /etc/systemd/resolved.conf.d/lxdbr0.conf"
+    ${sudo_command_prefix} service systemd-resolved restart
+    ${sudo_command_prefix} service network-manager restart
+    ${sudo_command_prefix} snap restart lxd
 }
 
 function create_lxc_profile {

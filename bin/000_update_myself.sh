@@ -9,21 +9,22 @@ function get_sudo_exists {
     fi
 }
 
-function get_sudo_command_prefix {
+function get_sudo_command {
+    # we need this for travis - there is no sudo command !
     if [[ $(get_sudo_exists) == "True" ]]; then
-        local sudo_cmd_prefix="sudo"
-        echo ${sudo_cmd_prefix}
+        local sudo_command="sudo"
+        echo ${sudo_command}
     else
-        local sudo_cmd_prefix=""
-        echo ${sudo_cmd_prefix}
+        local sudo_command=""
+        echo ${sudo_command}
     fi
 }
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command_prefix=$(get_sudo_command_prefix)
-    ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
+    local sudo_command=$(get_sudo_command)
+    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/install_lib_bash.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
@@ -34,15 +35,15 @@ function include_dependencies {
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function update_myself {
-    local sudo_command_prefix=$(get_sudo_command_prefix)
-    retry ${sudo_command_prefix} git fetch --all > /dev/null 2>&1
-    ${sudo_command_prefix} git reset --hard origin/master > /dev/null 2>&1
+    local sudo_command=$(get_sudo_command)
+    retry ${sudo_command} git fetch --all > /dev/null 2>&1
+    ${sudo_command} git reset --hard origin/master > /dev/null 2>&1
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    ${sudo_command_prefix} chmod -R 0755 "${my_dir}"
-    ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
-    ${sudo_command_prefix} chown -R "${USER}" "${my_dir}"
-    ${sudo_command_prefix} chgrp -R "${USER}" "${my_dir}"
+    ${sudo_command} chmod -R 0755 "${my_dir}"
+    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
+    ${sudo_command} chown -R "${USER}" "${my_dir}"
+    ${sudo_command} chgrp -R "${USER}" "${my_dir}"
 }
 
 

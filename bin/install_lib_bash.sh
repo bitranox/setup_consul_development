@@ -19,6 +19,7 @@ function get_sudo_exists {
 }
 
 function get_sudo_command_prefix {
+    # we need this for travis - there is no sudo command !
     if [[ $(get_sudo_exists) == "True" ]]; then
         local sudo_cmd_prefix="sudo"
         echo ${sudo_cmd_prefix}
