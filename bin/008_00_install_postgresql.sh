@@ -26,7 +26,7 @@ function include_dependencies {
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
     ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
-    source "${my_dir}/000_update_myself.sh"
+    source "${my_dir}/000_00_update_myself.sh"
     source "${my_dir}/008_99_lib.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
