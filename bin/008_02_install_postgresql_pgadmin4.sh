@@ -26,7 +26,7 @@ function include_dependencies {
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
     ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
-    source "${my_dir}/000_00_update_myself.sh"
+    "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after update
     source "${my_dir}/008_99_lib.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
@@ -34,7 +34,7 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-include_dependencies  # we need to do that via a function to have local scope of my_dir
+include_dependencies "${0}" "${@}" # pass own script name and parameters
 
 wait_for_enter "Installiere postgresql admin Interface für Desktop"
 install_essentials
