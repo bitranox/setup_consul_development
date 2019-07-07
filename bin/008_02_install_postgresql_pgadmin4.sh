@@ -6,9 +6,9 @@ function include_dependencies {
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/000_update_myself.sh"
     source "${my_dir}/008_99_lib.sh"
-    source /usr/bin/lib_bash/lib_color.sh
-    source /usr/bin/lib_bash/lib_retry.sh
-    source /usr/bin/lib_bash/lib_helpers.sh
+    source /usr/lib/lib_bash/lib_color.sh
+    source /usr/lib/lib_bash/lib_retry.sh
+    source /usr/lib/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
