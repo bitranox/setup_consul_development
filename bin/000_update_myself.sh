@@ -5,20 +5,24 @@ function include_dependencies {
     sudo chmod -R +x "${my_dir}"/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
     source "${my_dir}/install_lib_bash.sh"
-    source "${my_dir}/lib_bash/lib_color.sh"
-    source "${my_dir}/lib_bash/lib_retry.sh"
-    source "${my_dir}/lib_bash/lib_helpers.sh"
+    source /usr/bin/lib_bash/lib_color.sh
+    source /usr/bin/lib_bash/lib_retry.sh
+    source /usr/bin/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function update_myself {
-    retry sudo git fetch --all > /dev/null 2>&1
-    sudo git reset --hard origin/master > /dev/null 2>&1
+    local sudo_command_prefix=$(get_sudo_command_prefix)
+    retry ${sudo_command_prefix} git fetch --all > /dev/null 2>&1
+    ${sudo_command_prefix} git reset --hard origin/master > /dev/null 2>&1
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    sudo chmod -R +x "${my_dir}"/*.sh
-    sudo chmod -R +x "${my_dir}"/lib_install/*.sh
+    ${sudo_command_prefix} chmod -R 0755 "${my_dir}"
+    ${sudo_command_prefix} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command_prefix} chmod -R +x "${my_dir}"/lib_install/*.sh
+    ${sudo_command_prefix} chown -R ${USER} "${my_dir}"
+    ${sudo_command_prefix} chgrp -R ${USER} "${my_dir}"
 }
 
 

@@ -4,12 +4,10 @@ function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     sudo chmod -R +x "${my_dir}"/*.sh
     sudo chmod -R +x "${my_dir}"/lib_install/*.sh
-    source "${my_dir}/install_lib_bash.sh"
     source "${my_dir}/000_update_myself.sh"
-    source "${my_dir}/lib_bash/lib_color.sh"
-    source "${my_dir}/lib_bash/lib_retry.sh"
-    source "${my_dir}/lib_bash/lib_helpers.sh"
-    source "${my_dir}/lib_bash/lib_lxc_helpers.sh"
+    source /usr/bin/lib_bash/lib_color.sh
+    source /usr/bin/lib_bash/lib_retry.sh
+    source /usr/bin/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
