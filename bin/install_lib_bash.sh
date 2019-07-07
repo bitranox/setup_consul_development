@@ -56,6 +56,7 @@ function get_needs_update {
 function update_lib_bash_if_exist {
     if [[ -d "/usr/lib/lib_bash" ]]; then
         if [[ $(get_needs_update) == "True" ]]; then
+            echo "lib_bash needs to update"
             (
                 # create a subshell to preserve current directory
                 cd /usr/lib/lib_bash
@@ -64,6 +65,8 @@ function update_lib_bash_if_exist {
                 ${sudo_command_prefix} git reset --hard origin/master  > /dev/null 2>&1
                 set_lib_bash_permissions
             )
+        else
+            echo "lib_bash is up to date"
         fi
     fi
 }
