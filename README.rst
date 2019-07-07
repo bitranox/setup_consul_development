@@ -206,7 +206,7 @@ folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückf
 - git
 
 000_00_update_myself
------------------
+--------------------
 
 Dieses Skript führt ein Update der eigenen Installationsskripte durch.
 Sobald auf Github eine neue Version vorliegt, werden bei Aufruf eines der nachfolgenden Skripte automatisch ein Update ausgeführt.
@@ -218,7 +218,7 @@ Achtung, etwaige eigene Änderungen in diesen Skripten werden überschrieben !
     ./000*
 
 001_00_install_languagepack
-------------------------
+---------------------------
 
 Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht bereits haben - es schadet nicht.
 
@@ -228,7 +228,7 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
     ./001*
 
 002_00_install_ubuntu_mate_desktop
--------------------------------
+----------------------------------
 Für Ubuntu-Desktop Versionen OPTIONAL, für Ubuntu Server zwingend notwendig !
 
 Installation des Ubuntu-Mate-Desktops - diese Desktopumgebung ist mehr Windows-ähnlich,
@@ -242,7 +242,7 @@ Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager 
     ./002*
 
 003_00_remove_unnecessary
-----------------------
+-------------------------
 Für die Entwicklung unnötige Programme deinstallieren. Darunter fallen viele Tools wie VIM, Brasero, aber auch
 Thunderbird Mailprogramm, Dateimanager Nautils (Mate verwendet Caja), oder Libre Office.
 Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dieser Programme benötigen !
@@ -253,7 +253,7 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
     ./003*
 
 004_00_install_tools
------------------
+--------------------
 Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, synaptics, x2goclient
 
 .. code-block:: bash
@@ -262,7 +262,7 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
     ./004*
 
 005_00_install_lxd_container_system
---------------------------------
+-----------------------------------
 Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden möchten)
 
 .. code-block:: bash
@@ -271,7 +271,7 @@ Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden m�
     ./005*
 
 006_00_configure_lxd_container_system
-----------------------------------
+-------------------------------------
 Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
  - anlegen eines Shared Directories zum Dateiaustausch unter $HOME/lxc-shared
  - Disk Device zu Shared Directory zu Profile "default" hinzufügen
@@ -286,7 +286,7 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
     ./006*
 
 007_00_create_clean_lxc_container
-------------------------------
+---------------------------------
 Erzeugen des ersten LXC Containers (nur wenn Sie LXC Container verwenden möchten)
 Erzeuge einen sauberen LXC Container lxc-clean, mit Benutzer consul, passwort consul.
 Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxd erreichbar.
