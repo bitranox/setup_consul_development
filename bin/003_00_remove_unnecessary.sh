@@ -39,9 +39,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function remove_unnecessary {
     ### remove Canonical Reporting
     local sudo_command=$(get_sudo_command)
@@ -116,6 +113,8 @@ function remove_unnecessary {
     ${sudo_command} apt-get purge transmission-common -y
 }
 
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 wait_for_enter_warning "Unnötige Programme deinstallieren - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie sicher ?"
 wait_for_enter_warning "Unnötige Programme und deren Daten werden GELÖSCHT - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie GANZ sicher ?"
 install_essentials

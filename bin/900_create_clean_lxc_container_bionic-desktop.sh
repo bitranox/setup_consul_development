@@ -40,9 +40,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function create_container_disco {
     # parameter: $1 = container_name
     local container_name=$1
@@ -211,6 +208,10 @@ function lxc_create_image {
 container_name="lxc-clean-bionic-desktop"
 profile_name="map-lxc-shared"
 lxc_user_name="consul"
+
+
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 wait_for_enter "Erzeuge einen sauberen LXC-Container ${container_name}, user=${lxc_user_name}, pwd=consul, DNS Name = ${container_name}.lxd"
 install_essentials
 linux_update

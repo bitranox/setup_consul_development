@@ -39,9 +39,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function install_swapfile {
     banner "Install 8GB Swapfile"
     local sudo_command=$(get_sudo_command)
@@ -72,6 +69,8 @@ function install_ubuntu_mate_desktop {
 }
 
 
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
 install_essentials
 linux_update

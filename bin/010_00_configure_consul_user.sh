@@ -40,10 +40,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
-
 function install_ruby {
     banner "Install Ruby"
     local sudo_command=$(get_sudo_command)
@@ -58,6 +54,8 @@ function install_ruby {
 }
 
 
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby
 banner "Install Ruby, nodejs, npm fertig"

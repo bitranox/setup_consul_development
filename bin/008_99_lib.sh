@@ -39,9 +39,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function install_postgresql_repository {
     local sudo_command=$(get_sudo_command)
     ${sudo_command} apt-get install wget ca-certificates
@@ -61,3 +58,6 @@ function install_postgresql_pgadmin4 {
     local sudo_command=$(get_sudo_command)
     ${sudo_command} apt-get install pgadmin4 -y
 }
+
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies

@@ -40,9 +40,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function install_software {
     banner "install needed tools : build-essential, mc, geany, meld, synaptic, x2goclient"
     local sudo_command=$(get_sudo_command)
@@ -96,7 +93,8 @@ function install_chrome_remote_desktop {
     replace_or_add_lines_containing_string_in_file "/etc/environment" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\""
 }
 
-
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 wait_for_enter "Notwendige und nützliche Tools werden installiert"
 install_essentials
 linux_update

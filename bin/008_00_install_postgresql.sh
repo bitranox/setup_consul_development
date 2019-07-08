@@ -43,7 +43,6 @@ function include_dependencies {
 
 update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
-
 wait_for_enter "Installiere Datenbankserver postgresql samt admin Interface für Desktop"
 install_essentials
 install_postgresql_repository

@@ -40,9 +40,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function lxd_init {
     # lxd initialisieren
     lxd init --auto --storage-backend dir
@@ -98,8 +95,8 @@ function extend_default_profile {
 }
 
 
-
-
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 profile_name="map-lxc-shared"
 wait_for_enter "Konfiguriere LXD Container System"
 install_essentials

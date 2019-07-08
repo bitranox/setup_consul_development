@@ -40,9 +40,6 @@ function include_dependencies {
     source "${my_dir}/lib_install/install_essentials.sh"
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
-
 function install_lxd_container_system {
     banner "snap Install LXD"
     local sudo_command=$(get_sudo_command)
@@ -62,6 +59,8 @@ function add_user_to_lxd_group {
     # init LXD - not as root !
 }
 
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 wait_for_enter "Installiere LXD Container System"
 install_essentials
 linux_update
