@@ -26,7 +26,7 @@ function update_lib_bash {
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
     ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     echo "${my_dir}/install_or_update_lib_bash" "${@}"
-    "${my_dir}/install_or_update_lib_bash" "${@}" || exit 0              # exit old instance after updates
+    "${my_dir}/install_or_update_lib_bash.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
 
