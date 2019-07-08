@@ -54,7 +54,7 @@ function set_consul_dev_env_public_permissions {
 function is_consul_dev_env_public_to_update {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local git_remote_hash=$(git --no-pager ls-remote --quiet https://github.com/bitranox/consul-dev-env-public.git | grep HEAD | awk '{print $1;}' )
-    local git_local_hash=$( $(get_sudo_command) cat "${my_dir}"/.git/refs/heads/master)
+    local git_local_hash=$( $(get_sudo_command) cat ~/consul-dev-env-public/.git/refs/heads/master)
     if [[ "${git_remote_hash}" == "${git_local_hash}" ]]; then
         echo "False"
     else
