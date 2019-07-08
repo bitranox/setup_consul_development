@@ -44,11 +44,11 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R 0755 ~/consul_dev_env_public/
-    ${sudo_command} chmod -R +x ~/consul_dev_env_public/bin/*.sh
-    ${sudo_command} chmod -R +x ~/consul_dev_env_public/bin/lib_install/*.sh
-    ${sudo_command} chown -R "${USER}" ~/consul_dev_env_public/
-    ${sudo_command} chgrp -R "${USER}" ~/consul_dev_env_public/
+    ${sudo_command} chmod -R 0755 ~/consul-dev-env-public
+    ${sudo_command} chmod -R +x ~/consul-dev-env-public/bin/*.sh
+    ${sudo_command} chmod -R +x ~/consul-dev-env-public/bin/lib_install/*.sh
+    ${sudo_command} chown -R "${USER}" ~/consul-dev-env-public/
+    ${sudo_command} chgrp -R "${USER}" ~/consul-dev-env-public/
 }
 
 function is_consul_dev_env_public_to_update {
@@ -65,18 +65,18 @@ function is_consul_dev_env_public_to_update {
 
 function update_consul_dev_env_public {
     if [[ $(is_consul_dev_env_public_to_update) == "True" ]]; then
-        clr_green "consul_dev_env_public needs to update"
+        clr_green "consul-dev-env-public needs to update"
         (
             # create a subshell to preserve current directory
-            cd ~/consul_dev_env_public
+            cd ~/consul-dev-env-public
             local sudo_command=$(get_sudo_command)
             ${sudo_command} git fetch --all  > /dev/null 2>&1
             ${sudo_command} git reset --hard origin/master  > /dev/null 2>&1
             set_consul_dev_env_public_permissions
         )
-        clr_green "consul_dev_env_public update complete"
+        clr_green "consul-dev-env-public update complete"
     else
-        clr_green "consul_dev_env_public is up to date"
+        clr_green "consul-dev-env-public is up to date"
     fi
 }
 
