@@ -23,7 +23,7 @@ function get_sudo_command {
 function install_or_update_lib_bash {
     local sudo_command=$(get_sudo_command)
     if [[ -d "/usr/lib/lib_bash" ]]; then
-        ${sudo_command} /usr/usr/lib/lib_bash/install_or_update_lib_bash.sh
+        ${sudo_command} /usr/lib/lib_bash/install_or_update_lib_bash.sh
     else
         $(get_sudo_command) git clone https://github.com/bitranox/lib_bash.git /usr/lib/lib_bash > /dev/null 2>&1
         ${sudo_command} chmod -R 0755 /usr/lib/lib_bash
