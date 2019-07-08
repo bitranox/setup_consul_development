@@ -20,7 +20,7 @@ function get_sudo_command {
     fi
 }
 
-function update_lib_bash {
+function install_or_update_lib_bash {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
@@ -94,7 +94,7 @@ function restart_calling_script {
 
 }
 
-update_lib_bash "${@}"
+install_or_update_lib_bash "${@}"
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 update_consul_dev_env_public
 restart_calling_script "${@}"  # needs caller name and parameters
