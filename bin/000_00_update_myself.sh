@@ -44,11 +44,11 @@ include_dependencies  # we need to do that via a function to have local scope of
 
 function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R 0755 ~/consul_dev_env_public
-    ${sudo_command} chmod -R +x ~/consul_dev_env_public/*.sh
-    ${sudo_command} chmod -R +x ~/consul_dev_env_public/lib_install/*.sh
-    ${sudo_command} chown -R "${USER}" ~/consul_dev_env_public
-    ${sudo_command} chgrp -R "${USER}" ~/consul_dev_env_public
+    ${sudo_command} chmod -R 0755 ~/consul_dev_env_public/
+    ${sudo_command} chmod -R +x ~/consul_dev_env_public/bin/*.sh
+    ${sudo_command} chmod -R +x ~/consul_dev_env_public/bin/lib_install/*.sh
+    ${sudo_command} chown -R "${USER}" ~/consul_dev_env_public/
+    ${sudo_command} chgrp -R "${USER}" ~/consul_dev_env_public/
 }
 
 function is_consul_dev_env_public_to_update {
