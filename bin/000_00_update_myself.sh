@@ -21,11 +21,16 @@ function get_sudo_command {
 }
 
 function install_or_update_lib_bash {
-    local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
-    "${my_dir}/install_or_update_lib_bash.sh" "${@}" || exit 0              # exit old instance after updates
+    if [[ -d "/usr/lib/lib_bash" ]]; then
+        ${sudo_command} /usr/usr/lib/lib_bash/install_or_update_lib_bash.sh
+    else
+        $(get_sudo_command) git clone https://github.com/bitranox/lib_bash.git /usr/lib/lib_bash > /dev/null 2>&1
+        ${sudo_command} chmod -R 0755 /usr/lib/lib_bash
+        ${sudo_command} chmod -R +x /usr/lib/lib_bash/*.sh
+        ${sudo_command} chown -R root /usr/lib/lib_bash || ${sudo_command} chown -R ${USER} /usr/lib/lib_bash  || echo "giving up set owner" # there is no user root on travis
+        ${sudo_command} chgrp -R root /usr/lib/lib_bash || ${sudo_command} chgrp -R ${USER} /usr/lib/lib_bash  || echo "giving up set group" # there is no user root on travis
+    fi
 }
 
 
@@ -94,7 +99,7 @@ function restart_calling_script {
 
 }
 
-# install_or_update_lib_bash "${@}"
+install_or_update_lib_bash
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 update_consul_dev_env_public
 restart_calling_script "${@}"  # needs caller name and parameters
