@@ -20,12 +20,20 @@ function get_sudo_command {
     fi
 }
 
+function update_myself {
+    local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
+    local sudo_command=$(get_sudo_command)
+    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
+    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
+    "${my_dir}/install_or_update_lib_bash" "${@}" || exit 0              # exit old instance after updates
+}
+
+
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
     ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
-    source "${my_dir}/install_lib_bash.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
@@ -34,38 +42,58 @@ function include_dependencies {
 
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 
-function update_myself {
+function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
-    retry ${sudo_command} git fetch --all > /dev/null 2>&1
-    ${sudo_command} git reset --hard origin/master > /dev/null 2>&1
-    local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    ${sudo_command} chmod -R 0755 "${my_dir}"
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
-    ${sudo_command} chown -R "${USER}" "${my_dir}"
-    ${sudo_command} chgrp -R "${USER}" "${my_dir}"
+    ${sudo_command} chmod -R 0755 ~/consul_dev_env_public
+    ${sudo_command} chmod -R +x ~/consul_dev_env_public/*.sh
+    ${sudo_command} chmod -R +x ~/consul_dev_env_public/lib_install/*.sh
+    ${sudo_command} chown -R "${USER}" ~/consul_dev_env_public
+    ${sudo_command} chgrp -R "${USER}" ~/consul_dev_env_public
 }
 
-
-function check_upgrade {
-    # parameter: $1 script_name
-    # parameter: $2 script_args
-    local caller_command=("$@")
-    local git_remote_hash=$(git --no-pager ls-remote --quiet | grep HEAD | awk '{print $1;}')
-    local git_local_hash=$(git --no-pager log --decorate=short --pretty=oneline -n1 | grep HEAD | awk '{print $1;}')
-
-    if [[ ${git_remote_hash} == ${git_local_hash} ]]; then
-        clr_green "Version up to date"
+function is_consul_dev_env_public_to_update {
+    local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
+    local git_remote_hash=$(git --no-pager ls-remote --quiet https://github.com/bitranox/consul-dev-env-public.git | grep HEAD | awk '{print $1;}' )
+    local git_local_hash=$( $(get_sudo_command) cat "${my_dir}"/.git/refs/heads/master)
+    if [[ "${git_remote_hash}" == "${git_local_hash}" ]]; then
+        echo "False"
     else
-        banner "new Version, updating skripts..."
-        update_myself
-
-        # running the new Version of the calling script
-        "${caller_command[@]}"
-
-        # exit this old instance with error code 100
-        exit 100
+        echo "True"
     fi
 }
 
-check_upgrade "${@}"  # needs caller name and parameters
+
+function update_consul_dev_env_public {
+    if [[ $(is_consul_dev_env_public_to_update) == "True" ]]; then
+        clr_green "consul_dev_env_public needs to update"
+        (
+            # create a subshell to preserve current directory
+            cd ~/consul_dev_env_public
+            local sudo_command=$(get_sudo_command)
+            ${sudo_command} git fetch --all  > /dev/null 2>&1
+            ${sudo_command} git reset --hard origin/master  > /dev/null 2>&1
+            set_consul_dev_env_public_permissions
+        )
+        clr_green "consul_dev_env_public update complete"
+    else
+        clr_green "consul_dev_env_public is up to date"
+    fi
+}
+
+
+function restart_calling_script {
+    local caller_command=("$@")
+    if [ ${#caller_command[@]} -eq 0 ]; then
+        # no parameters passed
+        exit 0
+    else
+        # parameters passed, running the new Version of the calling script
+        "${caller_command[@]}"
+        # exit this old instance with error code 100
+        exit 100
+    fi
+
+}
+
+update_consul_dev_env_public
+restart_calling_script "${@}"  # needs caller name and parameters

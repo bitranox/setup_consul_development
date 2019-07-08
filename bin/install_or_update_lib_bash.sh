@@ -38,15 +38,16 @@ function set_lib_bash_permissions {
     ${sudo_command} chgrp -R root /usr/lib/lib_bash
 }
 
-function install_lib_bash_if_not_exist {
-    if [[ ! -d "/usr/lib/lib_bash" ]]; then
-        echo "installing lib_bash"
-        $(get_sudo_command) git clone https://github.com/bitranox/lib_bash.git /usr/lib/lib_bash > /dev/null 2>&1
-        set_lib_bash_permissions
-    fi
+function is_lib_bash_installed {
+        if [[ -d "/usr/lib/lib_bash" ]]; then
+            echo "True"
+        else
+            echo "False"
+        fi
 }
 
-function get_needs_update {
+
+function is_lib_bash_to_update {
     local git_remote_hash=$(git --no-pager ls-remote --quiet https://github.com/bitranox/lib_bash.git | grep HEAD | awk '{print $1;}' )
     local git_local_hash=$( $(get_sudo_command) cat /usr/lib/lib_bash/.git/refs/heads/master)
     if [[ "${git_remote_hash}" == "${git_local_hash}" ]]; then
@@ -56,24 +57,46 @@ function get_needs_update {
     fi
 }
 
-function update_lib_bash_if_exist {
-    if [[ -d "/usr/lib/lib_bash" ]]; then
-        if [[ $(get_needs_update) == "True" ]]; then
-            echo "lib_bash needs to update"
-            (
-                # create a subshell to preserve current directory
-                cd /usr/lib/lib_bash
-                local sudo_command=$(get_sudo_command)
-                ${sudo_command} git fetch --all  > /dev/null 2>&1
-                ${sudo_command} git reset --hard origin/master  > /dev/null 2>&1
-                set_lib_bash_permissions
-            )
-            echo "lib_bash update complete"
-        else
-            echo "lib_bash is up to date"
-        fi
+function install_lib_bash {
+    echo "installing lib_bash"
+    $(get_sudo_command) git clone https://github.com/bitranox/lib_bash.git /usr/lib/lib_bash > /dev/null 2>&1
+    set_lib_bash_permissions
+}
+
+function update_lib_bash {
+    if [[ $(is_lib_bash_to_update) == "True" ]]; then
+        echo "lib_bash needs to update"
+        (
+            # create a subshell to preserve current directory
+            cd /usr/lib/lib_bash
+            local sudo_command=$(get_sudo_command)
+            ${sudo_command} git fetch --all  > /dev/null 2>&1
+            ${sudo_command} git reset --hard origin/master  > /dev/null 2>&1
+            set_lib_bash_permissions
+        )
+        echo "lib_bash update complete"
+    else
+        echo "lib_bash is up to date"
     fi
 }
 
-update_lib_bash_if_exist
-install_lib_bash_if_not_exist
+function restart_calling_script {
+    local caller_command=("$@")
+    if [ ${#caller_command[@]} -eq 0 ]; then
+        # no parameters passed
+        exit 0
+    else
+        # paramaters passed, running the new Version of the calling script
+        "${caller_command[@]}"
+        # exit this old instance with error code 100
+        exit 100
+    fi
+
+}
+
+if [[ $(is_lib_bash_installed) == "True" ]]; then
+    update_lib_bash
+    restart_calling_script  "${@}"  # needs caller name and parameters
+else
+    install_lib_bash
+fi
