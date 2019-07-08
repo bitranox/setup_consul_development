@@ -94,7 +94,7 @@ function restart_calling_script {
 
 }
 
-install_or_update_lib_bash "${@}"
+# install_or_update_lib_bash "${@}"
 include_dependencies  # we need to do that via a function to have local scope of my_dir
 update_consul_dev_env_public
 restart_calling_script "${@}"  # needs caller name and parameters

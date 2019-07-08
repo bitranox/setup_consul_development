@@ -25,6 +25,7 @@ function update_myself {
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
     ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
+    "${my_dir}/install_or_update_lib_bash.sh" "${@}" || exit 0              # exit old instance after updates
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
