@@ -65,7 +65,7 @@ function install_lib_bash {
 
 function update_lib_bash {
     if [[ $(is_lib_bash_to_update) == "True" ]]; then
-        echo "lib_bash needs to update"
+        clr_green "lib_bash needs to update"
         (
             # create a subshell to preserve current directory
             cd /usr/lib/lib_bash
@@ -74,9 +74,9 @@ function update_lib_bash {
             ${sudo_command} git reset --hard origin/master  > /dev/null 2>&1
             set_lib_bash_permissions
         )
-        echo "lib_bash update complete"
+        clr_green "lib_bash update complete"
     else
-        echo "lib_bash is up to date"
+        clr_green "lib_bash is up to date"
         exit 0
     fi
 }
@@ -96,6 +96,7 @@ function restart_calling_script {
 }
 
 if [[ $(is_lib_bash_installed) == "True" ]]; then
+    source /usr/lib/lib_bash/lib_color.sh
     update_lib_bash
     restart_calling_script  "${@}"  # needs caller name and parameters
 else
