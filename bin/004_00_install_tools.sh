@@ -76,7 +76,7 @@ function install_software {
 function install_chrome {
     banner "Install google chrome"
     local sudo_command=$(get_sudo_command)
-    retry wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    retry ${sudo_command} wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     retry ${sudo_command} dpkg -i google-chrome-stable_current_amd64.deb
     ${sudo_command} rm -f ./google-chrome-stable_current_amd64.deb
 }
@@ -87,7 +87,7 @@ function install_chrome_remote_desktop {
     retry ${sudo_command} apt-get install xvfb
     retry ${sudo_command} apt-get install xbase-clients
     retry ${sudo_command} apt-get install python-psutil
-    retry wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+    retry ${sudo_command} wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
     retry ${sudo_command} dpkg -i chrome-remote-desktop_current_amd64.deb
     ${sudo_command} rm -f ./chrome-remote-desktop_current_amd64.deb
     replace_or_add_lines_containing_string_in_file "/etc/environment" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\""
