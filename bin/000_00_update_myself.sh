@@ -33,6 +33,7 @@ function install_or_update_lib_bash {
     fi
 }
 
+install_or_update_lib_bash
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
@@ -44,6 +45,9 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
+
+include_dependencies  # we need to do that via a function to have local scope of my_dir
+
 
 function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
@@ -99,7 +103,6 @@ function restart_calling_script {
 
 }
 
-install_or_update_lib_bash
-include_dependencies  # we need to do that via a function to have local scope of my_dir
+
 update_consul_dev_env_public
 restart_calling_script "${@}"  # needs caller name and parameters

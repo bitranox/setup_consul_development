@@ -28,6 +28,9 @@ function update_myself {
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
+update_myself ${0} ${@}  # pass own script name and parameters
+
+
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command=$(get_sudo_command)
@@ -38,6 +41,8 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
+include_dependencies
+
 
 function install_swapfile {
     banner "Install 8GB Swapfile"
@@ -69,8 +74,7 @@ function install_ubuntu_mate_desktop {
 }
 
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
+
 wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
 install_essentials
 linux_update
