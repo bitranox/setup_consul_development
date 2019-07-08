@@ -20,7 +20,7 @@ function get_sudo_command {
     fi
 }
 
-function update_myself {
+function update_lib_bash {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R +x "${my_dir}"/*.sh
@@ -40,8 +40,6 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
-
-include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
@@ -78,6 +76,7 @@ function update_consul_dev_env_public {
         clr_green "consul-dev-env-public update complete"
     else
         clr_green "consul-dev-env-public is up to date"
+        exit 0
     fi
 }
 
@@ -99,5 +98,7 @@ function restart_calling_script {
 
 }
 
+update_lib_bash "${@}"
+include_dependencies  # we need to do that via a function to have local scope of my_dir
 update_consul_dev_env_public
 restart_calling_script "${@}"  # needs caller name and parameters
