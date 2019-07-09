@@ -56,13 +56,13 @@ function disable_hibernate {
 function install_ubuntu_mate_desktop {
     banner "Install ubuntu-mate-desktop"
     local sudo_command=$(get_sudo_command)
-    retry ${sudo_command} apt-get install grub2-themes-ubuntu-mate install -y
-    retry ${sudo_command} apt-get install ubuntu-mate-core install -y
-    retry ${sudo_command} apt-get install ubuntu-mate-artwork install -y
-    retry ${sudo_command} apt-get install ubuntu-mate-default-settings install -y
-    retry ${sudo_command} apt-get install ubuntu-mate-icon-themes install -y
-    retry ${sudo_command} apt-get install ubuntu-mate-wallpapers-complete install -y
-    retry ${sudo_command} apt-get install human-theme install -y
+    retry ${sudo_command} apt-get install grub2-themes-ubuntu-mate -y
+    retry ${sudo_command} apt-get install ubuntu-mate-core -y
+    retry ${sudo_command} apt-get install ubuntu-mate-artwork -y
+    retry ${sudo_command} apt-get install ubuntu-mate-default-settings -y
+    retry ${sudo_command} apt-get install ubuntu-mate-icon-themes -y
+    retry ${sudo_command} apt-get install ubuntu-mate-wallpapers-complete -y
+    retry ${sudo_command} apt-get install human-theme -y
     retry ${sudo_command} apt-get install mate-applet-brisk-menu -y
     retry ${sudo_command} apt-get install mate-system-monitor -y
     retry ${sudo_command} apt-get install language-pack-gnome-de -y
