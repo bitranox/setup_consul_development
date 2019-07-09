@@ -61,23 +61,31 @@ function install_and_update_language_packs {
     banner "Install and Update Language Packs"
     local sudo_command=$(get_sudo_command)
 
-    if [[ "$(get_is_package_installed language-pack-de)" == "True" ]]; then
+    if [[ "$(get_is_package_installed language-pack-de)" == "False" ]]; then
         retry ${sudo_command} apt-get install language-pack-de -y
     fi
-    if [[ "$(get_is_package_installed language-pack-de-base)" == "True" ]]; then
+    if [[ "$(get_is_package_installed language-pack-de-base)" == "False" ]]; then
         retry ${sudo_command} apt-get install language-pack-de-base -y
     fi
-    if [[ "$(get_is_package_installed manpages-de)" == "True" ]]; then
+    if [[ "$(get_is_package_installed manpages-de)" == "False" ]]; then
         retry ${sudo_command} apt-get install manpages-de -y
     fi
-    if [[ "$(get_is_package_installed language-pack-gnome-de)" == "True" ]]; then
+    if [[ "$(get_is_package_installed language-pack-gnome-de)" == "False" ]]; then
         retry ${sudo_command} apt-get install language-pack-gnome-de -y
     fi
 
     ${sudo_command} update-locale LANG=\"de_AT.UTF-8\" LANGUAGE=\"de_AT:de\"
 
-    # TODO - put in an array and check for each one if it is installed already ...
-    retry ${sudo_command} apt-get install $(check-language-support -l de) -y
+
+    local language_support_list=$(check-language-support -l de)
+    local language_support
+    while IFS=$'\n' read -ra language_support_array; do
+      for language_support in "${language_support_array[@]}"; do
+          if [[ "$(get_is_package_installed ${language_support})" == "False" ]]; then
+            retry ${sudo_command} apt-get install ${language_support} -y
+          fi
+      done
+    done <<< "${language_support_list}"
 }
 
 
