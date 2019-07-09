@@ -49,7 +49,7 @@ INPUTBOX_WIDTH=25
 
 function get_free_file_descriptor {
     local free_file_descriptor=$(($(($(ls /proc/self/fd | tail -n 1))) + 1 ))
-    echo "free_file_descriptor"
+    echo "${free_file_descriptor}"
 }
 
 
@@ -61,6 +61,7 @@ function display_result {
 
 function get_username {
     local file_descriptor=$(($(get_free_file_descriptor)))
+    echo "file_descriptor = ${file_descriptor}"
     exec ${file_descriptor}>&1  # get the lowest file descriptor - see : https://stackoverflow.com/questions/8297415/in-bash-how-to-find-the-lowest-numbered-unused-file-descriptor
     local result=$(dialog --title "Inputbox - To take input from you" \
         --backtitle "Linux Shell Script Tutorial Example" \
