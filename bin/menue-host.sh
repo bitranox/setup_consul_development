@@ -59,7 +59,7 @@ function get_username {
     local result=$(dialog --title "Inputbox - To take input from you" \
         --backtitle "Linux Shell Script Tutorial Example" \
         --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
-         2>&4)
+         1>NULL 2>&4)
     exec 3>&-
     echo ${result}
 }
