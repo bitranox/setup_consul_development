@@ -23,11 +23,8 @@ function get_sudo_command {
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
-update_myself ${0} ${@}  # pass own script name and parameters
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
@@ -39,13 +36,13 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_helpers.sh
     source "${my_dir}/lib_install/install_essentials.sh"
 }
+
+
+update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
-
-
-
 wait_for_enter "Installiere deutsche Sprachpakete"
-install_essentials                  # @install_essentials.sh
-linux_update                        # @/usr/lib/lib_bash/lib_helpers.sh
-install_and_update_language_packs   # @install_essentials.sh
+install_essentials                  # @lib_install.sh
+linux_update                        # @lib_bash/lib_helpers.sh
+install_and_update_language_packs   # @lib_install.sh
 wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
 reboot

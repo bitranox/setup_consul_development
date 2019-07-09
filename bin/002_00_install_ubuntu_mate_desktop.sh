@@ -68,11 +68,35 @@ function install_ubuntu_mate_desktop {
     banner "Install ubuntu-mate-desktop"
     local sudo_command=$(get_sudo_command)
     retry ${sudo_command} apt-get install ubuntu-mate-desktop -y
-    backup_file /etc/netplan/50-cloud-init.yaml
-    remove_file /etc/netplan/50-cloud-init.yaml
+    retry ${sudo_command} apt-get install grub2-themes-ubuntu-mate install -y
+    retry ${sudo_command} apt-get install ubuntu-mate-core install -y
+    retry ${sudo_command} apt-get install ubuntu-mate-artwork install -y
+    retry ${sudo_command} apt-get install ubuntu-mate-default-settings install -y
+    retry ${sudo_command} apt-get install ubuntu-mate-icon-themes install -y
+    retry ${sudo_command} apt-get install ubuntu-mate-wallpapers-complete install -y
+    retry ${sudo_command} apt-get install human-theme install -y
+    retry ${sudo_command} apt-get install mate-applet-brisk-menu -y
+    retry ${sudo_command} apt-get install mate-system-monitor -y
+    retry ${sudo_command} apt-get install language-pack-gnome-de -y
+    retry ${sudo_command} apt-get install geany -y
+    retry ${sudo_command} apt-get install mc -y
+    retry ${sudo_command} apt-get install meld -y
+    retry ${sudo_command} apt-get purge byobu -y
+    retry ${sudo_command} apt-get purge vim -y
+    backup_file /etc/netplan/50-cloud-init.yaml  # @lib_bash/lib_helpers
+    remove_file /etc/netplan/50-cloud-init.yaml  # @lib_bash/lib_helpers
     ${sudo_command} cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
 }
 
+function install_x2go_server {
+    banner "Install x2go Server"
+    local sudo_command=$(get_sudo_command)
+    retry ${sudo_command} add-apt-repository ppa:x2go/stable -y
+    retry ${sudo_command} apt-get update
+    retry ${sudo_command} install x2goserver -y
+    retry ${sudo_command} install x2goserver-xsession -y
+    retry ${sudo_command} install x2goclient -y
+}
 
 
 wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
@@ -81,7 +105,7 @@ linux_update
 install_swapfile
 disable_hibernate
 install_ubuntu_mate_desktop
-install_and_update_language_packs
-wait_for_enter_warning "Ubuntu Mate Desktop installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+install_x2go_server
+wait_for_enter_warning "Ubuntu Mate Desktop installiert"
 reboot
 

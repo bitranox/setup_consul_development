@@ -28,9 +28,10 @@ function install_and_update_language_packs {
     local sudo_command=$(get_sudo_command)
     retry ${sudo_command} apt-get install language-pack-de -y
     retry ${sudo_command} apt-get install language-pack-de-base -y
+    retry ${sudo_command} apt-get install manpages-de -y
     retry ${sudo_command} apt-get install language-pack-gnome-de -y
-    retry ${sudo_command} apt-get install $(check-language-support -l de)
     ${sudo_command} update-locale LANG=\"de_AT.UTF-8\" LANGUAGE=\"de_AT:de\"
+    retry ${sudo_command} apt-get install $(check-language-support -l de)
 }
 
 
