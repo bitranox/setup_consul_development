@@ -76,7 +76,7 @@ function get_username {
 while true; do
   file_descriptor=$(get_free_file_descriptor)
   echo "file_descriptor = ${file_descriptor}"
-  exec $((${file_descriptor}))>&1
+  exec ${file_descriptor}>&1
   selection=$(dialog \
     --backtitle "Host Installation" \
     --title "Host Installation - aktiver Benutzer ist ${USER}" \
