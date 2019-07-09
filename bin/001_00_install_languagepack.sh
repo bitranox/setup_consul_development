@@ -39,5 +39,10 @@ wait_for_enter "Installiere deutsche Sprachpakete"
 install_essentials                  # @lib_install.sh
 linux_update                        # @lib_bash/lib_helpers.sh
 install_and_update_language_packs   # @lib_install.sh
-wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
-reboot
+
+if [[ $(($?)) = 0 ]]; then
+    banner "deutsche Sprachpakete sind aktuell"
+else
+    wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+    reboot
+fi
