@@ -22,22 +22,16 @@ function get_sudo_command {
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
-    source "${my_dir}/lib_install/install_essentials.sh"
+    source "${my_dir}/lib_install.sh"
 }
 
 function install_ruby {
@@ -48,7 +42,7 @@ function install_ruby {
     ${sudo_command} apt-get install ruby-full
     # https://stackoverflow.com/questions/2119064/sudo-gem-install-or-gem-install-and-gem-locations
     # use RVM !!!
-    gem install bundler             # not Install gems as root !!!
+    gem install bundler             # do not Install gems as root !!!
     ${sudo_command} apt-get install nodejs
     ${sudo_command} apt-get install npm
 }
