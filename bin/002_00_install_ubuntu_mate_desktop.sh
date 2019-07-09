@@ -81,9 +81,9 @@ function install_x2go_server {
     local sudo_command=$(get_sudo_command)
     retry ${sudo_command} add-apt-repository ppa:x2go/stable -y
     retry ${sudo_command} apt-get update
-    retry ${sudo_command} install x2goserver -y
-    retry ${sudo_command} install x2goserver-xsession -y
-    retry ${sudo_command} install x2goclient -y
+    retry ${sudo_command} apt-get install x2goserver -y
+    retry ${sudo_command} apt-get install x2goserver-xsession -y
+    retry ${sudo_command} apt-get install x2goclient -y
 }
 
 
