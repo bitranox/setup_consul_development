@@ -56,7 +56,7 @@ while true; do
     --clear \
     --cancel-label "Exit" \
     --menu "Bitte auswählen:" $HEIGHT $WIDTH 4 \
-    "1" "Benutzer anlegen"
+    "1" "Benutzer anlegen" \
     "2" "Deutsches Sprachpaket Installieren" \
     "3" "Ubuntu Mate Desktop Installieren" \
     "4" "Unnötige Programme am Host entfernen" \
