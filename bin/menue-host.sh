@@ -62,11 +62,11 @@ function dialog_inputbox {
     # $5: <optional> width
     # returns : result
     # exitcode: status
-    title=$1
-    backtitle=$2
-    text=$3
-    height=$4
-    width=$5
+    local title=$1
+    local backtitle=$2
+    local text=$3
+    local height=$4
+    local width=$5
 
     local result=$(dialog --title "${title}" \
         --backtitle "${backtitle}" \
@@ -83,14 +83,14 @@ function dialog_return_on_exit_status_esc_or_cancel {
     case ${exit_status} in
         ${DIALOG_ESC})
             echo "clear && return"
-            return
             ;;
         ${DIALOG_CANCEL})
             echo "clear && return"
-            return
+            ;;
+        *)
+            echo ""
             ;;
     esac
-    echo ""
 }
 
 
