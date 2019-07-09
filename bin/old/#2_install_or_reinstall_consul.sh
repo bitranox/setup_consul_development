@@ -52,3 +52,4 @@ echo "sudo bin/rails s"
 echo ""
 read -p "Press Enter to exit"
 
+
