@@ -57,14 +57,14 @@ while true; do
     --cancel-label "Exit" \
     --menu "Bitte auswählen:" $HEIGHT $WIDTH 4 \
     "1" "Benutzer anlegen"
-    "1" "Deutsches Sprachpaket Installieren" \
-    "2" "Ubuntu Mate Desktop Installieren" \
-    "3" "Unnötige Programme am Host entfernen" \
-    "4" "Basisprogramme incl. Google Chrome installieren" \
-    "5" "LXD Containersystem installieren" \
-    "6" "LXD Containersystem konfigurieren" \
-    "7" "Benutzer zur Gruppe LXD hinzufügen" \
-    "8" "neuen LXC Container erstellen" \
+    "2" "Deutsches Sprachpaket Installieren" \
+    "3" "Ubuntu Mate Desktop Installieren" \
+    "4" "Unnötige Programme am Host entfernen" \
+    "5" "Basisprogramme incl. Google Chrome installieren" \
+    "6" "LXD Containersystem installieren" \
+    "7" "LXD Containersystem konfigurieren" \
+    "8" "Benutzer zur Gruppe LXD hinzufügen" \
+    "9" "neuen LXC Container erstellen" \
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
