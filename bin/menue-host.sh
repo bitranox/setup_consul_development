@@ -95,8 +95,8 @@ while true; do
         --backtitle "Linux Shell Script Tutorial Example" \
         --inputbox "Enter your name " ${DIALOG_HEIGHT} ${DIALOG_WIDTH} 2>$OUTPUT
 
-      result=$(echo "Hostname: $HOSTNAME"; uptime)
-      display_result "System Information"
+      # result=$(echo "Hostname: $HOSTNAME"; uptime)
+      # display_result "System Information"
       ;;
     2 )
       result=$(df -h)
