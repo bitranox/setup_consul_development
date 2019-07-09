@@ -73,7 +73,8 @@ function get_username {
 
 
 while true; do
-  exec {FD}>&1
+  file_descriptor=$(($(get_free_file_descriptor)))
+  exec ${file_descriptor}>&1
   selection=$(dialog \
     --backtitle "Host Installation" \
     --title "Host Installation - aktiver Benutzer ist ${USER}" \
@@ -89,9 +90,9 @@ while true; do
     "7" "LXD Containersystem konfigurieren" \
     "8" "Benutzer zur Gruppe LXD hinzufügen" \
     "9" "neuen LXC Container erstellen" \
-    2>&1 1>&${FD})
+    2>&1 1>&${file_descriptor})
   exit_status=$?
-  exec ${FD}>&-
+  exec ${file_descriptor}>&-
   case $exit_status in
     $DIALOG_CANCEL)
       clear
