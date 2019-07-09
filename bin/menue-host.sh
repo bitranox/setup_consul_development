@@ -55,12 +55,12 @@ function display_result {
 }
 
 function get_username {
-    exec 4>&1
+    exec {FD}>&1  # get the lowest file descriptor - see : https://stackoverflow.com/questions/8297415/in-bash-how-to-find-the-lowest-numbered-unused-file-descriptor
     local result=$(dialog --title "Inputbox - To take input from you" \
         --backtitle "Linux Shell Script Tutorial Example" \
         --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
-         1>NULL 2>&4)
-    exec 3>&-
+         1>NULL 2>&${FD})
+    exec ${FD}>&-
     echo ${result}
 }
 
