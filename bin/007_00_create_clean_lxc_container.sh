@@ -74,8 +74,8 @@ function lxc_install_language_pack {
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de -y"
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de-base -y"
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-gnome-de -y"
-    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install $(check-language-support -l de)"
     lxc_exec "${container_name}" "update-locale LANG=\"de_AT.UTF-8\" LANGUAGE=\"de_AT:de\""
+    retry lxc exec "${container_name}" -- sh -c "sudo apt-get install $(check-language-support -l de) -y"
     lxc_update ${container_name}
     lxc_reboot ${container_name}
     lxc_wait_until_internet_connected ${container_name}
@@ -87,8 +87,22 @@ function lxc_install_ubuntu_mate_desktop {
     local container_name=$1
     wait_for_enter "Container ${container_name}: Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
     lxc_update ${container_name}
-    retry lxc_exec "${container_name}" "sudo apt-get install ubuntu-mate-desktop -y"
-    lxc_install_language_pack ${container_name}
+    retry lxc_exec "${container_name}" "apt-get install grub2-themes-ubuntu-mate -y"
+    retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-core -y"
+    retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-artwork -y"
+    retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-default-settings -y"
+    retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-icon-themes -y"
+    retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-wallpapers-complete -y"
+    retry lxc_exec "${container_name}" "apt-get install human-theme -y"
+    retry lxc_exec "${container_name}" "apt-get install mate-applet-brisk-menu -y"
+    retry lxc_exec "${container_name}" "apt-get install mate-system-monitor -y"
+    retry lxc_exec "${container_name}" "apt-get install language-pack-gnome-de -y"
+    retry lxc_exec "${container_name}" "apt-get install geany -y"
+    retry lxc_exec "${container_name}" "apt-get install mc -y"
+    retry lxc_exec "${container_name}" "apt-get install meld -y"
+    retry lxc_exec "${container_name}" "apt-get purge byobu -y"
+    retry lxc_exec "${container_name}" "apt-get purge vim -y"
+
     lxc_reboot ${container_name}
     lxc_wait_until_internet_connected ${container_name}
 }
