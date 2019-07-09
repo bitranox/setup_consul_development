@@ -61,7 +61,7 @@ function display_result {
 
 function get_username {
     local file_descriptor=$(($(get_free_file_descriptor)))
-    echo "file_descriptor = ${file_descriptor}"
+    echo "get_username file_descriptor = ${file_descriptor}"
     exec ${file_descriptor}>&1  # get the lowest file descriptor - see : https://stackoverflow.com/questions/8297415/in-bash-how-to-find-the-lowest-numbered-unused-file-descriptor
     local result=$(dialog --title "Inputbox - To take input from you" \
         --backtitle "Linux Shell Script Tutorial Example" \
@@ -75,6 +75,7 @@ function get_username {
 
 while true; do
   file_descriptor=$(($(get_free_file_descriptor)))
+  echo "file_descriptor = ${file_descriptor}"
   exec $file_descriptor>&1
   selection=$(dialog \
     --backtitle "Host Installation" \
