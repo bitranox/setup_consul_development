@@ -48,7 +48,7 @@ INPUTBOX_WIDTH=25
 
 
 function get_free_file_descriptor {
-    local free_file_descriptor = $(($(($(ls /proc/self/fd | tail -n 1))) + 1 ))
+    local free_file_descriptor=$(($(($(ls /proc/self/fd | tail -n 1))) + 1 ))
     echo "free_file_descriptor"
 }
 
