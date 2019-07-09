@@ -46,7 +46,6 @@ function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
     ${sudo_command} chmod -R 0755 ~/consul-dev-env-public
     ${sudo_command} chmod -R +x ~/consul-dev-env-public/bin/*.sh
-    ${sudo_command} chmod -R +x ~/consul-dev-env-public/bin/lib_install/*.sh
     ${sudo_command} chown -R "${USER}" ~/consul-dev-env-public/
     ${sudo_command} chgrp -R "${USER}" ~/consul-dev-env-public/
 }
