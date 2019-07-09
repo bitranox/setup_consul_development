@@ -91,6 +91,8 @@ function lxc_install_ubuntu_mate_desktop {
     lxc_update ${container_name}
     retry lxc_exec "${container_name}" "apt-get install lightdm -y"
     retry lxc_exec "${container_name}" "apt-get install slick-greeter -y"
+    retry lxc_exec "${container_name}" "apt-get purge gdm -y"
+    retry lxc_exec "${container_name}" "apt-get purge gdm3 -y"
     retry lxc_exec "${container_name}" "apt-get install grub2-themes-ubuntu-mate -y"
     retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-core -y"
     retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-artwork -y"
@@ -106,6 +108,7 @@ function lxc_install_ubuntu_mate_desktop {
     retry lxc_exec "${container_name}" "apt-get install meld -y"
     retry lxc_exec "${container_name}" "apt-get purge byobu -y"
     retry lxc_exec "${container_name}" "apt-get purge vim -y"
+    retry lxc_exec "${container_name}" "dpkg-reconfigure lightdm"
 
     lxc_reboot ${container_name}
     lxc_wait_until_internet_connected ${container_name}
