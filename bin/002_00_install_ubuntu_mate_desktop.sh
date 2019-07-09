@@ -97,6 +97,6 @@ install_swapfile
 disable_hibernate
 install_ubuntu_mate_desktop
 install_x2go_server
+linux_update
 wait_for_enter_warning "Ubuntu Mate Desktop installiert"
 reboot
-
