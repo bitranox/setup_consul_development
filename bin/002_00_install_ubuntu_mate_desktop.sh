@@ -56,7 +56,6 @@ function disable_hibernate {
 function install_ubuntu_mate_desktop {
     banner "Install ubuntu-mate-desktop"
     local sudo_command=$(get_sudo_command)
-    retry ${sudo_command} apt-get install ubuntu-mate-desktop -y
     retry ${sudo_command} apt-get install grub2-themes-ubuntu-mate install -y
     retry ${sudo_command} apt-get install ubuntu-mate-core install -y
     retry ${sudo_command} apt-get install ubuntu-mate-artwork install -y
