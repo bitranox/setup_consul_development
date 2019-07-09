@@ -91,8 +91,6 @@ function lxc_install_ubuntu_mate_desktop {
     lxc_update ${container_name}
     retry lxc_exec "${container_name}" "apt-get install lightdm -y"
     retry lxc_exec "${container_name}" "apt-get install slick-greeter -y"
-    retry lxc_exec "${container_name}" "apt-get purge gdm -y"
-    retry lxc_exec "${container_name}" "apt-get purge gdm3 -y"
     retry lxc_exec "${container_name}" "dpkg-reconfigure lightdm"
     retry lxc_exec "${container_name}" "apt-get install grub2-themes-ubuntu-mate -y"
     retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-core -y"
