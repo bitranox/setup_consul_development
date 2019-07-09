@@ -78,6 +78,7 @@ function dialog_inputbox {
 
 function dialog_return_on_exit_status_esc_or_cancel {
     # $1: $? the exit code
+    # Usage : eval $(dialog_return_on_exit_status_esc_or_cancel $?)
     local exit_status=$1
     case ${exit_status} in
         ${DIALOG_ESC})
