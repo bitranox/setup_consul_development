@@ -21,38 +21,38 @@ function get_is_package_installed {
 
 function install_dialog {
     if [[ "$(get_is_package_installed dialog)" == "False" ]]; then
-        retry $(get_sudo_command) apt-get install dialog -y
+        retry $(get_sudo_command) apt-get install dialog -y > /dev/null 2>&1
     fi
 }
 
 function install_git {
     if [[ "$(get_is_package_installed git)" == "False" ]]; then
-        retry $(get_sudo_command) apt-get install git -y
+        retry $(get_sudo_command) apt-get install git -y > /dev/null 2>&1
     fi
 }
 
 function install_net_tools {
     if [[ "$(get_is_package_installed net-tools)" == "False" ]]; then
-        retry $(get_sudo_command) apt-get install net-tools -y
+        retry $(get_sudo_command) apt-get install net-tools -y > /dev/null 2>&1
     fi
 }
 
 function uninstall_whoopsie {
     local sudo_command=$(get_sudo_command)
     if [[ "$(get_is_package_installed whoopsie)" == "True" ]]; then
-        retry ${sudo_command} apt-get purge whoopsie -y
+        retry ${sudo_command} apt-get purge whoopsie -y > /dev/null 2>&1
     fi
     if [[ "$(get_is_package_installed libwhoopsie0)" == "True" ]]; then
-        retry ${sudo_command} apt-get purge libwhoopsie0 -y
+        retry ${sudo_command} apt-get purge libwhoopsie0 -y > /dev/null 2>&1
     fi
     if [[ "$(get_is_package_installed libwhoopsie-preferences0)" == "True" ]]; then
-        retry ${sudo_command} apt-get purge libwhoopsie-preferences0 -y
+        retry ${sudo_command} apt-get purge libwhoopsie-preferences0 -y > /dev/null 2>&1
     fi
 }
 
 function uninstall_apport {
     if [[ "$(get_is_package_installed apport)" == "True" ]]; then
-        retry $(get_sudo_command) apt-get purge apport -y
+        retry $(get_sudo_command) apt-get purge apport -y > /dev/null 2>&1
     fi
 }
 
