@@ -56,6 +56,11 @@ function disable_hibernate {
 function install_ubuntu_mate_desktop {
     banner "Install ubuntu-mate-desktop"
     local sudo_command=$(get_sudo_command)
+
+    retry ${sudo_command} apt-get install lightdm -y
+    retry ${sudo_command} apt-get install slick-greeter -y
+    retry ${sudo_command} dpkg-reconfigure lightdm
+
     retry ${sudo_command} apt-get install grub2-themes-ubuntu-mate -y
     retry ${sudo_command} apt-get install ubuntu-mate-core -y
     retry ${sudo_command} apt-get install ubuntu-mate-artwork -y
@@ -74,6 +79,7 @@ function install_ubuntu_mate_desktop {
     backup_file /etc/netplan/50-cloud-init.yaml  # @lib_bash/lib_helpers
     remove_file /etc/netplan/50-cloud-init.yaml  # @lib_bash/lib_helpers
     ${sudo_command} cp -f ./shared/config/etc/netplan/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
+    retry ${sudo_command} dpkg-reconfigure lightdm
 }
 
 function install_x2go_server {
