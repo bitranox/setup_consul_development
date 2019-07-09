@@ -141,10 +141,7 @@ while true; do
       echo "Program terminated."
       ;;
     1 )
-        result=$(add_user)
-        display_result "Username"
-        # result=$(echo "Hostname: $HOSTNAME"; uptime)
-        # display_result "System Information"
+        add_user
       ;;
     2 )
       result=$(df -h)
