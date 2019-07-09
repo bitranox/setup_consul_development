@@ -76,10 +76,27 @@ function dialog_inputbox {
     return $?
 }
 
+function dialog_return_on_exit_status_esc_or_cancel {
+    # $1: $? the exit code
+    local exit_status=$1
+    case ${exit_status} in
+        ${DIALOG_ESC})
+            echo "clear && return"
+            return
+            ;;
+        ${DIALOG_CANCEL})
+            echo "clear && return"
+            return
+            ;;
+    esac
+    echo ""
+}
+
 
 function add_user {
     username=$(dialog_inputbox "Benutzer anlegen" "Benutzer anlegen" "Benutzername: " 0 0)
-    echo "${username}"
+    dialog_return_on_exit_status_esc_or_cancel $?
+    echo ${username}
 }
 
 
