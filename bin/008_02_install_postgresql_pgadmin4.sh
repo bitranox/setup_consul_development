@@ -27,7 +27,7 @@ function update_myself {
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    source "${my_dir}/008_99_lib.sh"
+    source "${my_dir}/008_99_lib_install_postgresql.sh"
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
