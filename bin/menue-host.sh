@@ -47,25 +47,39 @@ INPUTBOX_HEIGHT=0
 INPUTBOX_WIDTH=0
 
 
-function get_free_file_descriptor {
-    # local free_file_descriptor=$(($(($(ls /proc/self/fd | tail -n 1))) + 1 ))
-    local free_file_descriptor=$(ls /proc/self/fd | tail -n 1)
-    echo "${free_file_descriptor}"
-}
-
-
 function display_result {
   dialog --title "$1" \
     --no-collapse \
     --msgbox "$result" 0 0
 }
 
-function get_username {
-    local result=$(dialog --title "Inputbox - To take input from you" \
-        --backtitle "Linux Shell Script Tutorial Example" \
-        --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
+
+function dialog_inputbox {
+    # $1: title
+    # $2: backtitle
+    # $3: text
+    # $4: <optional> height
+    # $5: <optional> width
+    # returns : result
+    # exitcode: status
+    title=$1
+    backtitle=$2
+    text=$3
+    height=$4
+    width=$5
+
+    local result=$(dialog --title "${title}" \
+        --backtitle "${backtitle}" \
+        --inputbox "${text}" "${height}" "${width}" \
          2>&1 1>/dev/tty);
-    echo ${result}
+    echo "${result}"
+    return $?
+}
+
+
+function add_user {
+    username=$(dialog_inputbox "Benutzer anlegen" "Benutzer anlegen" "Benutzername: " 0 0)
+    echo "${username}"
 }
 
 
@@ -106,7 +120,7 @@ while true; do
       echo "Program terminated."
       ;;
     1 )
-        result=$(get_username)
+        result=$(add_user)
         display_result "Username"
         # result=$(echo "Hostname: $HOSTNAME"; uptime)
         # display_result "System Information"
