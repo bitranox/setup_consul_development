@@ -88,9 +88,9 @@ function install_x2go_server {
 }
 
 
-wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
-update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
+update_myself ${0} ${@}  # pass own script name and parameters
+wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
 install_essentials
 linux_update
 install_swapfile
