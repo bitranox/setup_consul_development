@@ -142,6 +142,7 @@ while true; do
       ;;
     1 )
         add_user
+
       ;;
     2 )
       result=$(df -h)
