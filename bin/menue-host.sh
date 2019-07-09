@@ -43,6 +43,10 @@ HEIGHT=0
 WIDTH=0
 MENUE_HEIGHT=10
 
+DIALOG_WIDTH=0
+DIALOG_HEIGHT=0
+
+
 display_result() {
   dialog --title "$1" \
     --no-collapse \
@@ -56,7 +60,7 @@ while true; do
     --title "Host Installation - aktiver Benutzer ist ${USER}" \
     --clear \
     --cancel-label "Exit" \
-    --menu "Bitte auswählen:" $HEIGHT $WIDTH $MENUE_HEIGHT \
+    --menu "Bitte auswählen:" ${HEIGHT} ${WIDTH} ${MENUE_HEIGHT} \
     "1" "Benutzer anlegen" \
     "2" "Deutsches Sprachpaket Installieren" \
     "3" "Ubuntu Mate Desktop Installieren" \
@@ -87,6 +91,10 @@ while true; do
       echo "Program terminated."
       ;;
     1 )
+      dialog --title "Inputbox - To take input from you" \
+        --backtitle "Linux Shell Script Tutorial Example" \
+        --inputbox "Enter your name " ${DIALOG_HEIGHT} ${DIALOG_WIDTH} 2>$OUTPUT
+
       result=$(echo "Hostname: $HOSTNAME"; uptime)
       display_result "System Information"
       ;;
