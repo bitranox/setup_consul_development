@@ -55,7 +55,7 @@ function display_result {
 }
 
 function get_username {
-    exec local {FD}>&1  # get the lowest file descriptor - see : https://stackoverflow.com/questions/8297415/in-bash-how-to-find-the-lowest-numbered-unused-file-descriptor
+    exec {FD}>&1  # get the lowest file descriptor - see : https://stackoverflow.com/questions/8297415/in-bash-how-to-find-the-lowest-numbered-unused-file-descriptor
     local result=$(dialog --title "Inputbox - To take input from you" \
         --backtitle "Linux Shell Script Tutorial Example" \
         --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
@@ -66,7 +66,7 @@ function get_username {
 
 
 while true; do
-  exec 3>&1
+  exec {FD}>&1
   selection=$(dialog \
     --backtitle "Host Installation" \
     --title "Host Installation - aktiver Benutzer ist ${USER}" \
@@ -82,9 +82,9 @@ while true; do
     "7" "LXD Containersystem konfigurieren" \
     "8" "Benutzer zur Gruppe LXD hinzufügen" \
     "9" "neuen LXC Container erstellen" \
-    2>&1 1>&3)
+    2>&1 1>&${FD})
   exit_status=$?
-  exec 3>&-
+  exec ${FD}>&-
   case $exit_status in
     $DIALOG_CANCEL)
       clear
