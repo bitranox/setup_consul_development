@@ -89,6 +89,8 @@ function lxc_install_ubuntu_mate_desktop {
     local container_name=$1
     wait_for_enter "Container ${container_name}: Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
     lxc_update ${container_name}
+    retry lxc_exec "${container_name}" "apt-get install lightdm -y"
+    retry lxc_exec "${container_name}" "apt-get install slick-greeter -y"
     retry lxc_exec "${container_name}" "apt-get install grub2-themes-ubuntu-mate -y"
     retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-core -y"
     retry lxc_exec "${container_name}" "apt-get install ubuntu-mate-artwork -y"
