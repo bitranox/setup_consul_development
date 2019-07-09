@@ -35,7 +35,7 @@ function include_dependencies {
 
 function lxd_init {
     # lxd initialisieren
-    lxd init --auto --storage-backend dir
+    $(get_sudo_command) lxd init --auto --storage-backend dir
 }
 
 function set_uids {
