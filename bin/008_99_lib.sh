@@ -20,23 +20,12 @@ function get_sudo_command {
     fi
 }
 
-function update_myself {
-    local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
-    "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
-}
-
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
-    source "${my_dir}/lib_install/install_essentials.sh"
+    source "${my_dir}/lib_install.sh"
 }
 
 function install_postgresql_repository {
@@ -46,7 +35,6 @@ function install_postgresql_repository {
     ${sudo_command} sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     ${sudo_command} apt-get update
 }
-
 
 function install_postgresql {
     local sudo_command=$(get_sudo_command)
@@ -59,5 +47,4 @@ function install_postgresql_pgadmin4 {
     ${sudo_command} apt-get install pgadmin4 -y
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
