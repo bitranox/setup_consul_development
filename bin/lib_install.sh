@@ -8,17 +8,6 @@ function include_dependencies {
 }
 
 
-function get_is_package_installed {
-    # $1: package name
-    local package_name=$1
-    if [[ $(dpkg -l ${package_name} 2> /dev/null | grep ${package_name} | cut -f 1 -d " ") == "un" ]]; then
-        echo "False"
-    else
-        echo "True"
-    fi
-}
-
-
 function install_dialog {
     if [[ "$(get_is_package_installed dialog)" == "False" ]]; then
         retry $(get_sudo_command) apt-get install dialog -y > /dev/null 2>&1
