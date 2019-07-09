@@ -34,13 +34,15 @@ function include_dependencies {
     source "${my_dir}/lib_install.sh"
 }
 
-function create_container_disco {
+function create_new_container {
     # parameter: $1 = container_name
+    # parameter: $2 = Ubuntu Release "bionic", "disco"
     local container_name=$1
+    local ubuntu_release=$2
     banner "Erzeuge Container ${container_name}"
     lxc stop "${container_name}"  > /dev/null 2>&1
     lxc delete "${container_name}"  > /dev/null 2>&1
-    lxc launch ubuntu:disco "${container_name}"
+    lxc launch ubuntu:${ubuntu_release} "${container_name}"
 }
 
 function create_lxc_user {
@@ -142,7 +144,7 @@ function lxc_install_x2goserver {
     retry lxc_exec "${container_name}" "sudo apt-get install x2goserver-xsession -y"
 }
 
-function lxc_configure_ssh {
+function lxc_configure_sshd {
     # parameter: $1 = container_name, $2=user_name
     local container_name=$1
     local user_name=$2
@@ -215,26 +217,33 @@ function lxc_create_image {
 update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
 container_name="lxc-clean"
-profile_name="map-lxc-shared"
+ubuntu_release="disco"
 lxc_user_name="consul"
+lxc_install_desktop="True"
+lxc_create_image="True"
 wait_for_enter "Erzeuge einen sauberen LXC-Container ${container_name}, user=${lxc_user_name}, pwd=consul, DNS Name = ${container_name}.lxd"
 install_essentials
 linux_update
-create_container_disco "${container_name}"
+create_new_container "${container_name}" "${ubuntu_release}"
 create_lxc_user "${container_name}" "${lxc_user_name}"
 install_scripts_on_lxc_container "${container_name}"
 lxc_install_language_pack "${container_name}"
-lxc_install_ubuntu_mate_desktop "${container_name}"
-lxc_install_tools "${container_name}"
-lxc_install_x2goserver "${container_name}"
-lxc_configure_ssh "${container_name}" "${lxc_user_name}"
+lxc_configure_sshd "${container_name}" "${lxc_user_name}"
 lxc_disable_hibernate "${container_name}"
-# depricated, because we adopt the default profile - it is easier for the users to clone without
-# assigning other profiles
-# lxc_assign_profile "${container_name}" "${profile_name}"
-lxc_install_chrome "${container_name}"
-lxc_install_chrome_remote_desktop "${container_name}"
-lxc_install_language_pack ${container_name}
-lxc_create_image "${container_name}"
+
+if [[ "${lxc_install_desktop}" == "True" ]]; then
+    lxc_install_ubuntu_mate_desktop "${container_name}"
+    lxc_install_tools "${container_name}"
+    lxc_install_x2goserver "${container_name}"
+    lxc_install_chrome "${container_name}"
+    lxc_install_chrome_remote_desktop "${container_name}"
+    lxc_install_language_pack ${container_name}
+    lxc_disable_hibernate "${container_name}"
+fi
+
+if [[ "${lxc_create_image}" == "True" ]]; then
+    lxc_create_image "${container_name}"
+fi
+
 lxc_reboot "${container_name}"
-banner "LXC-Container fertig - erreichbar mit x2goclient, Adresse ${container_name}.lxd, Desktop System \"MATE\""
+banner "LXC-Container fertig - erreichbar mit ssh, x2goclient (wenn Sie Desktop installiert haben), Adresse ${container_name}.lxd"
