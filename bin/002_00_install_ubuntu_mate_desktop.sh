@@ -22,27 +22,16 @@ function get_sudo_command {
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
-
-
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
-    source "${my_dir}/lib_install/install_essentials.sh"
+    source "${my_dir}/lib_install.sh"
 }
-include_dependencies
-
 
 function install_swapfile {
     banner "Install 8GB Swapfile"
@@ -100,6 +89,8 @@ function install_x2go_server {
 
 
 wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
+update_myself ${0} ${@}  # pass own script name and parameters
+include_dependencies
 install_essentials
 linux_update
 install_swapfile

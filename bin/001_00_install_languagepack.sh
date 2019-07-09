@@ -22,7 +22,6 @@ function get_sudo_command {
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 

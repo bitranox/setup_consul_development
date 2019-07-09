@@ -7,8 +7,6 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_helpers.sh
 }
 
-include_dependencies  # we need to do that via a function to have local scope of my_dir
-
 function install_essentials {
     # update / upgrade linux and clean / autoremove
     clr_bold clr_green " "
@@ -34,6 +32,8 @@ function install_and_update_language_packs {
     retry ${sudo_command} apt-get install $(check-language-support -l de)
 }
 
+
+include_dependencies  # we need to do that via a function to have local scope of my_dir
 
 ## make it possible to call functions without source include
 # Check if the function exists (bash specific)
