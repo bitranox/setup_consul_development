@@ -59,6 +59,8 @@ function get_username {
         --backtitle "Linux Shell Script Tutorial Example" \
         --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
         2>&1 1>&3)
+    exit_status=$?
+    exec 3>&-
     echo ${result}
 }
 
