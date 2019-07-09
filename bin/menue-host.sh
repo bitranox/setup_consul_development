@@ -55,13 +55,11 @@ function display_result {
 }
 
 function get_username {
-    exec 3>&1
+    # exec 3>&1
     local result=$(dialog --title "Inputbox - To take input from you" \
         --backtitle "Linux Shell Script Tutorial Example" \
-        --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
-        2>&1 1>&3)
-    local exit_status=$?
-    exec 3>&-
+        --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH}
+        )
     echo ${result}
 }
 
