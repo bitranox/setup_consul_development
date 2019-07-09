@@ -22,22 +22,16 @@ function get_sudo_command {
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} chmod -R +x "${my_dir}"/*.sh
-    ${sudo_command} chmod -R +x "${my_dir}"/lib_install/*.sh
     source /usr/lib/lib_bash/lib_color.sh
     source /usr/lib/lib_bash/lib_retry.sh
     source /usr/lib/lib_bash/lib_helpers.sh
-    source "${my_dir}/lib_install/install_essentials.sh"
+    source "${my_dir}/lib_install.sh"
 }
 
 function lxd_init {
@@ -94,6 +88,15 @@ function extend_default_profile {
     lxc profile set default raw.idmap "both $(id -u) $(id -g)"
 }
 
+function add_current_user_to_lxd_group {
+    banner "LXD - add current user to lxd group"
+    local sudo_command=$(get_sudo_command)
+    # add current user to lxd group
+    ${sudo_command} usermod --append --groups lxd "${USER}"
+    # join the group for this session - not as root !
+    # init LXD - not as root !
+}
+
 
 update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
@@ -101,6 +104,7 @@ profile_name="map-lxc-shared"
 wait_for_enter "Konfiguriere LXD Container System"
 install_essentials
 linux_update
+add_current_user_to_lxd_group
 lxd_init
 set_uids
 create_shared_directory
