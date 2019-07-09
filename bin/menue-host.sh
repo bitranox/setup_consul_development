@@ -60,7 +60,7 @@ function get_username {
         --backtitle "Linux Shell Script Tutorial Example" \
         --inputbox "Enter your name " ${INPUTBOX_HEIGHT} ${INPUTBOX_WIDTH} \
         2>&1 1>&4)
-    exit_status=$?
+    local exit_status=$?
     exec 4>&-
     echo ${result}
 }
