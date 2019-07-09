@@ -55,7 +55,7 @@ while true; do
     --title "Host Installation - aktiver Benutzer ist ${USER}" \
     --clear \
     --cancel-label "Exit" \
-    --menu "Bitte auswählen:" $HEIGHT $WIDTH 4 \
+    --menu "Bitte auswählen:" $HEIGHT 10 $WIDTH 10 \
     "1" "Benutzer anlegen" \
     "2" "Deutsches Sprachpaket Installieren" \
     "3" "Ubuntu Mate Desktop Installieren" \
