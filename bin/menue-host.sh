@@ -98,6 +98,7 @@ function add_user {
     username=$(dialog_inputbox "Benutzer anlegen" "Benutzer anlegen" "Benutzername: " 0 0)
     $(dialog_return_on_exit_status_esc_or_cancel $?)
     if [[ "${username}" == "" ]]; then
+        $result="no User!!!"
         display_result "no User"
     fi
 }
