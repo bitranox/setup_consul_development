@@ -39,7 +39,7 @@ include_dependencies
 
 DIALOG_CANCEL=1
 DIALOG_ESC=255
-HEIGHT=10
+HEIGHT=0
 WIDTH=0
 
 display_result() {
@@ -55,7 +55,7 @@ while true; do
     --title "Host Installation - aktiver Benutzer ist ${USER}" \
     --clear \
     --cancel-label "Exit" \
-    --menu "Bitte auswählen:" $HEIGHT $WIDTH 8 \
+    --menu "Bitte auswählen:" $HEIGHT $WIDTH 4 \
     "1" "Benutzer anlegen" \
     "2" "Deutsches Sprachpaket Installieren" \
     "3" "Ubuntu Mate Desktop Installieren" \
