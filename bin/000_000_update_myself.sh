@@ -40,6 +40,7 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_install.sh
 }
 
+include_dependencies
 
 function set_consul_dev_env_public_permissions {
     local sudo_command=$(get_sudo_command)
@@ -48,6 +49,16 @@ function set_consul_dev_env_public_permissions {
     ${sudo_command} chown -R "${USER}" ~/consul-dev-env-public/
     ${sudo_command} chgrp -R "${USER}" ~/consul-dev-env-public/
 }
+
+
+function is_consul_dev_env_public_installed {
+        if [[ -d "~/consul-dev-env-public" ]]; then
+            echo "True"
+        else
+            echo "False"
+        fi
+}
+
 
 function is_consul_dev_env_public_to_update {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
@@ -58,6 +69,17 @@ function is_consul_dev_env_public_to_update {
     else
         echo "True"
     fi
+}
+
+
+function install_consul_dev_env_public {
+    clr_green "installing consul_dev_env_public"
+    (
+        # create a subshell to preserve current directory
+        cd ~
+        $(get_sudo_command) git clone https://github.com/bitranox/consul-dev-env-public.git > /dev/null 2>&1
+        set_consul_dev_env_public_permissions
+    )
 }
 
 
@@ -96,6 +118,10 @@ function restart_calling_script {
 
 
 install_or_update_lib_bash
-include_dependencies # we need to do that via a function to have local scope of my_dir and not to pass ${@} to the sourced scripts
-update_consul_dev_env_public
-restart_calling_script "${@}"  # needs caller name and parameters
+
+if [[ $(is_consul_dev_env_public_installed) == "True" ]]; then
+    update_consul_dev_env_public
+    restart_calling_script  "${@}"  # needs caller name and parameters
+else
+    install_consul_dev_env_public
+fi
