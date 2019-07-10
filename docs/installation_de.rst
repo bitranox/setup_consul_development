@@ -5,24 +5,24 @@
 - `Installation der Skripte`_
 - `Essentielle, automatisch Installierte Programme`_
 - Installation des Host Systemes
-    - `000_00_update_myself`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
-    - `002_00_install_ubuntu_mate_desktop`_
-    - `001_00_install_languagepack`_
-    - `003_00_remove_unnecessary`_
-    - `004_00_install_tools`_
+    - `000_000_update_myself`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
+    - `001_000_install_languagepack`_
+    - `002_000_install_ubuntu_mate_desktop`_
+    - `003_000_remove_unnecessary`_
+    - `004_000_install_tools`_
 - Installation der LXC Container - alternativ, jedoch EMPFOHLEN, es zahlt sich aus !
-    - `005_00_install_lxd_container_system`_
-    - `006_00_configure_lxd_container_system`_
-    - `007_00_create_clean_lxc_container`_
+    - `005_000_install_lxd_container_system`_
+    - `006_000_configure_lxd_container_system`_
+    - `007_000_create_clean_lxc_container`_
     - `Grundlegende Befehle für LXC Container`_
 - sonstige Einrichtung
     - `Chrome Remote Desktop einrichten`_
 - Installation von Consul
     - `Installation von Consul - Vorbereitung`_
-    - `008_00_install_postgresql`_
-    - `009_00_install_ruby`_
+    - `008_000_install_postgresql`_
+    - `009_000_install_ruby`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
-    - `010_00_configure_consul_user`_
+    - `010_000_configure_consul_user`_
 
 ----
 
@@ -140,7 +140,7 @@ folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückf
 - net-tools (grundlegende Netzwerk Tools)
 - git
 
-000_00_update_myself
+000_000_update_myself
 --------------------
 
 Dieses Skript führt ein Update der eigenen Installationsskripte durch.
@@ -152,7 +152,7 @@ Achtung, etwaige eigene Änderungen in diesen Skripten werden überschrieben !
     cd ~/consul-dev-env-public/bin
     ./000*
 
-001_00_install_languagepack
+001_000_install_languagepack
 ---------------------------
 
 Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht bereits haben - es schadet nicht.
@@ -162,7 +162,7 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
     cd ~/consul-dev-env-public/bin
     ./001*
 
-002_00_install_ubuntu_mate_desktop
+002_000_install_ubuntu_mate_desktop
 ----------------------------------
 Für Ubuntu-Desktop Versionen OPTIONAL, für Ubuntu Server zwingend notwendig !
 
@@ -176,7 +176,7 @@ Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager 
     cd ~/consul-dev-env-public/bin
     ./002*
 
-003_00_remove_unnecessary
+003_000_remove_unnecessary
 -------------------------
 Für die Entwicklung unnötige Programme deinstallieren. Darunter fallen viele Tools wie VIM, Brasero, aber auch
 Thunderbird Mailprogramm, Dateimanager Nautils (Mate verwendet Caja), oder Libre Office.
@@ -187,7 +187,7 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
     cd ~/consul-dev-env-public/bin
     ./003*
 
-004_00_install_tools
+004_000_install_tools
 --------------------
 Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, synaptics, x2goclient
 
@@ -196,7 +196,7 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
     cd ~/consul-dev-env-public/bin
     ./004*
 
-005_00_install_lxd_container_system
+005_000_install_lxd_container_system
 -----------------------------------
 Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden möchten)
 
@@ -205,7 +205,7 @@ Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden m�
     cd ~/consul-dev-env-public/bin
     ./005*
 
-006_00_configure_lxd_container_system
+006_000_configure_lxd_container_system
 -------------------------------------
 Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
  - anlegen eines Shared Directories zum Dateiaustausch unter $HOME/lxc-shared
@@ -220,7 +220,7 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
     cd ~/consul-dev-env-public/bin
     ./006*
 
-007_00_create_clean_lxc_container
+007_000_create_clean_lxc_container
 ---------------------------------
 Erzeugen des ersten LXC Containers (nur wenn Sie LXC Container verwenden möchten)
 Erzeuge einen sauberen LXC Container lxc-clean, mit Benutzer consul, passwort consul.
@@ -410,18 +410,18 @@ Einige Skripte können auch auf Servern ohne grafischer Benutzeroberfläche verw
 Führen Sie nun auf dieser Maschine die unter `Installation der Skripte`_ beschriebenen Schritte aus, um die Skripte
 auch auf dem Container zu installieren.
 
-008_00_install_postgresql
+008_000_install_postgresql
 -------------------------
 
 Installation des Datenbankservers. Die Installation besteht aus zwei Unterskripten, welche Sie auch einzeln aufrufen können.
 
-- 008_00_install_postgresql
+- 008_000_install_postgresql
     - ruft beide untenstehenden Skripte auf
     - getestet auf Ubuntu 18.04/19.04 Desktop
-- 008_01_install_postgresql_server.sh
+- 008_001_install_postgresql_server.sh
     - Installiert den Postgres SQL Server
     - getestet auf Ubuntu 18.04/19.04 Desktop und Server
-- 008_02_install_postgresql_pgadmin4
+- 008_002_install_postgresql_pgadmin4
     - Installiert das Administrationstool für Postgres - dies macht nur Sinn auf Maschinen mit grafischem Desktop
     - getestet auf Ubuntu 18.04/19.04 Desktop
 
@@ -431,10 +431,10 @@ Installation des Datenbankservers. Die Installation besteht aus zwei Unterskript
     # für Desktop Maschinen:
     ./008*
     # alternativ für Server:
-    ./008-01*
+    ./008-001*
 
 
-009_00_install_ruby
+009_000_install_ruby
 -------------------
 
 Installation von Ruby, nodejs und npm
@@ -447,7 +447,7 @@ getestet auf Ubuntu 18.04/19.04 Desktop und Server
     ./009*
 
 
-010_00_configure_consul_user
+010_000_configure_consul_user
 ----------------------------
 
 Gems sind die Bibliotheken von Ruby - es ist darauf zu Achten das gems NICHT ALS ROOT installiert werden.

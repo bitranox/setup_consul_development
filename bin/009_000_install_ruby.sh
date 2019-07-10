@@ -22,9 +22,8 @@ function get_sudo_command {
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
+    "${my_dir}/000_000_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
-
 
 function include_dependencies {
     source /usr/lib/lib_bash/lib_color.sh
@@ -33,31 +32,19 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_install.sh
 }
 
-function install_lxd_container_system {
-    banner "snap Install LXD"
+function install_ruby {
+    banner "Install Ruby"
     local sudo_command=$(get_sudo_command)
-    # install snap
-    retry ${sudo_command} apt-get install snap -y
-    # install lxd
-    retry ${sudo_command} snap install lxd
-}
-
-
-function add_user_to_lxd_group {
-    banner "LXD Init"
-    local sudo_command=$(get_sudo_command)
-    # add current user to lxd group
-    ${sudo_command} usermod --append --groups lxd "${USER}"
-    # join the group for this session - not as root !
-    # init LXD - not as root !
+    ${sudo_command} apt-get install zlib1g -y
+    ${sudo_command} apt-get install zlib1g-dev -y
+    ${sudo_command} apt-get install ruby-full -y
+    ${sudo_command} apt-get install nodejs -y
+    ${sudo_command} apt-get install npm -y
 }
 
 update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
-wait_for_enter "Installiere LXD Container System"
-install_essentials
-linux_update
-install_lxd_container_system
-add_user_to_lxd_group
-wait_for_enter_warning "LXD Container System fertig installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
-reboot
+wait_for_enter "Install Ruby, nodejs, npm"
+install_ruby
+banner "Install Ruby, nodejs, npm fertig"
+

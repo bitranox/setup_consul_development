@@ -22,8 +22,10 @@ function get_sudo_command {
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    "${my_dir}/000_00_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
+    "${my_dir}/000_000_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
+
+update_myself ${0} ${@}  # pass own script name and parameters
 
 function include_dependencies {
     source /usr/lib/lib_bash/lib_color.sh
@@ -32,8 +34,6 @@ function include_dependencies {
     source /usr/lib/lib_bash/lib_install.sh
 }
 
-
-update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
 
 
@@ -48,6 +48,7 @@ INPUTBOX_WIDTH=0
 
 
 function display_result {
+  # --no-collapse: do not convert tabs to spaces and reduces multiple spaces to a single space
   dialog --title "$1" \
     --no-collapse \
     --msgbox "$result" 0 0
