@@ -102,8 +102,3 @@ ENV/
 
 # pytest
 .pytest_cache/
-
-
-# project
-build_docs.py
-# .docs/
