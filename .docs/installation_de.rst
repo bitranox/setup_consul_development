@@ -8,8 +8,8 @@
     - `install_or_update`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
     - `001_000_install_languagepacks`_
     - `002_000_install_ubuntu_mate_desktop`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `003_000_remove_unnecessary`_
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `004_000_install_tools`_
 - Installation der LXC Container - alternativ, jedoch EMPFOHLEN, es zahlt sich aus !
     - `005_000_install_lxd_container_system`_
@@ -165,7 +165,7 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
 
 .. code-block:: bash
 
-    # tested bionic, disco, hetzner cloud
+    # tested bionic, disco, Hetzner Cloud
     cd /usr/local/setup_consul_development
     ./001*
 
@@ -176,11 +176,11 @@ Für Ubuntu-Desktop Versionen OPTIONAL, für Ubuntu Server zwingend notwendig !
 Installation des Ubuntu-Mate-Desktops - diese Desktopumgebung ist mehr Windows-ähnlich,
 viele Leute (so auch ich) kommen mit dem neuen Ubuntu-Gnome Desktop nicht so gut zurecht.
 
-Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager geändert!
+Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager geändert! (ausser bei Hetzner Cloud)
 
 .. code-block:: bash
 
-    # tested bionic, disco, hetzner cloud
+    # tested bionic, disco, Hetzner Cloud
     cd /usr/local/setup_consul_development
     ./002*
 
@@ -192,6 +192,7 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
 
 .. code-block:: bash
 
+    # tested bionic, disco, Hetzner Cloud
     cd /usr/local/setup_consul_development
     ./003*
 
