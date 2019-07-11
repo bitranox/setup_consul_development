@@ -20,7 +20,7 @@ install_essentials                  # @lib_bash_install
 linux_update                        # @lib_bash/lib_helpers.sh
 
 banner "Install and Update Language Packs"
-install_and_update_language_packs "de_AT"  # @lib_bash_install/900_000_lib_install_basics.sh
+install_language_packs "de_AT"  # @lib_bash_install/900_000_lib_install_basics.sh
 
 if [[ "$?" == "0" ]]; then
     banner "deutsche Sprachpakete sind aktuell"
