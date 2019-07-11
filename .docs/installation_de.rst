@@ -14,6 +14,7 @@
     - `005_000_install_lxd_container_system`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `006_000_configure_lxd_container_system`_
+    - `006_001_configure_lxd_dns`_
     - `007_000_create_clean_lxc_container`_
     - `Grundlegende Befehle für LXC Container`_
 - sonstige Einrichtung
@@ -170,7 +171,7 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
     ./001*
 
 002_000_install_ubuntu_mate_desktop
-----------------------------------
+-----------------------------------
 Für Ubuntu-Desktop Versionen OPTIONAL, für Ubuntu Server zwingend notwendig !
 
 Installation des Ubuntu-Mate-Desktops - diese Desktopumgebung ist mehr Windows-ähnlich,
@@ -185,7 +186,7 @@ Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager 
     ./002*
 
 003_000_remove_unnecessary
--------------------------
+--------------------------
 Für die Entwicklung unnötige Programme deinstallieren. Darunter fallen viele Tools wie VIM, Brasero, aber auch
 Thunderbird Mailprogramm, Dateimanager Nautilus (Mate verwendet Caja), oder Libre Office.
 Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dieser Programme benötigen !
@@ -197,7 +198,7 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
     ./003*
 
 004_000_install_tools
---------------------
+---------------------
 Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, synaptics, x2goclient
 
 .. code-block:: bash
@@ -207,7 +208,7 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
     ./004*
 
 005_000_install_lxd_container_system
------------------------------------
+------------------------------------
 Installation des LXD (=LXC Daemon) Container Systemes (nur wenn Sie LXC Container verwenden möchten)
 Der LXD Daemon verwaltet die LXC Container.
 
@@ -218,7 +219,7 @@ Der LXD Daemon verwaltet die LXC Container.
     ./005*
 
 006_000_configure_lxd_container_system
---------------------------------------
+---------------------------------------
 Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
  - anlegen eines Shared Directories zum Dateiaustausch unter $HOME/lxc-shared
  - Disk Device zu Shared Directory zu Profile "default" hinzufügen
@@ -239,7 +240,7 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
 
 
 007_000_create_clean_lxc_container
----------------------------------
+----------------------------------
 Erzeugen des ersten LXC Containers (nur wenn Sie LXC Container verwenden möchten)
 Erzeuge einen sauberen LXC Container lxc-clean, mit Benutzer consul, passwort consul.
 Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxc erreichbar.
@@ -429,7 +430,7 @@ Führen Sie nun auf dieser Maschine die unter `Installation der Skripte`_ beschr
 auch auf dem Container zu installieren.
 
 008_000_install_postgresql
--------------------------
+--------------------------
 
 Installation des Datenbankservers. Die Installation besteht aus zwei Unterskripten, welche Sie auch einzeln aufrufen können.
 
@@ -453,7 +454,7 @@ Installation des Datenbankservers. Die Installation besteht aus zwei Unterskript
 
 
 009_000_install_ruby
--------------------
+--------------------
 
 Installation von Ruby, nodejs und npm
 getestet auf Ubuntu 18.04/19.04 Desktop und Server
@@ -466,7 +467,7 @@ getestet auf Ubuntu 18.04/19.04 Desktop und Server
 
 
 010_000_configure_consul_user
-----------------------------
+-----------------------------
 
 Gems sind die Bibliotheken von Ruby - es ist darauf zu Achten das gems NICHT ALS ROOT installiert werden.
 
