@@ -42,7 +42,7 @@ matrix:
         - deploy_on_pypi="False"
         - CMDPREFIX=""
       before_install:
-          - $(which sudo) git clone https://github.com/bitranox/consul-dev-env-public.git
+          - $(which sudo) git clone https://github.com/bitranox/setup_consul_development.git
           - $(which sudo) chmod -R 0755 ./consul-dev-env-public
           - $(which sudo) chmod -R +x ./consul-dev-env-public/bin/*.sh
 

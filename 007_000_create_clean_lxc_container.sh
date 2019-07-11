@@ -42,7 +42,7 @@ function install_scripts_on_lxc_container {
     banner "Container ${container_name}: lege Install Scripte an"
     retry lxc_exec "${container_name}" "sudo rm -Rf ./consul-dev-env-public"
     retry lxc_exec "${container_name}" "sudo apt-get install git -y"
-    retry lxc_exec "${container_name}" "git clone https://github.com/bitranox/consul-dev-env-public.git"
+    retry lxc_exec "${container_name}" "git clone https://github.com/bitranox/setup_consul_development.git"
     retry lxc_exec "${container_name}" "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
 }
 

@@ -39,15 +39,15 @@ function include_dependencies {
 include_dependencies
 
 function set_consul_dev_env_public_permissions {
-    $(which sudo) chmod -R 0755 ~/consul-dev-env-public
-    $(which sudo) chmod -R +x ~/consul-dev-env-public/bin/*.sh
-    $(which sudo) chown -R "${USER}" ~/consul-dev-env-public/
-    $(which sudo) chgrp -R "${USER}" ~/consul-dev-env-public/
+    $(which sudo) chmod -R 0755 /usr/local/setup_consul_development
+    $(which sudo) chmod -R +x /usr/local/setup_consul_development/*.sh
+    $(which sudo) chown -R "${USER}" /usr/local/setup_consul_development
+    $(which sudo) chgrp -R "${USER}" /usr/local/setup_consul_development
 }
 
 
 function is_consul_dev_env_public_installed {
-        if [[ -d "~/consul-dev-env-public" ]]; then
+        if [[ -d "/usr/local/setup_consul_development" ]]; then
             echo "True"
         else
             echo "False"
@@ -56,9 +56,8 @@ function is_consul_dev_env_public_installed {
 
 
 function is_consul_dev_env_public_to_update {
-    local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    local git_remote_hash=$(git --no-pager ls-remote --quiet https://github.com/bitranox/consul-dev-env-public.git | grep HEAD | awk '{print $1;}' )
-    local git_local_hash=$( $(which sudo) cat ~/consul-dev-env-public/.git/refs/heads/master)
+    local git_remote_hash=$(git --no-pager ls-remote --quiet https://github.com/bitranox/setup_consul_development.git | grep HEAD | awk '{print $1;}' )
+    local git_local_hash=$( $(which sudo) cat /usr/local/setup_consul_development/.git/refs/heads/master)
     if [[ "${git_remote_hash}" == "${git_local_hash}" ]]; then
         echo "False"
     else
@@ -69,12 +68,8 @@ function is_consul_dev_env_public_to_update {
 
 function install_consul_dev_env_public {
     clr_green "installing consul_dev_env_public"
-    (
-        # create a subshell to preserve current directory
-        cd ~
-        $(which sudo) git clone https://github.com/bitranox/consul-dev-env-public.git > /dev/null 2>&1
-        set_consul_dev_env_public_permissions
-    )
+    $(which sudo) git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development > /dev/null 2>&1
+    set_consul_dev_env_public_permissions
 }
 
 
@@ -83,7 +78,7 @@ function update_consul_dev_env_public {
         clr_green "consul-dev-env-public needs to update"
         (
             # create a subshell to preserve current directory
-            cd ~/consul-dev-env-public
+            cd /usr/local/setup_consul_development
             $(which sudo) git fetch --all  > /dev/null 2>&1
             $(which sudo) git reset --hard origin/master  > /dev/null 2>&1
             set_consul_dev_env_public_permissions
