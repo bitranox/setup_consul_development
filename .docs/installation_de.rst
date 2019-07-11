@@ -242,7 +242,7 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
 ---------------------------------
 Erzeugen des ersten LXC Containers (nur wenn Sie LXC Container verwenden möchten)
 Erzeuge einen sauberen LXC Container lxc-clean, mit Benutzer consul, passwort consul.
-Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxd erreichbar.
+Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxc erreichbar.
 (auch über SSH, etc)
 
 .. code-block:: bash
@@ -254,8 +254,8 @@ Der LXC Container läuft nun und ist über SSH erreichbar.
 
 Starten Sie nun den X2GO Client an Hostsystem (aud fer VM soferne verwendet) und erzeugen Sie eine neue Sitzung mit folgenden Einstellungen :
 
- - Name : lxc-clean.lxd
- - Host: lxc-clean.lxd
+ - Name : lxc-clean.lxc
+ - Host: lxc-clean.lxc
  - Login: consul
  - Sitzungsart: MATE
  - Reiter "Verbindung" : LAN
@@ -356,7 +356,7 @@ wir haben folgendes für Sie eingerichtet :
     # es wird Zeit aus dem Image lxc-clean-fresh einen lxc container zum testen zu erzeugen
     lxc init lxc-clean-fresh lxc-test                     # erzeuge aus dem Image lxc-clean-fresh einen neuen Container lxc-test
     lxc start lxc-test                                    # starten des neuen Containers lxc-test
-    # auf diesen Container können Sie wieder mit X2go über Adresse lxc-test.lxd zugreifen
+    # auf diesen Container können Sie wieder mit X2go über Adresse lxc-test.lxc zugreifen
 
     # neues Image erzeugen
     # wenn Sie nun den Container lxc-test so hergerichtet haben wie Sie möchten, (Hintergrund, Chrome Remote Desktop, etc ... )
@@ -369,7 +369,7 @@ wir haben folgendes für Sie eingerichtet :
 
     # so starten Sie nun alle drei container gleichzeitig - WHOW.
     # Images können nicht gestartet werden - das sind sozusagen Backups von Containern.
-    # auf alle Container können Sie wiederum mit X2Go unter der Adresse <containername>.lxd zugreifen ! Gleichzeitig !
+    # auf alle Container können Sie wiederum mit X2Go unter der Adresse <containername>.lxc zugreifen ! Gleichzeitig !
     # Wir empfehlen jedoch chrome-remote-desktop zu installieren, das ist performanter.
     lxc start lxc-test
     lxc start lxc-test2
