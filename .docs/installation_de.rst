@@ -218,19 +218,25 @@ Der LXD Daemon verwaltet die LXC Container.
     ./005*
 
 006_000_configure_lxd_container_system
--------------------------------------
+--------------------------------------
 Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
  - anlegen eines Shared Directories zum Dateiaustausch unter $HOME/lxc-shared
  - Disk Device zu Shared Directory zu Profile "default" hinzufügen
  - subuid, subgid setzen
  - raw idmap im profile setzen (für Zugriffsberechtigung auf Shared Directory)
- - lcx network bridge DNS Zone .lxd einrichten (die container sind dann im DNS unter <containername>.lxd eingetragen
- - systemd-resolved konfigurieren, DNS Zone .lxd wird auf der lxdbr0 Bridge abgefragt
+ - lcx network bridge DNS Zone .lxc einrichten (die container sind dann im DNS unter <containername>.lxc eingetragen
+
 
 .. code-block:: bash
 
     cd /usr/local/setup_consul_development
     ./006*
+
+006_001_configure_lxd_dns
+-------------------------
+    in Arbeit, DNSMASQ da systemd resolver unter bionic nicht mit lxc spielt !!!
+    - systemd-resolved konfigurieren, DNS Zone .lxc wird auf der lxdbr0 Bridge abgefragt
+
 
 007_000_create_clean_lxc_container
 ---------------------------------
