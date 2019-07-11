@@ -1,9 +1,10 @@
 #!/bin/bash
 
 function install_or_update_lib_bash {
-    if [[ -d "/usr/local/lib_bash" ]]; then
-        $(which sudo) /usr/local/lib_bash/install_or_update_lib_bash.sh
+    if [[ -f "/usr/local/lib_bash/install_or_update.sh" ]]; then
+        $(which sudo) /usr/local/lib_bash/install_or_update.sh
     else
+        $(which sudo) rm -fR /usr/local/lib_bash
         $(which sudo) git clone https://github.com/bitranox/lib_bash.git /usr/local/lib_bash > /dev/null 2>&1
         $(which sudo) chmod -R 0755 /usr/local/lib_bash
         $(which sudo) chmod -R +x /usr/local/lib_bash/*.sh
@@ -15,9 +16,10 @@ function install_or_update_lib_bash {
 install_or_update_lib_bash
 
 function install_or_update_lib_bash_install {
-    if [[ -d "/usr/local/lib_bash_install" ]]; then
-        $(which sudo) /usr/local/lib_bash_install/install_or_update_lib_bash_install.sh
+    if [[ -f "/usr/local/lib_bash_install/install_or_update.sh" ]]; then
+        $(which sudo) /usr/local/lib_bash_install/install_or_update.sh
     else
+        $(which sudo) rm -fR /usr/local/lib_bash_install
         $(which sudo) git clone https://github.com/bitranox/lib_bash_install.git /usr/local/lib_bash_install > /dev/null 2>&1
         $(which sudo) chmod -R 0755 /usr/local/lib_bash_install
         $(which sudo) chmod -R +x /usr/local/lib_bash_install/*.sh
@@ -47,7 +49,7 @@ function set_setup_consul_development_permissions {
 
 
 function is_setup_consul_development_installed {
-        if [[ -f "/usr/local/setup_consul_development/install_or_update_setup_consul_development.sh" ]]; then
+        if [[ -f "/usr/local/setup_consul_development/install_or_update.sh" ]]; then
             echo "True"
         else
             echo "False"

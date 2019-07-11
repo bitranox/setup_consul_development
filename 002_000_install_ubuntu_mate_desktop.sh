@@ -2,7 +2,7 @@
 
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
-    "${my_dir}/000_000_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
+    /usr/local/setup_consul_development/install_or_update.sh "${@}" || exit 0              # exit old instance after updates
 }
 
 function include_dependencies {

@@ -70,7 +70,7 @@ Installation
 - `Installation der Skripte`_
 - `Essentielle, automatisch Installierte Programme`_
 - Installation des Host Systemes
-    - `install_or_update_setup_consul_development`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
+    - `install_or_update`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `001_000_install_languagepack`_
     - `002_000_install_ubuntu_mate_desktop`_
@@ -193,7 +193,7 @@ Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
     # wechsel in das Skript Verzeichnis
     cd /usr/local/setup_consul_development
 
-    # Aufruf des Skriptes install_or_update_setup_consul_development.sh
+    # Aufruf des Skriptes install_or_update.sh
     # so können Sie sehr schnell die Skripte ohne große Tipparbeit in der Konsole ausführen
     # alternativ können Sie natürlich sie Skripte über den Dateimanager starten
     # Die Skripte werden automatisch beim Aufruf auf die neueste Version upgedated.
@@ -212,8 +212,8 @@ folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückf
 - net-tools (grundlegende Netzwerk Tools)
 - git
 
-install_or_update_setup_consul_development
-------------------------------------------
+install_or_update
+-----------------
 
 Dieses Skript führt ein Update der eigenen Installationsskripte durch.
 Sobald auf Github eine neue Version vorliegt, werden bei Aufruf eines der nachfolgenden Skripte automatisch ein Update ausgeführt.
@@ -222,7 +222,7 @@ Achtung, etwaige eigene Änderungen in diesen Skripten werden überschrieben !
 .. code-block:: bash
 
     cd /usr/local/setup_consul_development
-    ./install_or_update_setup_consul_development.sh
+    ./install_or_update.sh
 
 001_000_install_languagepack
 ---------------------------
@@ -330,8 +330,8 @@ Auf dem Container sind die Installationsskripte bereits installiert - wenn Sie m
 
     # am LCX Container ausführen !
     cd /usr/local/setup_consul_development
-    ./install_or_update_setup_consul_development.sh      # skripte updaten
-    ./003*      # überflüssige Programme entfernen
+    ./install_or_update.sh       # skripte updaten
+    ./003*                       # überflüssige Programme entfernen
 
     # nun am Host ausführen
     lxc stop lxc-clean                                      # container stoppen
