@@ -24,5 +24,5 @@ linux_update
 install_diverse_tools
 install_chrome
 install_chrome_remote_desktop
-install_language_packs
+install_language_packs "de_AT"  # @lib_bash_install/900_000_lib_install_basics.sh
 banner "Notwendige und nützliche Tools sind installiert"
