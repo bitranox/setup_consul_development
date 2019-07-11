@@ -1,109 +1,88 @@
 #!/bin/bash
 
-function get_sudo_exists {
-    # we need this for travis - there is no sudo command !
-    if [[ -f /usr/bin/sudo ]]; then
-        echo "True"
-    else
-        echo "False"
-    fi
-}
-
-function get_sudo_command {
-    # we need this for travis - there is no sudo command !
-    if [[ $(get_sudo_exists) == "True" ]]; then
-        local sudo_command="sudo"
-        echo ${sudo_command}
-    else
-        local sudo_command=""
-        echo ${sudo_command}
-    fi
-}
-
 function update_myself {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     "${my_dir}/000_000_update_myself.sh" "${@}" || exit 0              # exit old instance after updates
 }
 
 function include_dependencies {
-    source /usr/lib/lib_bash/lib_color.sh
-    source /usr/lib/lib_bash/lib_retry.sh
-    source /usr/lib/lib_bash/lib_helpers.sh
-    source /usr/lib/lib_bash/lib_install.sh
+    source /usr/local/lib_bash/lib_color.sh
+    source /usr/local/lib_bash/lib_retry.sh
+    source /usr/local/lib_bash/lib_helpers.sh
+    source /usr/local/lib_bash/lib_install.sh
 }
 
 function remove_unnecessary {
     ### remove Canonical Reporting
-    local sudo_command=$(get_sudo_command)
-    ${sudo_command} apt-get purge whoopsie -y
-    ${sudo_command} apt-get purge libwhoopsie0 -y
-    ${sudo_command} apt-get purge libwhoopsie-preferences0 -y
-    ${sudo_command} apt-get purge apport -y
+    $(which sudo) apt-get purge whoopsie -y
+    $(which sudo) apt-get purge libwhoopsie0 -y
+    $(which sudo) apt-get purge libwhoopsie-preferences0 -y
+    $(which sudo) apt-get purge apport -y
     ### Spelling
-    ${sudo_command} apt-get purge aspell -y
+    $(which sudo) apt-get purge aspell -y
     ### Bluetooth
-    ${sudo_command} apt-get purge blueman -y
-    ${sudo_command} apt-get purge bluez -y
-    ${sudo_command} apt-get purge bluez-cups -y
-    ${sudo_command} apt-get purge bluez-obexd -y
+    $(which sudo) apt-get purge blueman -y
+    $(which sudo) apt-get purge bluez -y
+    $(which sudo) apt-get purge bluez-cups -y
+    $(which sudo) apt-get purge bluez-obexd -y
     # CD Brenner
-    ${sudo_command} apt-get purge brasero -y
-    ${sudo_command} apt-get purge brasero-cdrkit -y
-    ${sudo_command} apt-get purge brasero-common -y
-    ${sudo_command} apt-get purge cdrdao -y
-    ${sudo_command} apt-get purge dvd+rw-tools -y
-    ${sudo_command} apt-get purge dvdauthor -y
-    ${sudo_command} apt-get purge growisofs -y
-    ${sudo_command} apt-get purge libburn4 -y
+    $(which sudo) apt-get purge brasero -y
+    $(which sudo) apt-get purge brasero-cdrkit -y
+    $(which sudo) apt-get purge brasero-common -y
+    $(which sudo) apt-get purge cdrdao -y
+    $(which sudo) apt-get purge dvd+rw-tools -y
+    $(which sudo) apt-get purge dvdauthor -y
+    $(which sudo) apt-get purge growisofs -y
+    $(which sudo) apt-get purge libburn4 -y
     # Musik
-    ${sudo_command} apt-get purge rhythmbox -y
-    ${sudo_command} apt-get purge rhythmbox-data -y
+    $(which sudo) apt-get purge rhythmbox -y
+    $(which sudo) apt-get purge rhythmbox-data -y
     # Braille für Blinde
-    ${sudo_command} apt-get purge brltty -y
-    ${sudo_command} apt-get purge libbrlapi0.6 -y
-    ${sudo_command} apt-get purge xzoom -y
+    $(which sudo) apt-get purge brltty -y
+    $(which sudo) apt-get purge libbrlapi0.6 -y
+    $(which sudo) apt-get purge xzoom -y
     # Webcam
-    ${sudo_command} apt-get purge cheese -y
-    ${sudo_command} apt-get purge cheese-common -y
+    $(which sudo) apt-get purge cheese -y
+    $(which sudo) apt-get purge cheese-common -y
     # Taschenrechner
-    ${sudo_command} apt-get purge dc -y
+    $(which sudo) apt-get purge dc -y
     # editoren / Terminals
-    ${sudo_command} apt-get purge enchant -y
-    ${sudo_command} apt-get purge gedit -y
-    ${sudo_command} apt-get purge gedit-common -y
-    ${sudo_command} apt-get purge pluma-common -y
-    ${sudo_command} apt-get purge tilda -y
-    ${sudo_command} apt-get purge vim -y
+    $(which sudo) apt-get purge enchant -y
+    $(which sudo) apt-get purge gedit -y
+    $(which sudo) apt-get purge gedit-common -y
+    $(which sudo) apt-get purge pluma-common -y
+    $(which sudo) apt-get purge tilda -y
+    $(which sudo) apt-get purge vim -y
     # Bildbetrachter / Scanner
-    ${sudo_command} apt-get purge eog -y
-    ${sudo_command} apt-get purge shotwell-common -y
-    ${sudo_command} apt-get purge simple-scan -y
+    $(which sudo) apt-get purge eog -y
+    $(which sudo) apt-get purge shotwell-common -y
+    $(which sudo) apt-get purge simple-scan -y
     # Sprachausgabe
-    ${sudo_command} apt-get purge espeak-ng-data -y
+    $(which sudo) apt-get purge espeak-ng-data -y
     # Dateibetrachter
-    ${sudo_command} apt-get purge evince-common -y
+    $(which sudo) apt-get purge evince-common -y
     # video
-    ${sudo_command} apt-get purge ffmpegthumbnailer -y
+    $(which sudo) apt-get purge ffmpegthumbnailer -y
     # gdm3 Gnome Display Manager
-    ${sudo_command} apt-get purge gdm3 -y
+    $(which sudo) apt-get purge gdm3 -y
     # Bildbearbeitung
-    ${sudo_command} apt-get purge imagemagick-6.q16 -y
+    $(which sudo) apt-get purge imagemagick-6.q16 -y
     # Libre Office
-    ${sudo_command} apt-get purge libreoffice-common -y
-    ${sudo_command} apt-get purge ure -y
+    $(which sudo) apt-get purge libreoffice-common -y
+    $(which sudo) apt-get purge ure -y
     # Dateimanager
-    ${sudo_command} apt-get purge nautilus -y
-    ${sudo_command} apt-get purge nautilus-data -y
-    ${sudo_command} apt-get purge nautilus-extension-gnome-terminal -y
-    ${sudo_command} apt-get purge nautilus-sendto -y
+    $(which sudo) apt-get purge nautilus -y
+    $(which sudo) apt-get purge nautilus-data -y
+    $(which sudo) apt-get purge nautilus-extension-gnome-terminal -y
+    $(which sudo) apt-get purge nautilus-sendto -y
     # Bildschirmtastatur
-    ${sudo_command} apt-get purge onboard -y
-    ${sudo_command} apt-get purge onboard-common -y
+    $(which sudo) apt-get purge onboard -y
+    $(which sudo) apt-get purge onboard-common -y
     # Dock
-    ${sudo_command} apt-get purge plank -y
+    $(which sudo) apt-get purge plank -y
     # thunderbird
-    ${sudo_command} apt-get purge thunderbird -y
-    ${sudo_command} apt-get purge transmission-common -y
+    $(which sudo) apt-get purge thunderbird -y
+    $(which sudo) apt-get purge transmission-common -y
 }
 
 update_myself ${0} ${@}  # pass own script name and parameters
