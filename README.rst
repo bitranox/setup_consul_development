@@ -70,8 +70,8 @@ Installation
 - `Installation der Skripte`_
 - `Essentielle, automatisch Installierte Programme`_
 - Installation des Host Systemes
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `install_or_update_setup_consul_development`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `001_000_install_languagepack`_
     - `002_000_install_ubuntu_mate_desktop`_
     - `003_000_remove_unnecessary`_
