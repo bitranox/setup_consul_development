@@ -36,5 +36,5 @@ install_essentials
 linux_update
 install_lxd_container_system
 add_user_to_lxd_group
-wait_for_enter_warning "LXD Container System fertig installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+wait_for_enter_warning "LXD Container System fertig installiert${IFS}ein Neustart ist erforderlich, Enter rebootet die Maschine${IFS}offene Dokumente vorher sichern !"
 reboot

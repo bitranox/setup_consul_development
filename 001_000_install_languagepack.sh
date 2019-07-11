@@ -24,6 +24,6 @@ install_and_update_language_packs "de_AT"  # @lib_bash_install/900_000_lib_insta
 if [[ "$?" == "0" ]]; then
     banner "deutsche Sprachpakete sind aktuell"
 else
-    wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
+    wait_for_enter_warning "deutsche Sprachpakete installiert${IFS}ein Neustart ist erforderlich, Enter rebootet die Maschine${IFS}offene Dokumente vorher sichern !"
     reboot
 fi
