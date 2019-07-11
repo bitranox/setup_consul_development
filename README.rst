@@ -193,7 +193,6 @@ Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
     # wechsel in das Skript Verzeichnis
     cd /usr/local/setup_consul_development
 
-    # Aufruf des Skriptes install_or_update.sh
     # so können Sie sehr schnell die Skripte ohne große Tipparbeit in der Konsole ausführen
     # alternativ können Sie natürlich sie Skripte über den Dateimanager starten
     # Die Skripte werden automatisch beim Aufruf auf die neueste Version upgedated.
@@ -330,8 +329,8 @@ Auf dem Container sind die Installationsskripte bereits installiert - wenn Sie m
 
     # am LCX Container ausführen !
     cd /usr/local/setup_consul_development
-    ./install_or_update.sh       # skripte updaten
-    ./003*                       # überflüssige Programme entfernen
+    ./install_or_update.sh      # skripte updaten
+    ./003*                      # überflüssige Programme entfernen
 
     # nun am Host ausführen
     lxc stop lxc-clean                                      # container stoppen
