@@ -1,0 +1,126 @@
+language: python
+group: travis_latest
+dist: xenial
+sudo: true
+
+env:
+    global:
+        - github_master="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+        - pip_command="pip"
+        - python_command="python"
+        - WINEDEBUG=fixme-all       # switch off wine fix me messages
+
+addons:
+    apt:
+        packages:
+            - xvfb      # install xvfb virtual framebuffer - this we need for WINE
+            - winbind   # needed for WINE
+
+services:   # start services
+  - xvfb    # is needed for WINE on headless installation
+
+
+matrix:
+    include:
+
+    - os: linux
+      language: python
+      python: '3.6'
+      # we can do that also with env - but we dont want to show it on the travis build overview
+      before_install:
+        - export mypy_static_typecheck="False"
+        - export build_docs="True"
+        - export deploy_on_pypi="False"
+
+    - os: linux
+      language: python
+      python: '3.6'
+      name: "consul-test"
+      env:
+        - mypy_static_typecheck="False"
+        - build_docs="True"
+        - deploy_on_pypi="False"
+        - CMDPREFIX=""
+      before_install:
+          - if [[ -f /usr/bin/sudo ]]; then export sudo_command="sudo"; else export sudo_command=""; fi
+          - ${sudo_command} git clone https://github.com/bitranox/consul-dev-env-public.git
+          - ${sudo_command} chmod -R 0755 ./consul-dev-env-public
+          - ${sudo_command} chmod -R +x ./consul-dev-env-public/bin/*.sh
+
+install:
+    # install lib_bash_wine - this installs also lib_bash
+    - if [[ -f /usr/bin/sudo ]]; then export sudo_command="sudo"; else export sudo_command=""; fi
+    - ${sudo_command} git clone https://github.com/bitranox/lib_bash_wine.git /usr/lib/lib_bash_wine
+    - ${sudo_command} chmod -R 0755 /usr/lib/lib_bash_wine
+    - ${sudo_command} chmod -R +x /usr/lib/lib_bash_wine/*.sh
+    - ${sudo_command} /usr/lib/lib_bash_wine/install_or_update_lib_bash_wine.sh
+    - export lib_bash_color="/usr/lib/lib_bash/lib_color.sh"
+    - export lib_bash_banner="/usr/lib/lib_bash/lib_helpers.sh banner"
+    - export lib_bash_banner_warning="/usr/lib/lib_bash/lib_helpers.sh banner_warning"
+    - export lib_bash_wine="/usr/lib/lib_bash_wine"
+
+    - export REPOSITORY_NAME=${TRAVIS_REPO_SLUG#*/} && ${lib_bash_color} clr_bold clr_green "Export Repository Name ${REPOSITORY_NAME}"
+    - if [[ ${CMDPREFIX} == "wine" ]]; then ${lib_bash_wine}/001_000_install_wine.sh ; fi
+    - if [[ ${CMDPREFIX} == "wine" ]]; then ${lib_bash_wine}/002_000_install_wine_machine.sh ; fi
+    - if [[ ${wine_python_version} == "python2" ]]; then ${lib_bash_wine}/003_000_install_wine_python2_preinstalled.sh ; fi
+    - if [[ ${wine_python_version} == "python3" ]]; then ${lib_bash_wine}/003_001_install_wine_python3_preinstalled.sh ; fi
+    - if [[ ${CMDPREFIX} == "wine" ]]; then ${lib_bash_wine}/004_000_install_wine_git_portable.sh ; fi
+    # - if [[ ${CMDPREFIX} == "wine" ]]; then ${lib_bash_wine}/005_001_install_wine_powershell_core.sh ; fi
+
+    - ${lib_bash_banner} "upgrading pip"
+    - ${CMDPREFIX} ${python_command} -m pip install --upgrade pip
+    - if [[ $TRAVIS_PYTHON_VERSION == pypy3.5-6.0 ]]; then ${CMDPREFIX} ${pip_command} install "pytest-cov==2.6.0"; fi
+    # mypy does not run on pypy 3.5 - we only do mypy on python 3.6
+    - if [[ "${mypy_static_typecheck}" == "True" ]]; then ${lib_bash_banner} "install mypy" && ${CMDPREFIX} ${pip_command} install mypy; fi
+    - if [[ "${build_docs}" == "True" ]]; then ${lib_bash_banner} "install rst_include (Building Docs)" && ${CMDPREFIX} ${pip_command} install rst_include; fi
+    - ${lib_bash_banner} "install codecov" && ${CMDPREFIX} ${pip_command} install codecov
+    - ${lib_bash_banner} "install pytest" && ${CMDPREFIX} ${pip_command} install pytest pytest-pep8 pytest-cov
+    - ${lib_bash_banner} "install dill" && ${CMDPREFIX} ${pip_command} install dill
+    - if [[ -f setup.py ]]; then export setup_py_found="True" && ${lib_bash_banner} "setup.py found" ; else ${lib_bash_banner_warning} "no setup.py found, nothing to test" ; fi
+    - if [[ "${setup_py_found}" == "True" ]]; then ${lib_bash_banner} "Installing Application" && ${CMDPREFIX} ${pip_command} install -e . ; fi
+
+script:
+    - if [[ "${setup_py_found}" == "True" ]]; then ${lib_bash_banner} "running setup.py --install-option test" && ${CMDPREFIX} ${pip_command} install ${github_master} --install-option test ; else ${lib_bash_banner_warning} "no setup.py found, no setup.py --install-option test" ; fi
+    - if [[ "${setup_py_found}" == "True" ]]; then ${lib_bash_banner} "running pytest" && ${CMDPREFIX} ${python_command} -m pytest --pep8 --cov ; else ${lib_bash_banner_warning} "no setup.py found, no pytest" ; fi
+    - if [[ "${mypy_static_typecheck}" == "True" ]]; then ${lib_bash_banner} "running mypy static typechecks" && ${CMDPREFIX} ${python_command} -m mypy -p ${REPOSITORY_NAME}; else ${lib_bash_banner_warning} "static typechecking disabled on this build" ;  fi
+    - if [[ -f build_docs.py ]] && [[ "${build_docs}" == "True" ]]; then ${lib_bash_banner} "Building Docs" && ${CMDPREFIX} ${python_command} build_docs.py ${TRAVIS_REPO_SLUG}; else ${lib_bash_banner_warning} "Building Docs disabled on this build" ;  fi
+
+after_success:
+    - ${CMDPREFIX} coverage report
+    - ${CMDPREFIX} codecov
+
+    # This works for sure - but might expose the secure password within the matrix,
+    # because windows builds need filter_secrets: false at the Moment (2019-04-12)
+    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install -U twine ; fi
+    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${pip_command} install wheel ; fi
+    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} ${python_command} setup.py sdist bdist_wheel ; fi
+    # - if [[ ${deploy_on_pypi} == "True" ]] && [[ -n ${TRAVIS_TAG} ]]; then ${CMDPREFIX} twine upload --repository-url https://upload.pypi.org/legacy/ -u bitranox -p ${pypi_password} dist/* ; fi
+
+
+# the password needs to be encrypted pointing to ${deploy.password}
+# make a backup before adding secrets by travis gem, all comments in the yml files get lost !
+# password needs to be created from the project directory for every repository with ruby gem travis:   travis encrypt "*******" --add deploy.password --org
+# option --org for travis.org, --com for travis.com
+
+
+
+
+deploy:
+  provider: pypi
+  user: put_your_username_here
+  password:
+    secure: put_your_secure_password_here
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true    # we release only on PyPi on tagged Releases (Release on Github)
+    # python: 3.6  # that would be the usual option, but we can not use it.
+    # we need this, because on projects with windows builds only, we can not build on windows, because of
+    # the filter_secure issue. So we build on WINE, but need somehow to address the matrix include on which to build
+    condition: ${deploy_on_pypi} = "True"
+
+notifications:
+  email:
+    recipients:
+        - rnowotny@rotek.at
+    on_success: never # default: change
+    on_failure: always # default: always
