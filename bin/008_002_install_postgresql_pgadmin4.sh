@@ -11,7 +11,7 @@ function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
     source /usr/local/lib_bash/lib_retry.sh
     source /usr/local/lib_bash/lib_helpers.sh
-    source /usr/local/lib_bash/lib_install.sh
+    source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
 
 update_myself ${0} ${@}  # pass own script name and parameters

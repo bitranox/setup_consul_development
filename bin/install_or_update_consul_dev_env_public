@@ -12,11 +12,28 @@ function install_or_update_lib_bash {
     fi
 }
 
+install_or_update_lib_bash
+
+function install_or_update_lib_bash_install {
+    if [[ -d "/usr/local/lib_bash_install" ]]; then
+        $(which sudo) /usr/local/lib_bash_install/install_or_update_lib_bash_install.sh
+    else
+        $(which sudo) git clone https://github.com/bitranox/lib_bash_install.git /usr/local/lib_bash_install > /dev/null 2>&1
+        $(which sudo) chmod -R 0755 /usr/local/lib_bash_install
+        $(which sudo) chmod -R +x /usr/local/lib_bash_install/*.sh
+        $(which sudo) chown -R root /usr/local/lib_bash_install || $(which sudo) chown -R ${USER} /usr/local/lib_bash_install  || echo "giving up set owner" # there is no user root on travis
+        $(which sudo) chgrp -R root /usr/local/lib_bash_install || $(which sudo) chgrp -R ${USER} /usr/local/lib_bash_install  || echo "giving up set group" # there is no user root on travis
+    fi
+}
+
+install_or_update_lib_bash_install
+
+
 function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
     source /usr/local/lib_bash/lib_retry.sh
     source /usr/local/lib_bash/lib_helpers.sh
-    source /usr/local/lib_bash/lib_install.sh
+    source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
 
 include_dependencies
@@ -93,8 +110,6 @@ function restart_calling_script {
 
 }
 
-
-install_or_update_lib_bash
 
 if [[ $(is_consul_dev_env_public_installed) == "True" ]]; then
     update_consul_dev_env_public

@@ -9,16 +9,16 @@ function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
     source /usr/local/lib_bash/lib_retry.sh
     source /usr/local/lib_bash/lib_helpers.sh
-    source /usr/local/lib_bash/lib_install.sh
+    source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
 
 
 update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
 wait_for_enter "Installiere deutsche Sprachpakete"
-install_essentials                  # @lib_install.sh
+install_essentials                  # @lib_bash_install
 linux_update                        # @lib_bash/lib_helpers.sh
-install_and_update_language_packs   # @lib_install.sh
+install_and_update_language_packs   # @lib_bash_install
 
 if [[ $(($?)) = 0 ]]; then
     banner "deutsche Sprachpakete sind aktuell"
