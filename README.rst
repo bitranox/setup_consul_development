@@ -75,10 +75,9 @@ Installation
     - `002_000_install_ubuntu_mate_desktop`_
     - `003_000_remove_unnecessary`_
     - `004_000_install_tools`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
--  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
 - Installation der LXC Container - alternativ, jedoch EMPFOHLEN, es zahlt sich aus !
     - `005_000_install_lxd_container_system`_
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `006_000_configure_lxd_container_system`_
     - `007_000_create_clean_lxc_container`_
     - `Grundlegende Befehle für LXC Container`_
@@ -268,15 +267,18 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
 
 .. code-block:: bash
 
+    # tested bionic, disco, Hetzner Cloud
     cd /usr/local/setup_consul_development
     ./004*
 
 005_000_install_lxd_container_system
 -----------------------------------
-Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden möchten)
+Installation des LXD (=LXC Daemon) Container Systemes (nur wenn Sie LXC Container verwenden möchten)
+Der LXD Daemon verwaltet die LXC Container.
 
 .. code-block:: bash
 
+    # tested bionic, disco, Hetzner Cloud
     cd /usr/local/setup_consul_development
     ./005*
 
