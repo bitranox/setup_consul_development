@@ -5,7 +5,8 @@
 - `Installation der Skripte`_
 - `Essentielle, automatisch Installierte Programme`_
 - Installation des Host Systemes
-    - `000_000_update_myself`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
+    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
+    - `install_or_update_setup_consul_development`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
     - `001_000_install_languagepack`_
     - `002_000_install_ubuntu_mate_desktop`_
     - `003_000_remove_unnecessary`_
@@ -21,7 +22,6 @@
     - `Installation von Consul - Vorbereitung`_
     - `008_000_install_postgresql`_
     - `009_000_install_ruby`_
-    -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `010_000_configure_consul_user`_
 
 ----
@@ -108,12 +108,12 @@ Wir gehen nun davon aus, das Betriebssystem läuft. Wechseln Sie auf die Konsole
     # install git
     sudo apt-get install git -y
     # Herunterladen der Skripte
-    git clone https://github.com/bitranox/consul-dev-env-public.git
+    sudo git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development
     # Skripte ausführbar machen
-    sudo chmod -R +x ./consul-dev-env-public/bin/*.sh
+    sudo chmod -R +x /usr/local/setup_consul_development/*.sh
 
 
-die Skripte befinden sich nun im Verzeichnis Home/consul-dev-env-public/bin und müssen von dort aufgerufen werden.
+die Skripte befinden sich nun im Verzeichnis /usr/local/setup_consul_development
 Dies können Sie händisch in der Konsole machen, oder über einen Dateimanager (Nautilus, Caja, etc...) aufrufen.
 
 Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
@@ -121,14 +121,16 @@ Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
 .. code-block:: bash
 
     # wechsel in das Skript Verzeichnis
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
 
-    # Aufruf des Skriptes 000_update_myself.sh
+    # Aufruf des Skriptes install_or_update_setup_consul_development.sh
     # so können Sie sehr schnell die Skripte ohne große Tipparbeit in der Konsole ausführen
     # alternativ können Sie natürlich sie Skripte über den Dateimanager starten
-    # Wenn Sie diese Skripte bereits heruntergeladen haben, so sollten Sie bei neuerlicher Verwendung
-    # immer das Skript 000_update_myself.sh ausführen, um die neueste Version zu erhalten !
-    ./000*
+    # Die Skripte werden automatisch beim Aufruf auf die neueste Version upgedated.
+    # wenn Sie z.Bsp. das Skript /usr/local/setup_consul_development/001_000_install_languagepack.sh
+    # aufrufen möchten so gehen Sie wie folgt vor :
+    cd /usr/local/setup_consul_development
+    ./001*      # das spart Ihnen jede Menge Tipparbeit
 
 
 
@@ -140,8 +142,8 @@ folgende Programme werden bei Verwendung dieser Skripte automatisch, ohne Rückf
 - net-tools (grundlegende Netzwerk Tools)
 - git
 
-000_000_update_myself
---------------------
+install_or_update_setup_consul_development
+------------------------------------------
 
 Dieses Skript führt ein Update der eigenen Installationsskripte durch.
 Sobald auf Github eine neue Version vorliegt, werden bei Aufruf eines der nachfolgenden Skripte automatisch ein Update ausgeführt.
@@ -149,8 +151,8 @@ Achtung, etwaige eigene Änderungen in diesen Skripten werden überschrieben !
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
-    ./000*
+    cd /usr/local/setup_consul_development
+    ./install_or_update_setup_consul_development.sh
 
 001_000_install_languagepack
 ---------------------------
@@ -159,7 +161,7 @@ Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./001*
 
 002_000_install_ubuntu_mate_desktop
@@ -173,7 +175,7 @@ Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager 
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./002*
 
 003_000_remove_unnecessary
@@ -184,7 +186,7 @@ Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dies
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./003*
 
 004_000_install_tools
@@ -193,7 +195,7 @@ Installation von notwendigen Tools wie snap, geany, mc, meld, build-essential, s
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./004*
 
 005_000_install_lxd_container_system
@@ -202,7 +204,7 @@ Installation des LCD Container Systemes (nur wenn Sie LXC Container verwenden m�
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./005*
 
 006_000_configure_lxd_container_system
@@ -217,7 +219,7 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./006*
 
 007_000_create_clean_lxc_container
@@ -229,7 +231,7 @@ Dieser Container ist dann über den X2GO Client über die Adresse lxc-clean.lxd 
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     ./007*
 
 Der LXC Container läuft nun und ist über SSH erreichbar.
@@ -257,8 +259,8 @@ Auf dem Container sind die Installationsskripte bereits installiert - wenn Sie m
 .. code-block:: bash
 
     # am LCX Container ausführen !
-    cd ~/consul-dev-env-public/bin
-    ./000*      # skripte updaten
+    cd /usr/local/setup_consul_development
+    ./install_or_update_setup_consul_development.sh      # skripte updaten
     ./003*      # überflüssige Programme entfernen
 
     # nun am Host ausführen
@@ -427,7 +429,7 @@ Installation des Datenbankservers. Die Installation besteht aus zwei Unterskript
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     # für Desktop Maschinen:
     ./008*
     # alternativ für Server:
@@ -442,7 +444,7 @@ getestet auf Ubuntu 18.04/19.04 Desktop und Server
 
 .. code-block:: bash
 
-    cd ~/consul-dev-env-public/bin
+    cd /usr/local/setup_consul_development
     # für Desktop oder Server Maschinen:
     ./009*
 
