@@ -40,10 +40,10 @@ function install_scripts_on_lxc_container {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: lege Install Scripte an"
-    retry lxc_exec "${container_name}" "sudo rm -Rf ./consul-dev-env-public"
+    retry lxc_exec "${container_name}" "sudo rm -Rf /usr/local/setup_consul_development"
     retry lxc_exec "${container_name}" "sudo apt-get install git -y"
-    retry lxc_exec "${container_name}" "git clone https://github.com/bitranox/setup_consul_development.git"
-    retry lxc_exec "${container_name}" "sudo chmod -R +x ./consul-dev-env-public/bin/*.sh"
+    retry lxc_exec "${container_name}" "git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development"
+    retry lxc_exec "${container_name}" "sudo chmod -R +x /usr/local/setup_consul_development/*.sh"
 }
 
 function lxc_install_language_pack {
@@ -133,7 +133,7 @@ function lxc_configure_sshd {
     local user_name=$2
     banner "Container ${container_name}: Configure ssh"
     retry lxc_exec "${container_name}" "sudo apt-get install ssh -y"
-    lxc_exec "${container_name}" "sudo cp -f ./consul-dev-env-public/bin/shared/config_lxc/etc/ssh/sshd_config /etc/ssh/sshd_config"
+    lxc_exec "${container_name}" "sudo cp -f /usr/local/setup_consul_development/shared/config_lxc/etc/ssh/sshd_config /etc/ssh/sshd_config"
     lxc_exec "${container_name}" "sudo service sshd restart"
     lxc_exec "${container_name}" "sudo service x2goserver restart"
 }

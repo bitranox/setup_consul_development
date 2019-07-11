@@ -38,7 +38,7 @@ function include_dependencies {
 
 include_dependencies
 
-function set_consul_dev_env_public_permissions {
+function set_setup_consul_development_permissions {
     $(which sudo) chmod -R 0755 /usr/local/setup_consul_development
     $(which sudo) chmod -R +x /usr/local/setup_consul_development/*.sh
     $(which sudo) chown -R "${USER}" /usr/local/setup_consul_development
@@ -46,8 +46,8 @@ function set_consul_dev_env_public_permissions {
 }
 
 
-function is_consul_dev_env_public_installed {
-        if [[ -d "/usr/local/setup_consul_development" ]]; then
+function is_setup_consul_development_installed {
+        if [[ -f "/usr/local/setup_consul_development/install_or_update_setup_consul_development.sh" ]]; then
             echo "True"
         else
             echo "False"
@@ -55,7 +55,7 @@ function is_consul_dev_env_public_installed {
 }
 
 
-function is_consul_dev_env_public_to_update {
+function is_setup_consul_development_to_update {
     local git_remote_hash=$(git --no-pager ls-remote --quiet https://github.com/bitranox/setup_consul_development.git | grep HEAD | awk '{print $1;}' )
     local git_local_hash=$( $(which sudo) cat /usr/local/setup_consul_development/.git/refs/heads/master)
     if [[ "${git_remote_hash}" == "${git_local_hash}" ]]; then
@@ -66,26 +66,26 @@ function is_consul_dev_env_public_to_update {
 }
 
 
-function install_consul_dev_env_public {
-    clr_green "installing consul_dev_env_public"
+function install_setup_consul_development {
+    clr_green "installing setup_consul_development"
     $(which sudo) git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development > /dev/null 2>&1
-    set_consul_dev_env_public_permissions
+    set_setup_consul_development_permissions
 }
 
 
-function update_consul_dev_env_public {
-    if [[ $(is_consul_dev_env_public_to_update) == "True" ]]; then
-        clr_green "consul-dev-env-public needs to update"
+function update_setup_consul_development {
+    if [[ $(is_setup_consul_development_to_update) == "True" ]]; then
+        clr_green "setup_consul_development needs to update"
         (
             # create a subshell to preserve current directory
             cd /usr/local/setup_consul_development
             $(which sudo) git fetch --all  > /dev/null 2>&1
             $(which sudo) git reset --hard origin/master  > /dev/null 2>&1
-            set_consul_dev_env_public_permissions
+            set_setup_consul_development_permissions
         )
-        clr_green "consul-dev-env-public update complete"
+        clr_green "setup_consul_development update complete"
     else
-        clr_green "consul-dev-env-public is up to date"
+        clr_green "setup_consul_development is up to date"
         exit 0
     fi
 }
@@ -106,9 +106,9 @@ function restart_calling_script {
 }
 
 
-if [[ $(is_consul_dev_env_public_installed) == "True" ]]; then
-    update_consul_dev_env_public
+if [[ $(is_setup_consul_development_installed) == "True" ]]; then
+    update_setup_consul_development
     restart_calling_script  "${@}"  # needs caller name and parameters
 else
-    install_consul_dev_env_public
+    install_setup_consul_development
 fi

@@ -168,14 +168,19 @@ Wir gehen nun davon aus, das Betriebssystem läuft. Wechseln Sie auf die Konsole
 
 .. code-block:: bash
 
-    # wechsel in das Home Verzeichnis
-    cd ~
+    # maschine updaten
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get autoclean
+    sudo apt-get autoremove
     # install git
     sudo apt-get install git -y
     # Herunterladen der Skripte
     sudo git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development
     # Skripte ausführbar machen
     sudo chmod -R +x /usr/local/setup_consul_development/*.sh
+    cd /usr/local/setup_consul_development
+    sudo ./install*
 
 
 die Skripte befinden sich nun im Verzeichnis /usr/local/setup_consul_development
