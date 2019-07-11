@@ -6,7 +6,7 @@
 - `Essentielle, automatisch Installierte Programme`_
 - Installation des Host Systemes
     - `install_or_update`_ - Einmalig vor Verwendung der nachfolgenden Skripte ausführen, um die neuesten Versionen zu erhalten !
-    - `001_000_install_languagepack`_
+    - `001_000_install_languagepacks`_
     -  BIS HIER GETESTET NACHFOLGENDES FUNKTIONIERT NOCH NICHT
     - `002_000_install_ubuntu_mate_desktop`_
     - `003_000_remove_unnecessary`_
@@ -131,7 +131,7 @@ Die Skripte sind nummeriert und lassen sich so leicht auch manuell aufrufen :
     # so können Sie sehr schnell die Skripte ohne große Tipparbeit in der Konsole ausführen
     # alternativ können Sie natürlich sie Skripte über den Dateimanager starten
     # Die Skripte werden automatisch beim Aufruf auf die neueste Version upgedated.
-    # wenn Sie z.Bsp. das Skript /usr/local/setup_consul_development/001_000_install_languagepack.sh
+    # wenn Sie z.Bsp. das Skript /usr/local/setup_consul_development/001_000_install_languagepacks.sh
     # aufrufen möchten so gehen Sie wie folgt vor :
     cd /usr/local/setup_consul_development
     ./001*      # das spart Ihnen jede Menge Tipparbeit
@@ -158,13 +158,14 @@ Achtung, etwaige eigene Änderungen in diesen Skripten werden überschrieben !
     cd /usr/local/setup_consul_development
     ./install_or_update.sh
 
-001_000_install_languagepack
----------------------------
+001_000_install_languagepacks
+-----------------------------
 
 Installation des Deutschen Sprachpaketes für Linux. Auch wenn Sie es vielleicht bereits haben - es schadet nicht.
 
 .. code-block:: bash
 
+    # tested bionic, disco, hetzner cloud
     cd /usr/local/setup_consul_development
     ./001*
 
@@ -179,13 +180,14 @@ Die Netzwerksettings unter /etc/netplan/ werden automatisch auf Netzwerkmanager 
 
 .. code-block:: bash
 
+    # tested bionic, disco, hetzner cloud
     cd /usr/local/setup_consul_development
     ./002*
 
 003_000_remove_unnecessary
 -------------------------
 Für die Entwicklung unnötige Programme deinstallieren. Darunter fallen viele Tools wie VIM, Brasero, aber auch
-Thunderbird Mailprogramm, Dateimanager Nautils (Mate verwendet Caja), oder Libre Office.
+Thunderbird Mailprogramm, Dateimanager Nautilus (Mate verwendet Caja), oder Libre Office.
 Führen Sie dieses Script nur dann aus, wenn Sie SICHER sind das Sie keines dieser Programme benötigen !
 
 .. code-block:: bash
