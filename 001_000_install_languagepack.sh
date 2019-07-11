@@ -17,9 +17,11 @@ include_dependencies
 wait_for_enter "Installiere deutsche Sprachpakete"
 install_essentials                  # @lib_bash_install
 linux_update                        # @lib_bash/lib_helpers.sh
-install_and_update_language_packs   # @lib_bash_install
 
-if [[ $(($?)) = 0 ]]; then
+banner "Install and Update Language Packs"
+install_and_update_language_packs "de_AT"  # @lib_bash_install/900_000_lib_install_basics.sh
+
+if [[ "$?" == "0" ]]; then
     banner "deutsche Sprachpakete sind aktuell"
 else
     wait_for_enter_warning "deutsche Sprachpakete installiert - ein Neustart ist erforderlich, Enter rebootet die Maschine - offene Dokumente vorher sichern !"
