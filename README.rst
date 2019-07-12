@@ -290,7 +290,10 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
  - Disk Device zu Shared Directory zu Profile "default" hinzufügen
  - subuid, subgid setzen
  - raw idmap im profile setzen (für Zugriffsberechtigung auf Shared Directory)
- - lcx network bridge DNS Zone .lxc einrichten (die container sind dann im DNS unter <containername>.lxc eingetragen
+ - lcx network bridge DNS Zone .lxd einrichten (die container sind dann im DNS unter <containername>.lxd eingetragen,
+   die Searchdomains sind so eingestellt das Sie die container unter <containername>.lxd oder kurz <containername> im Netzwerk
+   erreichen können.
+ - ein zusätzliches Profil für Privilegierte Container anlegen - solche Container können wiederum Container enthalten (Nested Container)
 
 
 .. code-block:: bash
@@ -301,7 +304,7 @@ Konfiguration des LXC Systemes (nur wenn Sie LXC Container verwenden möchten)
 006_001_configure_lxd_dns
 -------------------------
     in Arbeit, DNSMASQ da systemd resolver unter bionic nicht mit lxc spielt !!!
-    - systemd-resolved konfigurieren, DNS Zone .lxc wird auf der lxdbr0 Bridge abgefragt
+    - systemd-resolved konfigurieren, DNS Zone .lxd wird auf der lxdbr0 Bridge abgefragt
 
 
 007_000_create_clean_lxc_container
@@ -320,8 +323,8 @@ Der LXC Container läuft nun und ist über SSH erreichbar.
 
 Starten Sie nun den X2GO Client an Hostsystem (aud fer VM soferne verwendet) und erzeugen Sie eine neue Sitzung mit folgenden Einstellungen :
 
- - Name : lxc-clean.lxc
- - Host: lxc-clean.lxc
+ - Name : lxc-clean
+ - Host: lxc-clean
  - Login: consul
  - Sitzungsart: MATE
  - Reiter "Verbindung" : LAN
@@ -347,7 +350,7 @@ Auf dem Container sind die Installationsskripte bereits installiert - wenn Sie m
 
     # nun am Host ausführen
     lxc stop lxc-clean                                      # container stoppen
-    lxc publish lxc-clean --alias lcx-clean-fresh-minimal   # neues Image erstellen das alte Image ann wie unten Beschrieben gelöscht werden
+    lxc publish lxc-clean --alias lcx-clean-fresh-minimal   # neues Image erstellen das alte Image kann wie unten Beschrieben gelöscht werden
 
 
 Grundlegende Befehle für LXC Container
