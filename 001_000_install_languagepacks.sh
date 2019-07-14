@@ -4,7 +4,11 @@ function update_myself {
     /usr/local/setup_consul_development/install_or_update.sh "${@}" || exit 0              # exit old instance after updates
 }
 
-update_myself ${0} ${@}  # pass own script name and parameters
+if [[ -z "${@}" ]]; then
+    update_myself ${0}
+else
+    update_myself ${0} ${@}  > /dev/null 2>&1  # suppress messages here, not to spoil up answers from functions  when called verbatim
+fi
 
 
 function include_dependencies {
