@@ -90,7 +90,6 @@ function update_setup_consul_development {
         clr_green "setup_consul_development update complete"
     else
         clr_green "setup_consul_development is up to date"
-        exit 0
     fi
 }
 
