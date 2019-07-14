@@ -77,6 +77,22 @@ function install_setup_consul_development {
 }
 
 
+function restart_calling_script {
+    local caller_command=("$@")
+    if [ ${#caller_command[@]} -eq 0 ]; then
+        echo "setup_consul_development/install_or_update.sh : no caller command - exit 0"
+        # no parameters passed
+        exit 0
+    else
+        # parameters passed, running the new Version of the calling script
+        echo "setup_consul_development/install_or_update.sh : calling command : $@ - exit 100"
+        "${caller_command[@]}"
+        # exit this old instance with error code 100
+        exit 100
+    fi
+}
+
+
 function update_setup_consul_development {
     if [[ $(is_setup_consul_development_to_update) == "True" ]]; then
         clr_green "setup_consul_development needs to update"
@@ -94,24 +110,9 @@ function update_setup_consul_development {
 }
 
 
-function restart_calling_script {
-    local caller_command=("$@")
-    if [ ${#caller_command[@]} -eq 0 ]; then
-        # no parameters passed
-        exit 0
-    else
-        # parameters passed, running the new Version of the calling script
-        "${caller_command[@]}"
-        # exit this old instance with error code 100
-        exit 100
-    fi
-
-}
-
-
 if [[ $(is_setup_consul_development_installed) == "True" ]]; then
     update_setup_consul_development
-    restart_calling_script  "${@}"  # needs caller name and parameters
+    restart_calling_script  "${@}" || exit 0  # needs caller name and parameters
 else
     install_setup_consul_development
 fi
