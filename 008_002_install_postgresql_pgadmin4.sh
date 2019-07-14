@@ -5,12 +5,7 @@ function update_myself {
 }
 
 
-if [[ ! -z "$1" ]] && declare -f "${1}" ; then
-    update_myself ${0}
-else
-    update_myself ${0} ${@}  > /dev/null 2>&1  # suppress messages here, not to spoil up answers from functions  when called verbatim
-fi
-
+update_myself ${0}
 
 function include_dependencies {
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
