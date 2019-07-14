@@ -15,7 +15,9 @@ function include_dependencies {
     source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
 
+
 include_dependencies
+
 
 wait_for_enter_warning "Unnötige Programme deinstallieren - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie sicher ?"
 wait_for_enter_warning "Unnötige Programme und deren Daten werden GELÖSCHT - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie GANZ sicher ?"

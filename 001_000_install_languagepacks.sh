@@ -4,6 +4,9 @@ function update_myself {
     /usr/local/setup_consul_development/install_or_update.sh "${@}" || exit 0              # exit old instance after updates
 }
 
+update_myself ${0} ${@}  # pass own script name and parameters
+
+
 function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
     source /usr/local/lib_bash/lib_retry.sh
@@ -13,8 +16,9 @@ function include_dependencies {
 }
 
 
-update_myself ${0} ${@}  # pass own script name and parameters
 include_dependencies
+
+
 wait_for_enter "Installiere deutsche Sprachpakete"
 install_essentials                  # @lib_bash_install
 linux_update                        # @lib_bash/lib_helpers.sh

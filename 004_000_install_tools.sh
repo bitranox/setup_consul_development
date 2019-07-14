@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 function update_myself {
     /usr/local/setup_consul_development/install_or_update.sh "${@}" || exit 0              # exit old instance after updates
 }

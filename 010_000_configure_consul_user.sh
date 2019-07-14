@@ -5,12 +5,18 @@ function update_myself {
 }
 
 
+update_myself ${0} ${@}  # pass own script name and parameters
+
+
 function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
     source /usr/local/lib_bash/lib_retry.sh
     source /usr/local/lib_bash/lib_helpers.sh
     source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
+
+include_dependencies
+
 
 function install_ruby {
     banner "Install Ruby"
@@ -25,18 +31,6 @@ function install_ruby {
 }
 
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
 wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby
 banner "Install Ruby, nodejs, npm fertig"
-
-################################################################################################
-# function get_input_with_default_value
-################################################################################################
-
-#
-# name="Ricardo"
-# read -e -i "$name" -p "Please enter your name: " input
-# name="${input:-$name}"
-#

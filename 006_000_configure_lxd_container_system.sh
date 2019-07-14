@@ -16,7 +16,9 @@ function include_dependencies {
     source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
 
+
 include_dependencies
+
 
 wait_for_enter "Konfiguriere LXD Container System"
 install_essentials

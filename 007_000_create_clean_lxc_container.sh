@@ -4,6 +4,10 @@ function update_myself {
     /usr/local/setup_consul_development/install_or_update.sh "${@}" || exit 0              # exit old instance after updates
 }
 
+
+update_myself ${0} ${@}  # pass own script name and parameters
+
+
 function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
     source /usr/local/lib_bash/lib_retry.sh
@@ -11,6 +15,10 @@ function include_dependencies {
     source /usr/local/lib_bash/lib_lxc_helpers.sh
     source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
+
+
+include_dependencies
+
 
 function create_new_container {
     # parameter: $1 = container_name
@@ -196,8 +204,7 @@ function lxc_create_image {
 }
 
 
-update_myself ${0} ${@}  # pass own script name and parameters
-include_dependencies
+
 container_name="lxc-clean"
 ubuntu_release="disco"
 lxc_user_name="consul"
