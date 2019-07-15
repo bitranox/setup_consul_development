@@ -202,6 +202,10 @@ function lxc_create_image {
     lxc_wait_until_internet_connected ${container_name}
 }
 
+function tests {
+	clr_green "no tests in ${0}"
+}
+
 
 
 container_name="lxc-clean"

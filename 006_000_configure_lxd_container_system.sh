@@ -18,6 +18,10 @@ function include_dependencies {
 
 include_dependencies
 
+function tests {
+	clr_green "no tests in ${0}"
+}
+
 
 wait_for_enter "Konfiguriere LXD Container System"
 install_essentials

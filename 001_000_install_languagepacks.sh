@@ -14,8 +14,11 @@ function include_dependencies {
     source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
 }
 
-
 include_dependencies
+
+function tests {
+	clr_green "no tests in ${0}"
+}
 
 
 wait_for_enter "Installiere deutsche Sprachpakete"

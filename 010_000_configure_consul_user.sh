@@ -29,6 +29,10 @@ function install_ruby {
     $(which sudo) apt-get install npm
 }
 
+function tests {
+	clr_green "no tests in ${0}"
+}
+
 
 wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby

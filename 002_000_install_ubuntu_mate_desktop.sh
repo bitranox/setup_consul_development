@@ -18,6 +18,10 @@ function include_dependencies {
 
 include_dependencies
 
+function tests {
+	clr_green "no tests in ${0}"
+}
+
 
 wait_for_enter "Installiere Ubuntu Mate Desktop - bitte Lightdm als Default Displaymanager auswählen"
 install_ubuntu_mate_desktop_recommended "8GB"   # 8GB Swapsize

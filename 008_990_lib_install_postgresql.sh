@@ -27,6 +27,10 @@ function install_postgresql_pgadmin4 {
     $(which sudo) apt-get install pgadmin4 -y
 }
 
+function tests {
+	clr_green "no tests in ${0}"
+}
+
 
 ## make it possible to call functions without source include
 call_function_from_commandline "${0}" "${@}"

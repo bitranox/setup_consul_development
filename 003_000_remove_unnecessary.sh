@@ -18,6 +18,10 @@ function include_dependencies {
 
 include_dependencies
 
+function tests {
+	clr_green "no tests in ${0}"
+}
+
 
 wait_for_enter_warning "Unnötige Programme deinstallieren - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie sicher ?"
 wait_for_enter_warning "Unnötige Programme und deren Daten werden GELÖSCHT - Thunderbird, Libre Office, Nautilus und vieles mehr - sind Sie GANZ sicher ?"
