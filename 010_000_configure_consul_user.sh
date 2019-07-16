@@ -19,14 +19,14 @@ include_dependencies
 
 function install_ruby {
     banner "Install Ruby"
-    $(which sudo) apt-get install zlib1g
-    $(which sudo) apt-get install zlib1g-dev
-    $(which sudo) apt-get install ruby-full
+    $(get_sudo) apt-get install zlib1g
+    $(get_sudo) apt-get install zlib1g-dev
+    $(get_sudo) apt-get install ruby-full
     # https://stackoverflow.com/questions/2119064/sudo-gem-install-or-gem-install-and-gem-locations
     # use RVM !!!
     gem install bundler             # do not Install gems as root !!!
-    $(which sudo) apt-get install nodejs
-    $(which sudo) apt-get install npm
+    $(get_sudo) apt-get install nodejs
+    $(get_sudo) apt-get install npm
 }
 
 function tests {

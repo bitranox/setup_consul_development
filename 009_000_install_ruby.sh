@@ -20,11 +20,11 @@ include_dependencies
 
 function install_ruby {
     banner "Install Ruby"
-    $(which sudo) apt-get install zlib1g -y
-    $(which sudo) apt-get install zlib1g-dev -y
-    $(which sudo) apt-get install ruby-full -y
-    $(which sudo) apt-get install nodejs -y
-    $(which sudo) apt-get install npm -y
+    $(get_sudo) apt-get install zlib1g -y
+    $(get_sudo) apt-get install zlib1g-dev -y
+    $(get_sudo) apt-get install ruby-full -y
+    $(get_sudo) apt-get install nodejs -y
+    $(get_sudo) apt-get install npm -y
 }
 
 
