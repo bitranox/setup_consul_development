@@ -14,3 +14,6 @@ function get_my_dir {
     echo "$mydir"
 }
 
+
+## run install or update on top of the file
+[[ -d "${BASH_SOURCE%/*" ]] && "${BASH_SOURCE%/*}"./install_or_update.sh || "${PWD}"./install_or_update.sh
