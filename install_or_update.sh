@@ -125,8 +125,8 @@ function tests {
 }
 
 
-if [[ $(is_setup_consul_development_installed) == "True" ]]; then
-    if [[ $(is_setup_consul_development_up_to_date) == "False" ]]; then
+if is_setup_consul_development_installed; then
+    if !is_setup_consul_development_up_to_date; then
         if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@main: setup_consul_development is not up to date"; fi
         update_setup_consul_development
         if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@main: call restart_calling_script ${@}"; fi
