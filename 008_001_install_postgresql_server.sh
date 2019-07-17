@@ -8,6 +8,7 @@ function update_myself {
 update_myself ${0}
 
 function include_dependencies {
+    # shellcheck disable=SC2164
     local my_dir="$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )"  # this gives the full path, even for sourced scripts
     source "${my_dir}/008_990_lib_install_postgresql.sh"
     source /usr/local/lib_bash/lib_color.sh
