@@ -12,19 +12,19 @@ include_dependencies
 
 
 function install_postgresql_repository {
-    $(get_sudo) apt-get install wget ca-certificates
-    $(get_sudo) wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-    $(get_sudo) sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-    $(get_sudo) apt-get update
+    "$(cmd "sudo")" apt-get install wget ca-certificates
+    "$(cmd "sudo")" wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    "$(cmd "sudo")" sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+    "$(cmd "sudo")" apt-get update
 }
 
 function install_postgresql {
-    $(get_sudo) apt-get install postgresql postgresql-contrib -y
-    $(get_sudo) apt-get install postgresql-server-dev-all -y
+    "$(cmd "sudo")" apt-get install postgresql postgresql-contrib -y
+    "$(cmd "sudo")" apt-get install postgresql-server-dev-all -y
 }
 
 function install_postgresql_pgadmin4 {
-    $(get_sudo) apt-get install pgadmin4 -y
+    "$(cmd "sudo")" apt-get install pgadmin4 -y
 }
 
 function tests {
