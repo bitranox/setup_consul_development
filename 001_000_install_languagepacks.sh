@@ -16,11 +16,6 @@ function include_dependencies {
 
 include_dependencies
 
-function tests {
-	clr_green "no tests in ${0}"
-}
-
-
 wait_for_enter "Installiere deutsche Sprachpakete"
 install_essentials                  # @lib_bash_install
 linux_update                        # @lib_bash/lib_helpers.sh

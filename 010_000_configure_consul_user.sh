@@ -29,11 +29,6 @@ function install_ruby {
     "$(cmd "sudo")" apt-get install npm
 }
 
-function tests {
-	clr_green "no tests in ${0}"
-}
-
-
 wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby
 banner "Install Ruby, nodejs, npm fertig"

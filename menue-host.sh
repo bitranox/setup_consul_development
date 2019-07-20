@@ -84,13 +84,6 @@ function add_user {
 }
 
 
-
-function tests {
-	clr_green "no tests in ${0}"
-}
-
-
-
 while true; do
   selection=$(dialog \
     --backtitle "Host Installation" \

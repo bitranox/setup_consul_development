@@ -28,11 +28,6 @@ function install_ruby {
 }
 
 
-function tests {
-	clr_green "no tests in ${0}"
-}
-
-
 wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby
 banner "Install Ruby, nodejs, npm fertig"
