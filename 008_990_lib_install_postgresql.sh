@@ -13,7 +13,7 @@ include_dependencies
 
 function install_postgresql_repository {
     "$(cmd "sudo")" apt-get install wget ca-certificates
-    "$(cmd "sudo")" wget -q -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    "$(cmd "sudo")" wget -nv -c -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     "$(cmd "sudo")" sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     "$(cmd "sudo")" apt-get update
 }

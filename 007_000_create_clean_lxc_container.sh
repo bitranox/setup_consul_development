@@ -172,7 +172,7 @@ function lxc_install_chrome {
     # parameter: $1 = container_name
     local container_name=$1
     banner "Container ${container_name}: install google chrome"
-    retry lxc_exec "${container_name}" "sudo wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+    retry lxc_exec "${container_name}" "sudo wget -nv -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     retry lxc_exec "${container_name}" "sudo dpkg -i google-chrome-stable_current_amd64.deb"
     lxc_exec "${container_name}" "sudo rm -f ./google-chrome-stable_current_amd64.deb"
 
@@ -185,7 +185,7 @@ function lxc_install_chrome_remote_desktop {
     retry lxc_exec "${container_name}" "sudo apt-get install xvfb"
     retry lxc_exec "${container_name}" "sudo apt-get install xbase-clients"
     retry lxc_exec "${container_name}" "sudo apt-get install python-psutil"
-    retry lxc_exec "${container_name}" "sudo wget -q https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
+    retry lxc_exec "${container_name}" "sudo wget -nv -c https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb"
     retry lxc_exec "${container_name}" "sudo dpkg -i chrome-remote-desktop_current_amd64.deb"
     lxc_exec "${container_name}" "sudo rm -f ./chrome-remote-desktop_current_amd64.deb"
     lxc_replace_or_add_lines_containing_string_in_file ${container_name} "/etc/environment" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES" "CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES=\"5120x1600\"" "#"
