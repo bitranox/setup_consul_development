@@ -19,6 +19,8 @@ function include_dependencies {
 
 include_dependencies
 
+linux_update   # on a fresh server install we can not find package dialog without updating first
+
 wait_for_enter "Installiere deutsche Sprachpakete"
 debug "${dbg}" "before install_essentials"
 install_essentials                  # @lib_bash_install
