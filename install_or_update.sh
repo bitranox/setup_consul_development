@@ -29,8 +29,8 @@ function install_or_update_lib_bash {
         # file exists - so update
         $(command -v sudo 2>/dev/null) /usr/local/lib_bash/install_or_update.sh
     else
+        clr_green "installing lib_bash"
         install_lib_bash
-
     fi
 }
 
@@ -54,6 +54,7 @@ function install_or_update_lib_bash_install {
     if [[ -f "/usr/local/lib_bash_install/install_or_update.sh" ]]; then
         "$(cmd "sudo")" /usr/local/lib_bash_install/install_or_update.sh
     else
+        clr_green "installing lib_bash_install"
         "$(cmd "sudo")" rm -fR /usr/local/lib_bash_install
         "$(cmd "sudo")" git clone https://github.com/bitranox/lib_bash_install.git /usr/local/lib_bash_install > /dev/null 2>&1
         "$(cmd "sudo")" chmod -R 0755 /usr/local/lib_bash_install
@@ -127,6 +128,7 @@ if [[ "${0}" == "${BASH_SOURCE[0]}" ]]; then    # if the script is not sourced
     if ! is_setup_consul_development_installed; then install_setup_consul_development ; fi   # if it is just downloaded but not installed at the right place !!!
 
     if ! is_setup_consul_development_up_to_date; then
+        clr_green "updating setup_consul_development"
         update_setup_consul_development
         source "$(readlink -f "${BASH_SOURCE[0]}")"      # source ourself
         exit 0                                           # exit the old instance
