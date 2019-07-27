@@ -52,10 +52,8 @@ include_dependencies
 
 function install_or_update_lib_bash_install {
     if [[ -f "/usr/local/lib_bash_install/install_or_update.sh" ]]; then
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@install_or_update_lib_bash_install: lib_bash_install already installed, calling /usr/local/lib_bash_install/install_or_update.sh"; fi
         "$(cmd "sudo")" /usr/local/lib_bash_install/install_or_update.sh
     else
-        if [[ "${bitranox_debug}" == "True" ]]; then echo "setup_consul_development\install_or_update.sh@install_or_update_lib_bash_install: installing lib_bash_install"; fi
         "$(cmd "sudo")" rm -fR /usr/local/lib_bash_install
         "$(cmd "sudo")" git clone https://github.com/bitranox/lib_bash_install.git /usr/local/lib_bash_install > /dev/null 2>&1
         "$(cmd "sudo")" chmod -R 0755 /usr/local/lib_bash_install
