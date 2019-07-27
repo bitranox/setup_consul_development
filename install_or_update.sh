@@ -29,7 +29,7 @@ function install_or_update_lib_bash {
         # file exists - so update
         $(command -v sudo 2>/dev/null) /usr/local/lib_bash/install_or_update.sh
     else
-        clr_green "installing lib_bash"
+        echo "installing lib_bash"
         install_lib_bash
     fi
 }
