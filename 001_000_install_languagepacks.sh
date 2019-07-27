@@ -1,5 +1,7 @@
 #!/bin/bash
 
+dbd="True"
+
 sudo_askpass="$(command -v ssh-askpass)"
 export SUDO_ASKPASS="${sudo_askpass}"
 export NO_AT_BRIDGE=1  # get rid of (ssh-askpass:25930): dbind-WARNING **: 18:46:12.019: Couldn't register with accessibility bus: Did not receive a reply.
@@ -18,7 +20,9 @@ function include_dependencies {
 include_dependencies
 
 wait_for_enter "Installiere deutsche Sprachpakete"
+debug "${dbg}" "before install_essentials"
 install_essentials                  # @lib_bash_install
+debug "${dbg}" "before linux updates"
 linux_update                        # @lib_bash/lib_helpers.sh
 
 banner "Install and Update Language Packs"
