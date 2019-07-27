@@ -1,26 +1,42 @@
 #!/bin/bash
 
-export bitranox_debug="True"
+sudo_askpass="$(command -v ssh-askpass)"
+export SUDO_ASKPASS="${sudo_askpass}"
+export NO_AT_BRIDGE=1  # get rid of (ssh-askpass:25930): dbind-WARNING **: 18:46:12.019: Couldn't register with accessibility bus: Did not receive a reply.
+
+######################################################################################################################################################################################################
+
+function set_lib_bash_permissions {
+    local user
+    user="$(printenv USER)"
+    $(command -v sudo 2>/dev/null) chmod -R 0755 "/usr/local/lib_bash"
+    $(command -v sudo 2>/dev/null) chmod -R +x /usr/local/lib_bash/*.sh
+    $(command -v sudo 2>/dev/null) chown -R root /usr/local/lib_bash || "$(command -v sudo 2>/dev/null)" chown -R "${user}" /usr/local/lib_bash || echo "giving up set owner" # there is no user root on travis
+    $(command -v sudo 2>/dev/null) chgrp -R root /usr/local/lib_bash || "$(command -v sudo 2>/dev/null)" chgrp -R "${user}" /usr/local/lib_bash || echo "giving up set group" # there is no user root on travis
+}
+
+
+function install_lib_bash {
+    echo "installing lib_bash"
+    $(command -v sudo 2>/dev/null) rm -fR /usr/local/lib_bash
+    $(command -v sudo 2>/dev/null) git clone https://github.com/bitranox/lib_bash.git /usr/local/lib_bash > /dev/null 2>&1
+    set_lib_bash_permissions
+}
 
 
 function install_or_update_lib_bash {
     if [[ -f "/usr/local/lib_bash/install_or_update.sh" ]]; then
-        source /usr/local/lib_bash/lib_color.sh
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@install_or_update_lib_bash: lib_bash already installed, calling /usr/local/lib_bash/install_or_update.sh"; fi
+        # file exists - so update
         $(command -v sudo 2>/dev/null) /usr/local/lib_bash/install_or_update.sh
     else
-        if [[ "${bitranox_debug}" == "True" ]]; then echo "setup_consul_development\install_or_update.sh@install_or_update_lib_bash: installing lib_bash"; fi
-        $(command -v sudo 2>/dev/null) rm -fR /usr/local/lib_bash
-        $(command -v sudo 2>/dev/null) git clone https://github.com/bitranox/lib_bash.git /usr/local/lib_bash > /dev/null 2>&1
-        $(command -v sudo 2>/dev/null) chmod -R 0755 /usr/local/lib_bash
-        $(command -v sudo 2>/dev/null) chmod -R +x /usr/local/lib_bash/*.sh
-        $(command -v sudo 2>/dev/null) chown -R root /usr/local/lib_bash || $(command -v sudo 2>/dev/null) chown -R ${USER} /usr/local/lib_bash  || echo "giving up set owner" # there is no user root on travis
-        $(command -v sudo 2>/dev/null) chgrp -R root /usr/local/lib_bash || $(command -v sudo 2>/dev/null) chgrp -R ${USER} /usr/local/lib_bash  || echo "giving up set group" # there is no user root on travis
+        install_lib_bash
+
     fi
 }
 
 install_or_update_lib_bash
 
+######################################################################################################################################################################################################
 
 function include_dependencies {
     source /usr/local/lib_bash/lib_color.sh
@@ -30,6 +46,8 @@ function include_dependencies {
 
 include_dependencies
 
+
+######################################################################################################################################################################################################
 
 
 function install_or_update_lib_bash_install {
@@ -49,6 +67,8 @@ function install_or_update_lib_bash_install {
 
 install_or_update_lib_bash_install
 
+######################################################################################################################################################################################################
+
 
 function include_dependencies_lib_bash_install {
     source /usr/local/lib_bash_install/900_000_lib_install_basics.sh
@@ -56,6 +76,7 @@ function include_dependencies_lib_bash_install {
 
 include_dependencies_lib_bash_install
 
+######################################################################################################################################################################################################
 
 function set_setup_consul_development_permissions {
     "$(cmd "sudo")" chmod -R 0755 /usr/local/setup_consul_development
@@ -122,16 +143,13 @@ function update_setup_consul_development {
 }
 
 
-if is_setup_consul_development_installed; then
-    if !is_setup_consul_development_up_to_date; then
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@main: setup_consul_development is not up to date"; fi
+if [[ "${0}" == "${BASH_SOURCE[0]}" ]]; then    # if the script is not sourced
+    if ! is_setup_consul_development_installed; then install_setup_consul_development ; fi   # if it is just downloaded but not installed at the right place !!!
+
+    if ! is_setup_consul_development_up_to_date; then
         update_setup_consul_development
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@main: call restart_calling_script ${@}"; fi
-        restart_calling_script  "${@}"
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@main: call restart_calling_script ${@} returned ${?}"; fi
-    else
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@main: setup_consul_development is up to date"; fi
+        source "$(readlink -f "${BASH_SOURCE[0]}")"      # source ourself
+        exit 0                                           # exit the old instance
     fi
-else
-    install_setup_consul_development
+
 fi
