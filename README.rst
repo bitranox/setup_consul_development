@@ -176,7 +176,8 @@ Wir gehen nun davon aus, das Betriebssystem läuft. Wechseln Sie auf die Konsole
     sudo apt-get autoremove
     # install git
     sudo apt-get install git -y
-    # möglicherweise late Version löschen
+    # möglicherweise vorhandene alte Version löschen
+    sudo rm -Rf /usr/local/setup_consul_development
     # Herunterladen der Skripte
     sudo git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development
     # Skripte ausführbar machen
