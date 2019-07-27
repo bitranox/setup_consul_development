@@ -114,24 +114,7 @@ function install_setup_consul_development {
 }
 
 
-function restart_calling_script {
-    local caller_command=("${@}")
-    if [[ ${#caller_command[@]} -eq 0 ]]; then
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "lib_bash_install\install_or_update.sh@restart_calling_script: no caller command - exit 0"; fi
-        # no parameters passed
-        exit 0
-    else
-        # parameters passed, running the new Version of the calling script
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "lib_bash_install\install_or_update.sh@restart_calling_script: calling command : ${@}"; fi
-        eval "${caller_command[@]}"
-        if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "lib_bash_install\install_or_update.sh@restart_calling_script: after calling command : ${@} - exiting with 100"; fi
-        exit 100
-    fi
-}
-
-
 function update_setup_consul_development {
-    if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@update_setup_consul_development: updating setup_consul_development"; fi
     (
         # create a subshell to preserve current directory
         cd /usr/local/setup_consul_development
@@ -139,7 +122,6 @@ function update_setup_consul_development {
         "$(cmd "sudo")" git reset --hard origin/master  > /dev/null 2>&1
         set_setup_consul_development_permissions
     )
-    if [[ "${bitranox_debug}" == "True" ]]; then clr_blue "setup_consul_development\install_or_update.sh@update_setup_consul_development: setup_consul_development update complete"; fi
 }
 
 
