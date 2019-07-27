@@ -132,6 +132,8 @@ if [[ "${0}" == "${BASH_SOURCE[0]}" ]]; then    # if the script is not sourced
         update_setup_consul_development
         source "$(readlink -f "${BASH_SOURCE[0]}")"      # source ourself
         exit 0                                           # exit the old instance
+    else
+        clr_green "setup_consul_development is up to date"
     fi
 
 fi
