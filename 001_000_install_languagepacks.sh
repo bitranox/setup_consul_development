@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dbg="True"
+dbg="False"
 
 sudo_askpass="$(command -v ssh-askpass)"
 export SUDO_ASKPASS="${sudo_askpass}"
