@@ -1,11 +1,22 @@
+# STDLIB
 import argparse
 import errno
 import logging
 import os
 import sys
-from rst_include import *
-from rst_include.libs import lib_log
 import subprocess
+
+# OWN
+import lib_log
+
+if sys.version_info < (3, 6):
+    lib_log.setup_console_logger()
+    main_logger = logging.getLogger('init')
+    main_logger.error('only Python Versions from 3.6 are supported')
+    sys.exit(1)
+else:
+    # OWN
+    from rst_include import *
 
 
 # CONSTANTS & PROJECT SPECIFIC FUNCTIONS
@@ -84,11 +95,10 @@ def main(args):
 
 
 if __name__ == '__main__':
-    lib_log.setup_logger()
+    lib_log.setup_console_logger()
     main_logger = logging.getLogger('main')
     try:
         _args, _parser = parse_args()
-
         main(_args)
     except FileNotFoundError:
         # see https://www.thegeekstuff.com/2010/10/linux-error-codes for error codes
