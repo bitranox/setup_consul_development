@@ -106,7 +106,7 @@ PrintMotd no
 #ChrootDirectory none
 #VersionAddendum none
 
-# no default banner path
+# no default banner_level path
 #Banner none
 
 # Allow client to pass locale environment variables

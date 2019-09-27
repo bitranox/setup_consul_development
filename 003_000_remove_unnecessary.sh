@@ -25,5 +25,5 @@ install_essentials
 linux_update
 remove_unnecessary      # @ /usr/local/lib_bash_install/003_000_lib_remove_unnecessary.sh
 linux_update
-banner "Unnötige Programme deinstalliert"
+banner_level "Unnötige Programme deinstalliert"
 

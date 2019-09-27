@@ -20,7 +20,7 @@ include_dependencies
 
 
 function install_ruby {
-    banner "Install Ruby"
+    banner_level "Install Ruby"
     "$(cmd "sudo")" apt-get install zlib1g -y
     "$(cmd "sudo")" apt-get install zlib1g-dev -y
     "$(cmd "sudo")" apt-get install ruby-full -y
@@ -31,5 +31,5 @@ function install_ruby {
 
 wait_for_enter "Install Ruby, nodejs, npm"
 install_ruby
-banner "Install Ruby, nodejs, npm fertig"
+banner_level "Install Ruby, nodejs, npm fertig"
 

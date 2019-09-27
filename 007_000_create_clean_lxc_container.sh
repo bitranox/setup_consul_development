@@ -25,7 +25,7 @@ function create_new_container {
     # parameter: $2 = Ubuntu Release "bionic", "disco"
     local container_name=$1
     local ubuntu_release=$2
-    banner "Erzeuge Container ${container_name}"
+    banner_level "Erzeuge Container ${container_name}"
     lxc stop "${container_name}"  > /dev/null 2>&1
     lxc delete "${container_name}"  > /dev/null 2>&1
     lxc launch ubuntu:${ubuntu_release} "${container_name}"
@@ -35,7 +35,7 @@ function create_lxc_user {
     # parameter: $1 = container_name, $2=user_name
     local container_name=$1
     local user_name=$2
-    banner "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
+    banner_level "Container ${container_name}: lege LXC User ${user_name} an - bitte geben Sie das Passwort (Vorschlag) \"consul\" ein"
     lxc_exec "${container_name}" "adduser ${user_name}"
     clr_green "adding user ${user_name} to sudoer group"
     # seltsamerweise funktioniert dies nicht mit lxc_exec !
@@ -46,7 +46,7 @@ function create_lxc_user {
 function install_scripts_on_lxc_container {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: lege Install Scripte an"
+    banner_level "Container ${container_name}: lege Install Scripte an"
     retry lxc_exec "${container_name}" "sudo rm -Rf /usr/local/setup_consul_development"
     retry lxc_exec "${container_name}" "sudo apt-get install git -y"
     retry lxc_exec "${container_name}" "git clone https://github.com/bitranox/setup_consul_development.git /usr/local/setup_consul_development"
@@ -57,7 +57,7 @@ function lxc_install_language_pack {
     # install language pack and install language files for applications
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: Install Language Pack"
+    banner_level "Container ${container_name}: Install Language Pack"
     lxc_update ${container_name}
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de -y"
     retry lxc_exec "${container_name}" "sudo apt-get install language-pack-de-base -y"
@@ -102,7 +102,7 @@ function lxc_install_ubuntu_mate_desktop {
 function lxc_install_tools {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: Install Tools"
+    banner_level "Container ${container_name}: Install Tools"
     ### remove Canonical Reporting
     retry lxc_exec "${container_name}" "sudo apt-get purge whoopsie -y"
     retry lxc_exec "${container_name}" "sudo apt-get purge libwhoopsie0 -y"
@@ -127,7 +127,7 @@ function lxc_install_tools {
 function lxc_install_x2goserver {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: Install X2GO Server"
+    banner_level "Container ${container_name}: Install X2GO Server"
     retry lxc_exec "${container_name}" "sudo add-apt-repository ppa:x2go/stable -y"
     lxc_update ${container_name}
     retry lxc_exec "${container_name}" "sudo apt-get install x2goserver -y"
@@ -138,7 +138,7 @@ function lxc_configure_sshd {
     # parameter: $1 = container_name, $2=user_name
     local container_name=$1
     local user_name=$2
-    banner "Container ${container_name}: Configure ssh"
+    banner_level "Container ${container_name}: Configure ssh"
     retry lxc_exec "${container_name}" "sudo apt-get install ssh -y"
     lxc_exec "${container_name}" "sudo cp -f /usr/local/setup_consul_development/shared/config_lxc/etc/ssh/sshd_config /etc/ssh/sshd_config"
     lxc_exec "${container_name}" "sudo service sshd restart"
@@ -148,7 +148,7 @@ function lxc_configure_sshd {
 function lxc_disable_hibernate {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: create backup image ${container_name}-fresh"
+    banner_level "Container ${container_name}: create backup image ${container_name}-fresh"
     lxc_exec "${container_name}" "sudo systemctl mask sleep.target"
     lxc_exec "${container_name}" "sudo systemctl mask suspend.target"
     lxc_exec "${container_name}" "sudo systemctl mask hibernate.target"
@@ -161,7 +161,7 @@ function lxc_assign_profile {
     # parameter: $2 = profile_name
     local container_name=$1
     local profile_name=$2
-    banner "Container ${container_name}: attach Profiles default,${profile_name}"
+    banner_level "Container ${container_name}: attach Profiles default,${profile_name}"
     lxc_shutdown "${container_name}"
     lxc profile assign "${container_name}" default,"${profile_name}"
     lxc_startup "${container_name}"
@@ -172,7 +172,7 @@ function lxc_assign_profile {
 function lxc_install_chrome {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: install google chrome"
+    banner_level "Container ${container_name}: install google chrome"
     retry lxc_exec "${container_name}" "sudo wget -nv -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     retry lxc_exec "${container_name}" "sudo dpkg -i google-chrome-stable_current_amd64.deb"
     lxc_exec "${container_name}" "sudo rm -f ./google-chrome-stable_current_amd64.deb"
@@ -182,7 +182,7 @@ function lxc_install_chrome {
 function lxc_install_chrome_remote_desktop {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: install google chrome remote desktop"
+    banner_level "Container ${container_name}: install google chrome remote desktop"
     retry lxc_exec "${container_name}" "sudo apt-get install xvfb"
     retry lxc_exec "${container_name}" "sudo apt-get install xbase-clients"
     retry lxc_exec "${container_name}" "sudo apt-get install python-psutil"
@@ -196,7 +196,7 @@ function lxc_install_chrome_remote_desktop {
 function lxc_create_image {
     # parameter: $1 = container_name
     local container_name=$1
-    banner "Container ${container_name}: create backup image ${container_name}-fresh"
+    banner_level "Container ${container_name}: create backup image ${container_name}-fresh"
     lxc_shutdown "${container_name}"
     lxc publish ${container_name} --alias ${container_name}-fresh
     lxc_startup "${container_name}"
@@ -233,4 +233,4 @@ if [[ "${lxc_create_image}" == "True" ]]; then
 fi
 
 lxc_reboot "${container_name}"
-banner "LXC-Container fertig - erreichbar mit ssh, x2goclient (wenn Sie Desktop installiert haben), Adresse ${container_name}.lxd"
+banner_level "LXC-Container fertig - erreichbar mit ssh, x2goclient (wenn Sie Desktop installiert haben), Adresse ${container_name}.lxd"

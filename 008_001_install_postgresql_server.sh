@@ -25,4 +25,4 @@ wait_for_enter "Installiere Datenbankserver postgresql"
 install_essentials
 install_postgresql_repository
 install_postgresql
-banner "Installation Datenbankserver postgresql fertig"
+banner_level "Installation Datenbankserver postgresql fertig"
