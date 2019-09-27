@@ -29,4 +29,4 @@ set_uids
 create_shared_directory
 configure_lxd_bridge_zone "lxc"
 extend_default_profile
-banner_level "LXD fertig konfiguriert"
+banner "LXD fertig konfiguriert"

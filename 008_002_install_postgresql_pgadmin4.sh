@@ -25,4 +25,4 @@ wait_for_enter "Installiere postgresql admin Interface für Desktop"
 install_essentials
 install_postgresql_repository
 install_postgresql_pgadmin4
-banner_level "Installation postgresql admin Interface fertig"
+banner "Installation postgresql admin Interface fertig"

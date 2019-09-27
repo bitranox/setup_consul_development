@@ -26,4 +26,4 @@ install_essentials
 install_postgresql_repository
 install_postgresql
 install_postgresql_pgadmin4
-banner_level "Installation Datenbankserver postgresql fertig"
+banner "Installation Datenbankserver postgresql fertig"

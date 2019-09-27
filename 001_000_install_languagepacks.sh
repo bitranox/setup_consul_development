@@ -27,11 +27,11 @@ install_essentials                  # @lib_bash_install
 debug "${dbg}" "before linux updates"
 linux_update                        # @lib_bash/lib_helpers.sh
 
-banner_level "Install and Update Language Packs"
+banner "Install and Update Language Packs"
 install_language_packs "de_AT"  # @lib_bash_install/900_000_lib_install_basics.sh
 
 if [[ "$?" == "0" ]]; then
-    banner_level "deutsche Sprachpakete sind aktuell"
+    banner "deutsche Sprachpakete sind aktuell"
 else
     wait_for_enter_warning "deutsche Sprachpakete installiert${IFS}ein Neustart ist erforderlich, Enter rebootet die Maschine${IFS}offene Dokumente vorher sichern !"
     reboot
